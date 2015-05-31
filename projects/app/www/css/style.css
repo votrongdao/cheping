@@ -1,51 +1,55 @@
 .bar.bar-header {
-	position: relative;
-	background-color: rgb(91, 3, 4);
-	color:white;
+    position: relative;
+    background-color: rgb(91, 3, 4);
+    color: white;
 }
 
 .button .button.icon {
-	font-size: 8px;
-/*	color: white;*/
+    font-size: 8px;
+    /*	color: white;*/
 }
 
 .title {
-	color: white;
+    color: white;
 }
 
 .item .item-divider {
-	font-size: 8px;
-	position: relative;
+    font-size: 8px;
+    position: relative;
 }
 
 .color-demo {
-	float: left;
-	width: 20px;
-	height: 20px;
+    float: left;
+    width: 20px;
+    height: 20px;
     border-width: 1px;
     border-style: solid;
     border-radius: 4px;
 }
 
 .btn-middle {
-	position: absolute;
-	width: 100%;
-	left: 50%;
+    position: absolute;
+    width: 100%;
+    left: 50%;
 }
 
 .button-negative {
-	border-color: rgb(132, 214, 0);
-	background-color: rgb(132, 214, 0);
-	color: white;
+    border-color: rgb(132, 214, 0);
+    background-color: rgb(132, 214, 0);
+    color: white;
 }
 
 .button-default {
-	border-color: rgb(91, 3, 4);
-	background-color: rgb(91, 3, 4); 
-	color: white;
+    border-color: rgb(91, 3, 4);
+    background-color: rgb(91, 3, 4);
+    color: white;
 }
 
 .button-big {
-	width: 100px;
-	height: 30px;
+    width: 100px;
+    height: 30px;
+}
+
+a > .ion-chevron-left {
+    font-size: 5px;
 }

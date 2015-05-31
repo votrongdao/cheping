@@ -1,0 +1,15 @@
+<ion-view view-title="订单信息" id="tab.toDos.html">
+    <ion-content class="padding">
+        <ion-list>
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="toDo in toDos" type="item-text-wrap" href="#/tab/toDos/{{toDo.id}}">
+                <img ng-src="{{toDo.车型图片}}">
+                <h2>{{toDo.车型 型号 地点 价格}}</h2>
+                <p>{{toDo.}}</p>
+                <span class="item-note">已审核</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+                <ion-option-button class="button-assertive" ng-click="remove(chat)">
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
