@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="C:\Users\DuHai\Desktop\publish" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="UploadFile.asmx" publishTime="04/18/2013 15:53:03" />
+    <file relUrl="Services/SyncIautos.asmx" publishTime="04/18/2013 15:53:03" />
+    <file relUrl="bin/DataUpdateSerivce.pdb" publishTime="09/11/2013 10:42:56" />
+    <file relUrl="Web.config" publishTime="09/11/2013 10:43:16" />
+    <file relUrl="bin/DataUpdateSerivce.dll" publishTime="09/11/2013 10:42:56" />
+    <file relUrl="Global.asax" publishTime="04/18/2013 15:53:03" />
+  </publishProfile>
+</publishData>

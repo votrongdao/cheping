@@ -1,0 +1,4 @@
+D:\200SVN\model\DataUpdateSerivce\DataUpdateSerivce\bin\DataUpdateSerivce.dll
+D:\200SVN\model\DataUpdateSerivce\DataUpdateSerivce\bin\DataUpdateSerivce.pdb
+D:\200SVN\model\DataUpdateSerivce\DataUpdateSerivce\obj\Debug\DataUpdateSerivce.dll
+D:\200SVN\model\DataUpdateSerivce\DataUpdateSerivce\obj\Debug\DataUpdateSerivce.pdb

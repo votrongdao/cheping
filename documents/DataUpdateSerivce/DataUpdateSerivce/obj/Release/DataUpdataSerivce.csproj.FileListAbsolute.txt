@@ -1,0 +1,5 @@
+D:\200SVN\model\DataUpdateSerivce\DataUpdateSerivce\bin\DataUpdateSerivce.dll
+D:\200SVN\model\DataUpdateSerivce\DataUpdateSerivce\bin\DataUpdateSerivce.pdb
+D:\200SVN\model\DataUpdateSerivce\DataUpdateSerivce\obj\Release\DataUpdateSerivce.dll
+D:\200SVN\model\DataUpdateSerivce\DataUpdateSerivce\obj\Release\DataUpdateSerivce.pdb
+D:\200SVN\model\DataUpdateSerivce\DataUpdateSerivce\obj\Release\DataUpdataSerivce.csprojResolveAssemblyReference.cache

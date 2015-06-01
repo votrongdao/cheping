@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DataUpdataSerivce.Entity.AddFieldEntity">
+    <Position X="13.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAQAQAAAAAAAAAABACAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Entity\AddFieldEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.AddTableEntity">
+    <Position X="10.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAABAAAAAAAAAAAAQgAAAA=</HashCode>
+      <FileName>Entity\AddTableEntity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Columns" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.ColumnItem">
+    <Position X="12.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAARAABAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Entity\ColumnItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.data">
+    <Position X="7.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\data.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="items" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.dataItem">
+    <Position X="9.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\dataItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.field">
+    <Position X="7.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAFAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\field.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.FileHelper" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAABCEAAAAAAAA=</HashCode>
+      <FileName>Entity\FileHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.FindDataEntity">
+    <Position X="11.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Entity\FindDataEntity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="FilterItems" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.RecordItem">
+    <Position X="13.75" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAARAABAAAAAAAQAgAAAAAAA=</HashCode>
+      <FileName>Entity\RecordItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.SyncResult">
+    <Position X="3" Y="5.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAABAAAAAAAAAAAAAAAACAAAAAAACA=</HashCode>
+      <FileName>Entity\SyncResult.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="fields" />
+      <Property Name="datas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DataUpdataSerivce.Entity.UpdateDataData">
+    <Position X="11.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAABAAAAAAAAAAAgQAABAA=</HashCode>
+      <FileName>Entity\UpdateDataData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Record" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DataUpdataSerivce.Global" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAEAAAABAIAAAAAAAAAAA=</HashCode>
+      <FileName>Global.asax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.SampleItem" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>SampleItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.SampleJob" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SampleJob.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DataUpdataSerivce.Scheduler" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scheduler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.SchedulerConfiguration" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAEBgAABAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchedulerConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.Service1" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAABAAAAAAAAAAAEAAEAAAAAAAEAAAAA=</HashCode>
+      <FileName>Service1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.SQLHelper" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQQQiAGAQAABAAAEAAAIAEAAAAABAgABAACDABAAAAA=</HashCode>
+      <FileName>SQLHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.UploadFile" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>UploadFile.asmx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataUpdataSerivce.Services.SyncIautos" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAEEEAAAAAAAAAAIAAAAAAAAAiAAAACAAAAAAAA=</HashCode>
+      <FileName>Services\SyncIautos.asmx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="DataUpdataSerivce.ISchedulerJob" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ISchedulerJob.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="DataUpdataSerivce.Entity.OperateEnum" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\OperateEnumcs.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="微软雅黑" Size="9" />
+</ClassDiagram>
