@@ -1,0 +1,32 @@
+<ion-view view-title="订单详细信息">
+    <ion-content class="padding">
+        <div class="list">
+            <div class="item item-divider">
+                <p id="orderId">订单号: {{订单号}}</p>
+                <p id="collaboration">合作方式: {{合作方式}}</p>
+                <p id="orderType">订单类型: {{普通/加急}}</p>
+            </div>
+            <div class="item">{{toDo.车型}}</div>
+            <label class="item item-input">
+                <span class="input-label">车架号：</span>
+                <input type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">保单号：</span>
+                <input type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">车牌号：</span>
+                <input type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">备注：</span>
+                <input type="text">
+            </label>
+        </div>
+        <div class="padding btn-middle">
+            <button class="button button-negative button-big">验车失败</button>
+            <button class="button button-default button-big">验车成功</button>
+        </div>
+    </ion-content>
+</ion-view>
