@@ -9,8 +9,9 @@
     /*	color: white;*/
 }
 
-.title {
+.bar.bar-stable .title {
     color: white;
+    font-size: 20px;
 }
 
 .item .item-divider {
@@ -52,4 +53,8 @@
 
 a > .ion-chevron-left {
     font-size: 5px;
+}
+
+.item-no-border .item{
+  border-style: none;
 }

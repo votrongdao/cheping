@@ -1,0 +1,59 @@
+<!--<ion-view view-title="代办事项">-->
+<!--<ion-content>-->
+<!--<ion-list>-->
+<!--<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="todo in todos" type="item-text-wrap" href="#/tab/orders/{{todo.orderNo}}">-->
+<!--<img ng-src="{{ todo.thumbnail }}">-->
+<!--<h2>{{ todo.brand }}&nbsp;{{ todo.model }}&nbsp;{{ todo.city }}</h2>-->
+<!--<p>{{ todo.year }}&nbsp;{{ todo.color }}/{{ todo.innerColor }}</p>-->
+<!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+<!--</ion-item>-->
+<!--</ion-list>-->
+<!--</ion-content>-->
+<!--</ion-view>-->
+
+<ion-view view-title="代办事项">
+  <ion-content>
+    <div class="list card" ng-repeat="todo in todos" type="item-text-wrap" >
+
+      <div class="item item-remove-animate item-avatar item-icon-right" ui-sref="tabs.todoDetail({orderNo: todo.orderNo})">
+        <img ng-src="{{ todo.thumbnail }}">
+
+        <h2>{{ todo.brand }}</h2>
+
+        <p>{{ todo.model }}&nbsp;&nbsp;{{ todo.year }}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </div>
+
+      <div class="item item-body">
+        <img class="full-image" ng-src="{{ todo.thumbnail }}">
+
+        <div class="row">
+          <div class="col-40"><h2>外部颜色</h2></div>
+          <div class="col"><p class="text-right">{{ todo.color }}</p></div>
+        </div>
+
+        <div class="row">
+          <div class="col-40"><h2>内饰颜色</h2></div>
+          <div class="col"><p class="text-right">{{ todo.innerColor }}</p></div>
+        </div>
+
+        <div class="row">
+          <div class="col-40"><h2>上牌时间</h2></div>
+          <div class="col"><p class="text-right">{{ todo.carPlateDate }}</p></div>
+        </div>
+
+        <div class="row">
+          <div class="col-40"><h2>车辆所在地</h2></div>
+          <div class="col"><p class="text-right">{{ todo.province }}&nbsp;{{ todo.city }}</p></div>
+        </div>
+
+        <div class="row">
+          <div class="col-40"><h2>表显里程</h2></div>
+          <div class="col"><p class="text-right">{{ todo.drivingMileage }}&nbsp;百公里</p></div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
+
+

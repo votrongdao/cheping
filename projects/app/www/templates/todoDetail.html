@@ -1,0 +1,83 @@
+<ion-view view-title="代办事项">
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <h2>订单号：{{ todo.orderNo }}</h2>
+
+        <p>合作方式: {{ todo.cooperation }}</p>
+
+        <p>订单类型: {{ todo.orderType }}</p>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-list class="item-remove-animate item-icon-right">
+        <ion-item type="item-text-wrap">
+          <h2>车型:</h2>
+          <br>
+
+          <p>{{ todo.brand }}&nbsp;{{ todo.model }}</p>
+        </ion-item>
+        <ion-item type="item-text-wrap">
+          <h2>外部颜色:</h2>
+          <br>
+
+          <p>{{ todo.color }}</p>
+        </ion-item>
+        <ion-item type="item-text-wrap">
+          <h2>内饰颜色:</h2>
+          <br>
+
+          <p>{{ todo.innerColor }}</p>
+        </ion-item>
+        <ion-item type="item-text-wrap">
+          <h2>车辆所在地:</h2>
+          <br>
+
+          <p>{{ todo.province }}&nbsp;{{ todo.city }}</p>
+        </ion-item>
+        <ion-item type="item-text-wrap">
+          <h2>上牌时间:</h2>
+          <br>
+
+          <p>{{ todo.carPlateDate }}</p>
+        </ion-item>
+        <ion-item type="item-text-wrap">
+          <h2>牌照所在地:</h2>
+          <br>
+
+          <p>{{ todo.carPlateCity }}</p>
+        </ion-item>
+        <ion-item type="item-text-wrap">
+          <h2>心理价位:</h2>
+          <br>
+
+          <p>{{ todo.expectedPrice }}</p>
+        </ion-item>
+        <ion-item type="item-text-wrap">
+          <h2>采购价格:</h2>
+          <br>
+
+          <p>{{ todo.tradePrice }}</p>
+        </ion-item>
+        <ion-item type="item-text-wrap">
+          <h2>改装内容:</h2>
+          <br>
+
+          <p>{{ todo.modified }}</p>
+        </ion-item>
+        <ion-item type="item-text-wrap">
+          <h2>订单状态:</h2>
+          <br>
+
+          <p>{{ todo.orderState }}</p>
+        </ion-item>
+      </ion-list>
+
+
+      <ion-list class="item-remove-animate item-icon-right item-no-border">
+        <ion-item>
+          <button class="button button-block button-balanced">验车完成</button>
+        </ion-item>
+      </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,12 @@
+<ion-view view-title="订单列表">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="order in orders" type="item-text-wrap" ui-sref="tabs.orderDetail({orderNo: order.orderNo})">
+        <img ng-src="{{ order.thumbnail }}">
+        <h2>{{ order.brand }}&nbsp;{{ order.model }}&nbsp;{{ order.city }}</h2>
+        <p>{{ order.year }}&nbsp;{{ order.color }}/{{ order.innerColor }}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

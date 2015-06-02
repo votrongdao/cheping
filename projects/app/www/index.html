@@ -1,149 +1,26 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>车评系统</title>
-    <link rel="stylesheet" href="lib/ionic/css/ionic.min.css">
-    <link rel="stylesheet" type="text/css" href="icons/css/ionicons.min.css">
-    <link href="css/style.css" rel="stylesheet">
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title>1973 车评系统</title>
 
-    <!-- your app's js -->
-    <script src="js/app.js"></script>
-    <!-- <script src="js/controllers.js"></script>
-    <script src="js/services.js"></script> -->
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <script src="lib/lodash/lodash.min.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>
+
+  <script src="cordova.js"></script>
 </head>
-
-<body ng-app="myCar">
-    <div class="bar bar-header">
-        <a href="#" class="button icon icon-left ion-chevron-left button-clear">返回</a>
-        <div class="h1 title">订单详情</div>
-        <a class="button icon icon-right ion-more button-clear"></a>
-    </div>
-    <!--     <ion-tabs class="tabs-color-active-positive">
-        <ion-tab title="待办事项" ui-sref="tab.toDos">
-            <ion-nav-view name="tab.toDos"></ion-nav-view>
-        </ion-tab>
-        <ion-tab title="订单查询" ui-sref="tab.orders">
-            <ion-nav-view name="tab.orders"></ion-nav-view>
-        </ion-tab>
-        <ion-tab title="新增订单" ui-sref="tab.newOrder">
-            <ion-nav-view name="tab.newOrder"></ion-nav-view>
-        </ion-tab>
-    </ion-tabs> -->
-    <ion-tabs class="tabs-color-active-positive">
-        <ion-tab ui-sref="toDos" title="待办事项">
-            <ion-nav-view name="toDos"></ion-nav-view>
-        </ion-tab>
-        <ion-tab ui-sref="orders" title="订单查询">
-            <ion-nav-view name="orders"></ion-nav-view>
-        </ion-tab>
-        <ion-tab ui-sref="newOrder" title="新增订单">
-            <ion-nav-view name="newOrder"></ion-nav-view>
-        </ion-tab>
-    </ion-tabs>
-    <script type="text/ng-template" id="toDos.html">
-        <ion-view view-title="车评系统">
-            <ion-content class="padding">
-                <div class="list">
-                    <a ui-sref="templates/toDo.detail.html" class="item item-thumbnail-left">
-                        <img src="img/demo1.jpg">
-                        <h3>奥迪奥迪奥迪奥迪</h3>
-                        <p>2013款 &nbsp;&nbsp; 绿/绿</p>
-                    </a>
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo1.jpg">
-                        <h3>奥迪奥迪奥迪奥迪</h3>
-                        <p>2013款 &nbsp;&nbsp; 绿/绿</p>
-                    </a>
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo1.jpg">
-                        <h3>奥迪奥迪奥迪奥迪</h3>
-                        <p>2013款 &nbsp;&nbsp; 绿/绿</p>
-                    </a>
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo1.jpg">
-                        <h3>奥迪奥迪奥迪奥迪</h3>
-                        <p>2013款 &nbsp;&nbsp; 绿/绿</p>
-                    </a>
-                </div>
-            </ion-content>
-        </ion-view>
-    </script>
-    <script type="text/ng-template" id="orders.html">
-        <ion-view view-title="订单查询">
-            <ion-content class="padding">
-                <div class="list">
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo2.jpg">
-                        <h3> &nbsp;&nbsp;  &nbsp;&nbsp; 跑车</h3>
-                    </a>
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo2.jpg">
-                        <h3> &nbsp;&nbsp;  &nbsp;&nbsp; 轿车</h3>
-                    </a>
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo2.jpg">
-                        <h3> &nbsp;&nbsp;  &nbsp;&nbsp; 越野</h3>
-                    </a>
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo2.jpg">
-                        <h3> &nbsp;&nbsp;  &nbsp;&nbsp; 房车</h3>
-                    </a>
-                </div>
-                <button class="button button-block">手动输入</button>
-            </ion-content>
-        </ion-view>
-    </script>
-    <script type="text/ng-template" id="newOrder.html">
-        <ion-view view-title="新增订单">
-            <ion-content class="padding">
-                <div class="list">
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo3.jpg">
-                        <h3> &nbsp;&nbsp;  &nbsp;&nbsp; 跑车</h3>
-                    </a>
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo3.jpg">
-                        <h3> &nbsp;&nbsp;  &nbsp;&nbsp; 轿车</h3>
-                    </a>
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo3.jpg">
-                        <h3> &nbsp;&nbsp;  &nbsp;&nbsp; 越野</h3>
-                    </a>
-                    <a href="#" class="item item-thumbnail-left">
-                        <img src="img/demo3.jpg">
-                        <h3> &nbsp;&nbsp;  &nbsp;&nbsp; 房车</h3>
-                    </a>
-                </div>
-                <button class="button button-block">手动输入</button>
-            </ion-content>
-        </ion-view>
-    </script>
-    <!-- <script type="text/ng-template" id="tab.toDos.html">
-        <ion-view view-title="订单信息">
-            <ion-content class="padding">
-                <ion-list>
-                    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="toDo in toDos" type="item-text-wrap" href="#/tab/toDos/{{toDo.id}}">
-                        <img ng-src="{{toDo.车型图片}}">
-                        <h2>{{toDo.车型 型号 地点 价格}}</h2>
-                        <p>{{toDo.}}</p>
-                        <span class="item-note">已审核</span>
-                        <i class="icon ion-chevron-right icon-accessory"></i>
-                        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-                        </ion-option-button>
-                    </ion-item>
-                </ion-list>
-            </ion-content>
-        </ion-view>
-    </script> -->
+<body ng-app="cheping">
+<ion-nav-bar class="bar-stable">
+  <ion-nav-back-button class="button-light">
+  </ion-nav-back-button>
+</ion-nav-bar>
+<ion-nav-view></ion-nav-view>
 </body>
-
 </html>
