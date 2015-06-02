@@ -3,7 +3,17 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
+<<<<<<< Updated upstream
 angular.module('cheping', ['ionic', 'cheping.controllers', 'cheping.services'])
+=======
+angular.module('myCar', ['ionic', 'ngCordova'])
+
+.run(function($cordovaSplashscreen) {
+    setTimeout(function() {
+        $cordovaSplashscreen.hide()
+    }, 5000)
+})
+>>>>>>> Stashed changes
 
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {

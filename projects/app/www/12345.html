@@ -1,0 +1,125 @@
+<ion-tabs class="tabs-color-active-positive">
+    <ion-tab ui-sref="toDos" title="待办事项">
+        <ion-nav-view name="toDos"></ion-nav-view>
+    </ion-tab>
+    <ion-tab ui-sref="orders" title="订单查询">
+        <ion-nav-view name="orders"></ion-nav-view>
+    </ion-tab>
+    <ion-tab ui-sref="newOrder" title="新增订单">
+        <ion-nav-view name="newOrder"></ion-nav-view>
+    </ion-tab>
+</ion-tabs>
+<script type="text/ng-template" id="toDos.html">
+    <ion-view view-title="车评系统">
+        <ion-content class="padding">
+            <div class="list padding" id="toDos.html">
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+            </div>
+        </ion-content>
+    </ion-view>
+</script>
+<script type="text/ng-template" id="orders.html">
+    <ion-view view-title="车评系统">
+        <ion-content class="padding">
+            <div class="list padding" id="toDos">
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+            </div>
+        </ion-content>
+    </ion-view>
+</script>
+<script type="text/ng-template" id="newOrder.html">
+    <ion-view view-title="车评系统">
+        <ion-content class="padding">
+            <div class="list padding" id="toDos">
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+                <a href="#" class="item item-thumbnail-left">
+                    <img src="img/car-demo.jpg">
+                    <h3>奥迪奥迪奥迪奥迪</h3>
+                    <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+                </a>
+            </div>
+        </ion-content>
+    </ion-view>
+</script>
+<div ng-repeat="todo in todos" class="item item-icon-right">
+    ui-sref="app.todos.detail({tdo: $index})"
+    <span ng-class="{done: todo.done}">{{todo.title}}</span>
+</div>
+<ion-view view-title="车评系统">
+    <ion-content class="padding">
+        <div class="list">
+            <a href="#" class="item item-thumbnail-left">
+                <img src="img/demo2.jpg">
+                <h3>奥迪奥迪奥迪奥迪</h3>
+                <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+            </a>
+            <a href="#" class="item item-thumbnail-left">
+                <img src="img/demo2.jpg">
+                <h3>奥迪奥迪奥迪奥迪</h3>
+                <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+            </a>
+            <a href="#" class="item item-thumbnail-left">
+                <img src="img/demo2.jpg">
+                <h3>奥迪奥迪奥迪奥迪</h3>
+                <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+            </a>
+            <a href="#" class="item item-thumbnail-left">
+                <img src="img/demo2.jpg">
+                <h3>奥迪奥迪奥迪奥迪</h3>
+                <p>2013款 &nbsp;&nbsp; 绿/绿</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
