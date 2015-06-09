@@ -1,0 +1,16 @@
+<ion-view view-title="外部颜色">
+  <ion-header-bar>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="createDetailColorCtrl.goBack()">
+        <i class="ion-ios-arrow-back"></i>
+      </button>
+    </div>
+    <h1 class="title">外部颜色</h1>
+  </ion-header-bar>
+  <ion-content class="cp-brand">
+    <ion-radio ng-repeat="item in createDetailColorCtrl.items"
+               ng-value="item"
+               ng-model="createDetailColorCtrl.newOrder.color"
+               name="brand">{{ item }}
+    </ion-radio>
+</ion-view>

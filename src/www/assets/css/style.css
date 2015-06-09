@@ -1,0 +1,251 @@
+@charset "utf-8";
+html {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%
+}
+html,body {
+  margin: 0;
+  height: 100%
+}
+html,body,div,p,samp {
+  font-family: 'HiraginoSansGB W3','Microsoft YaHei',\5FAE\8F6F\96C5\9ED1,Helvetica,Arial,sans-serif
+}
+button,input,select,textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: 100%
+}
+button,input {
+  line-height: normal
+}
+button,select {
+  text-transform: none
+}
+button,html input[type=button],input[type=reset],input[type=submit] {
+  cursor: pointer;
+  -webkit-appearance: button
+}
+button[disabled],html input[disabled] {
+  cursor: default
+}
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none
+}
+input,textarea {
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box
+}
+button::-moz-focus-inner,input::-moz-focus-inner {
+  padding: 0;
+  border: 0
+}
+textarea {
+  overflow: auto;
+  vertical-align: top
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+img {
+  border: 0;
+  vertical-align: middle
+}
+a,img {
+  display: block
+}
+html,body,div,p,a,a:hover {
+  color: #4e4e4e;
+  font-size: 28px
+}
+body {
+  position: relative;
+  margin: 0 auto
+}
+body,input,select,textarea,button {
+  line-height: 1.3
+}
+h1,h2,h3,h4,h5,h6,strong,em,p {
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  padding: 0
+}
+ul,ol {
+  list-style: none;
+  padding: 0;
+  margin: 0
+}
+a,a:hover {
+  text-decoration: none
+}
+a:active,a:focus,button:active,button:focus {
+  -webkit-animation: activeReset .1s ease-out;
+  -moz-animation: activeReset .1s ease-out;
+  animation: activeReset .1s ease-out
+}
+a:visited,button:visited,a.ui-disabled:active,a.ui-disabled:focus,button.ui-disabled:active,button.ui-disabled:focus {
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none
+}
+@-webkit-keyframes activeReset {
+  0% {
+    -webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,.2)
+  }
+  50% {
+    -webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,.1)
+  }
+  100% {
+    -webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,0)
+  }
+}
+@-moz-keyframes activeReset {
+  0% {
+    -moz-box-shadow: inset 0 1px 5px rgba(0,0,0,.2)
+  }
+  50% {
+    -moz-box-shadow: inset 0 1px 5px rgba(0,0,0,.1)
+  }
+  100% {
+    -moz-box-shadow: inset 0 1px 5px rgba(0,0,0,0)
+  }
+}
+@keyframes activeReset {
+  0% {
+    box-shadow: inset 0 1px 5px rgba(0,0,0,.2)
+  }
+  50% {
+    box-shadow: inset 0 1px 5px rgba(0,0,0,.1)
+  }
+  100% {
+    box-shadow: inset 0 1px 5px rgba(0,0,0,0)
+  }
+}
+.clearfix:after {
+  display: block;
+  clear: both;
+  content: "";
+  visibility: hidden;
+  height: 0
+}
+.clearfix {
+  zoom:1}
+body,.viewport,.ui-page,.ui-single-page,.ui-header,.ui-header>.ui-wrapper,.ui-footer {
+  max-width: 800px;
+  min-width: 320px
+}
+.viewport {
+  height: 100%
+}
+
+.popup-alert .popup .popup-body {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.popup-alert .popup .popup-buttons {
+  display: none;
+}
+
+.popup-alert .popup .popup-buttons button{
+  background-color: #660000;
+}
+
+.popup-confirm .popup .popup-body {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.popup-confirm .popup .popup-buttons button{
+  background-color: #660000;
+}
+
+ion-header-bar.bar.bar-header {
+  border-bottom: 2px solid #660000;
+  background-color: #FBF7ED;
+}
+
+.ng-invalid.ng-dirty label.item {
+  border-bottom: 1px solid red;
+}
+
+.ng-input-error {
+  display: none;
+}
+
+.ng-invalid.ng-dirty .ng-input-error {
+  display: block;
+}
+
+.ng-input-error div {
+  font-size: 12px;
+  color: red;
+}
+
+.button-cp-green {
+  background-color: #99CC00;
+  color: white;
+}
+
+.button-cp-dark {
+  background-color: #660000;
+  color: white;
+}
+
+.cp-login {
+  background-color: #FBF7ED;
+}
+
+.cp-login > div:first-child {
+  margin-bottom: 20px;
+}
+
+.cp-login img {
+  width: 100%;
+}
+
+.cp-login .list {
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: #FBF7ED;
+}
+
+.cp-login div.padding > button.button-cp-dark.button-sign-in {
+  margin-top: 20px;
+}
+
+.cp-create ion-item h2 {
+  text-align: center;
+  color: #660000;
+  padding-top: 8px;
+  font-weight: bolder;
+}
+
+.cp-create-detail .item-icon-right{
+  padding-right: 0;
+}
+
+.cp-create-detail h2 {
+  color: #660000;
+  font-weight: bolder;
+}
+
+ion-header-bar.bar.bar-header .title {
+  text-align: center;
+  color: #660000;
+  font-weight: bolder;
+}
+
+.cp-brand label.item.item-radio {
+  line-height: 20px;
+}
+
+.cp-brand label.item.item-radio span.ng-binding {
+  font-size: 20px;
+}
