@@ -249,3 +249,11 @@ ion-header-bar.bar.bar-header .title {
 .cp-brand label.item.item-radio span.ng-binding {
   font-size: 20px;
 }
+
+h2 {
+  color: #660000;
+  font-weight: bolder
+}
+em {
+  color: red;
+}

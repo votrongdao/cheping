@@ -1,0 +1,18 @@
+<ion-view title="订单列表">
+  <ion-header-bar>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="orderListCtrl.goBack()">
+        <i class="ion-ios-arrow-back"></i>
+      </button>
+    </div>
+    <h1 class="title">订单列表</h1>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="order in orderListCtrl.orderList" class="item-icon-right">
+        <p ui-sref="cheping.index.orderListDetail({orderNo: order.orderNo})">订单号：{{order.orderNo}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
