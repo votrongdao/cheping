@@ -153,30 +153,28 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Requests\" />
-    <Folder Include="Responses\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\MiscController.cs" />
+    <Compile Include="Controllers\ModelController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DTO\ModelDto.cs" />
     <Compile Include="DTO\UserDto.cs" />
+    <Compile Include="Enum\JobTitle.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Case.cs" />
     <Compile Include="Models\ChePingContext.cs" />
     <Compile Include="Models\City.cs" />
-    <Compile Include="Models\Mapping\BrandMap.cs" />
     <Compile Include="Models\Mapping\CaseMap.cs" />
     <Compile Include="Models\Mapping\CityMap.cs" />
     <Compile Include="Models\Mapping\ModelMap.cs" />
     <Compile Include="Models\Mapping\OutletMap.cs" />
     <Compile Include="Models\Mapping\PhotoMap.cs" />
-    <Compile Include="Models\Mapping\ProvinceMap.cs" />
-    <Compile Include="Models\Mapping\SeriesMap.cs" />
     <Compile Include="Models\Mapping\TranscationRecordMap.cs" />
     <Compile Include="Models\Mapping\UserMap.cs" />
     <Compile Include="Models\Mapping\VehicleInfoMap.cs" />
@@ -184,13 +182,13 @@
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Outlet.cs" />
     <Compile Include="Models\Photo.cs" />
-    <Compile Include="Models\Province.cs" />
-    <Compile Include="Models\Series.cs" />
     <Compile Include="Models\TranscationRecord.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\VehicleInfo.cs" />
     <Compile Include="Models\VehicleInspection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Responses\BoolResponse.cs" />
+    <Compile Include="Services\ModelService.cs" />
     <Compile Include="Services\SmsService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>

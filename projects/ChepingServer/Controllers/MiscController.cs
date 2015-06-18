@@ -4,7 +4,7 @@
 // Created          : 2015-06-12  9:07 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  10:22 PM
+// Last Modified On : 2015-06-18  10:32 PM
 // ***********************************************************************
 // <copyright file="MiscController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -23,7 +23,7 @@ namespace ChepingServer.Controllers
     /// <summary>
     ///     MiscController.
     /// </summary>
-    [RoutePrefix("Sms")]
+    [RoutePrefix("api/Sms")]
     public class MiscController : ApiControllerBase
     {
         private readonly SmsService smsService = new SmsService();

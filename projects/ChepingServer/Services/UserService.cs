@@ -94,5 +94,17 @@ namespace ChepingServer.Services
                 return new PaginatedList<User>(pageIndex, pageSize, count, users);
             }
         }
+
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns>Task&lt;List&lt;User&gt;&gt;.</returns>
+        public async Task<List<User>> Index()
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                return await db.Users.ToListAsync();
+            }
+        }
     }
 }

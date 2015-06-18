@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  6:01 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  6:20 PM
+// Last Modified On : 2015-06-18  11:06 PM
 // ***********************************************************************
 // <copyright file="Model.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -15,14 +15,14 @@ namespace ChepingServer.Models
 {
     public class Model
     {
-        public int BrandId { get; set; }
+        public string Brand { get; set; }
 
         public int Id { get; set; }
 
-        public string ModelName { get; set; }
+        public string Modeling { get; set; }
 
         public int Price { get; set; }
 
-        public int SeriesId { get; set; }
+        public string Series { get; set; }
     }
 }

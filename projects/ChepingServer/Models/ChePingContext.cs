@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  6:02 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  9:38 PM
+// Last Modified On : 2015-06-18  11:54 PM
 // ***********************************************************************
 // <copyright file="ChePingContext.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -29,8 +29,6 @@ namespace ChepingServer.Models
         {
         }
 
-        public DbSet<Brand> Brands { get; set; }
-
         public DbSet<Case> Cases { get; set; }
 
         public DbSet<City> Cities { get; set; }
@@ -40,10 +38,6 @@ namespace ChepingServer.Models
         public DbSet<Outlet> Outlets { get; set; }
 
         public DbSet<Photo> Photos { get; set; }
-
-        public DbSet<Province> Provinces { get; set; }
-
-        public DbSet<Series> Series { get; set; }
 
         public DbSet<TranscationRecord> TranscationRecords { get; set; }
 
@@ -55,14 +49,11 @@ namespace ChepingServer.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new BrandMap());
             modelBuilder.Configurations.Add(new CaseMap());
             modelBuilder.Configurations.Add(new CityMap());
             modelBuilder.Configurations.Add(new ModelMap());
             modelBuilder.Configurations.Add(new OutletMap());
             modelBuilder.Configurations.Add(new PhotoMap());
-            modelBuilder.Configurations.Add(new ProvinceMap());
-            modelBuilder.Configurations.Add(new SeriesMap());
             modelBuilder.Configurations.Add(new TranscationRecordMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new VehicleInfoMap());

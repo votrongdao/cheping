@@ -4,12 +4,14 @@
 // Created          : 2015-06-18  6:01 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  6:22 PM
+// Last Modified On : 2015-06-18  10:41 PM
 // ***********************************************************************
 // <copyright file="User.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
+
+using ChepingServer.Enum;
 
 namespace ChepingServer.Models
 {
@@ -19,7 +21,7 @@ namespace ChepingServer.Models
 
         public int Id { get; set; }
 
-        public int JobTitle { get; set; }
+        public JobTitle JobTitle { get; set; }
 
         public int OutletId { get; set; }
 

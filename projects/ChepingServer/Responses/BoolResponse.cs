@@ -1,22 +1,23 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  6:01 PM
+// Created          : 2015-06-18  11:46 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  6:21 PM
+// Last Modified On : 2015-06-18  11:47 PM
 // ***********************************************************************
-// <copyright file="Province.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
+// <copyright file="BoolResponse.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
 
-namespace ChepingServer.Models
+namespace ChepingServer.Responses
 {
-    public class Province
+    public class BoolResponse
     {
-        public int Id { get; set; }
-
-        public string ProvinceName { get; set; }
+        /// <summary>
+        ///     Boolean 值
+        /// </summary>
+        public bool Result { get; set; }
     }
 }

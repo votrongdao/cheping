@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  6:01 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  6:08 PM
+// Last Modified On : 2015-06-18  11:06 PM
 // ***********************************************************************
 // <copyright file="ModelMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -27,16 +27,24 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-            this.Property(t => t.ModelName)
+            this.Property(t => t.Brand)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            this.Property(t => t.Series)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            this.Property(t => t.Modeling)
                 .IsRequired()
                 .HasMaxLength(200);
 
             // Table & Column Mappings
             this.ToTable("Models");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.BrandId).HasColumnName("BrandId");
-            this.Property(t => t.SeriesId).HasColumnName("SeriesId");
-            this.Property(t => t.ModelName).HasColumnName("ModelName");
+            this.Property(t => t.Brand).HasColumnName("Brand");
+            this.Property(t => t.Series).HasColumnName("Series");
+            this.Property(t => t.Modeling).HasColumnName("Modeling");
             this.Property(t => t.Price).HasColumnName("Price");
         }
     }

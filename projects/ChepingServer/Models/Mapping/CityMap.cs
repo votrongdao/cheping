@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  6:01 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  6:08 PM
+// Last Modified On : 2015-06-18  11:57 PM
 // ***********************************************************************
 // <copyright file="CityMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -37,6 +37,7 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.ProvinceName).HasColumnName("ProvinceName");
             this.Property(t => t.CityName).HasColumnName("CityName");
             this.Property(t => t.ProvinceId).HasColumnName("ProvinceId");
+            this.Property(t => t.CityId).HasColumnName("CityId");
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  7:28 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  10:27 PM
+// Last Modified On : 2015-06-19  12:07 AM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -24,8 +24,8 @@ using Moe.Lib;
 
 namespace ChepingServer.Controllers
 {
-    [RoutePrefix("api/users")]
-    public class UserController : ApiController
+    [RoutePrefix("api/Users")]
+    public class UserController : ApiControllerBase
     {
         private readonly SmsService smsService = new SmsService();
         private readonly UserService userService = new UserService();
@@ -43,9 +43,16 @@ namespace ChepingServer.Controllers
                 JobTitle = dto.JobTitle,
                 OutletId = dto.OutletId,
                 Password = Guid.NewGuid().ToString().Substring(0, 8),
-                UserCode = dto.UserCode,
                 UserName = dto.UserName
             };
+
+            int outletCode = user.OutletId + 1000;
+
+            string titleCode = "0" + dto.JobTitle;
+            titleCode = titleCode.Substring(titleCode.Length - 3, 3);
+
+            string userCode = "{0}{1}{2}".FormatWith(outletCode, titleCode, user.Cellphone.Substring(user.Cellphone.Length - 4, 4));
+            user.UserCode = userCode;
 
             return this.Ok((await this.userService.Create(user)).ToDto());
         }
@@ -69,9 +76,15 @@ namespace ChepingServer.Controllers
             user.Cellphone = dto.Cellphone;
             user.JobTitle = dto.JobTitle;
             user.OutletId = dto.OutletId;
-            user.Password = Guid.NewGuid().ToString().Substring(0, 8);
-            user.UserCode = dto.UserCode;
             user.UserName = dto.UserName;
+
+            int outletCode = user.OutletId + 1000;
+
+            string titleCode = "0" + dto.JobTitle;
+            titleCode = titleCode.Substring(titleCode.Length - 3, 3);
+
+            string userCode = "{0}{1}{2}".FormatWith(outletCode, titleCode, user.Cellphone.Substring(user.Cellphone.Length - 4, 4));
+            user.UserCode = userCode;
 
             return this.Ok((await this.userService.Edit(id, user)).ToDto());
         }
@@ -119,6 +132,16 @@ namespace ChepingServer.Controllers
             PaginatedList<User> users = await this.userService.GetPaginated(pageIndex, pageSize);
 
             return this.Ok(users.ToPaginated(u => u.ToDto()));
+        }
+
+        /// <summary>
+        ///     Indexes this instance.
+        /// </summary>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpGet, Route("Index"), ResponseType(typeof(List<UserDto>))]
+        public async Task<IHttpActionResult> Index()
+        {
+            return this.Ok(await this.userService.Index());
         }
 
         /// <summary>
