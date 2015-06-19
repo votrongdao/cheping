@@ -170,6 +170,7 @@
     <Compile Include="Controllers\MiscController.cs" />
     <Compile Include="Controllers\ModelController.cs" />
     <Compile Include="Controllers\OutletController.cs" />
+    <Compile Include="Controllers\TranscationRecordController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\CaseDto.cs" />
     <Compile Include="DTO\CityDto.cs" />
