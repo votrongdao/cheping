@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  12:57 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  1:15 AM
+// Last Modified On : 2015-06-19  3:08 PM
 // ***********************************************************************
 // <copyright file="CityController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -19,6 +19,7 @@ using ChepingServer.DTO;
 using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
+using Moe.AspNet.Filters;
 using Moe.Lib;
 
 namespace ChepingServer.Controllers
@@ -39,7 +40,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("Create"), ResponseType(typeof(CityDto))]
+        [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(CityDto))]
         public async Task<IHttpActionResult> Create(CityDto dto)
         {
             City city = new City
@@ -61,7 +62,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpGet, Route("Exist"), ResponseType(typeof(BoolResponse))]
+        [HttpGet, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
         public async Task<IHttpActionResult> Exist(CityDto dto)
         {
             City city = new City

@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  11:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  12:43 PM
+// Last Modified On : 2015-06-19  3:08 PM
 // ***********************************************************************
 // <copyright file="ModelController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -19,6 +19,7 @@ using ChepingServer.DTO;
 using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
+using Moe.AspNet.Filters;
 using Moe.Lib;
 
 namespace ChepingServer.Controllers
@@ -36,7 +37,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("Create"), ResponseType(typeof(ModelDto))]
+        [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Create(ModelDto dto)
         {
             Model model = new Model
@@ -57,7 +58,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Disables the specified identifier.
+        ///     Disables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
@@ -82,7 +83,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("{id}/Edit"), ResponseType(typeof(ModelDto))]
+        [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Edit([FromUri] int id, ModelDto dto)
         {
             Model model = await this.modelService.Get(id, true);
@@ -106,7 +107,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Enables the specified identifier.
+        ///     Enables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
@@ -130,7 +131,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpGet, Route("Exist"), ResponseType(typeof(BoolResponse))]
+        [HttpGet, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
         public async Task<IHttpActionResult> Exist(ModelDto dto)
         {
             Model model = new Model
@@ -145,13 +146,13 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("{id}"), ResponseType(typeof(ModelDto))]
-        public async Task<IHttpActionResult> Get([FromUri]int id, [FromUri] bool includeUnavailable = false)
+        public async Task<IHttpActionResult> Get([FromUri] int id, [FromUri] bool includeUnavailable = false)
         {
             Model model = await this.modelService.Get(id, includeUnavailable);
 
@@ -164,7 +165,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the brands.
+        ///     Gets the brands.
         /// </summary>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
@@ -175,7 +176,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the modelings.
+        ///     Gets the modelings.
         /// </summary>
         /// <param name="brand">The brand.</param>
         /// <param name="series">The series.</param>
@@ -188,7 +189,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the paginated.
+        ///     Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -203,7 +204,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the series.
+        ///     Gets the series.
         /// </summary>
         /// <param name="brand">The brand.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
@@ -215,7 +216,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Indexes this instance.
+        ///     Indexes this instance.
         /// </summary>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>

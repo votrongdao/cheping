@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  7:28 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  12:07 AM
+// Last Modified On : 2015-06-19  2:33 PM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -15,11 +15,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Security;
 using ChepingServer.DTO;
 using ChepingServer.Models;
+using ChepingServer.Requests;
 using ChepingServer.Services;
+using Moe.AspNet.Filters;
 using Moe.Lib;
 
 namespace ChepingServer.Controllers
@@ -44,7 +48,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns>IHttpActionResult.</returns>
-        [HttpPost, Route("Create"), ResponseType(typeof(UserDto))]
+        [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Create(UserDto dto)
         {
             User user = new User
@@ -95,7 +99,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <param name="dto">The dto.</param>
         /// <returns>IHttpActionResult.</returns>
-        [HttpPost, Route("/{id}/Edit"), ResponseType(typeof(UserDto))]
+        [HttpPost, Route("/{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Edit([FromUri] int id, UserDto dto)
         {
             User user = await this.userService.Get(id);
@@ -201,7 +205,27 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Resets the password.
+        ///     Logins the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpPost, Route("Login"), ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
+        public async Task<IHttpActionResult> Login(SignInRequest request)
+        {
+            User user = await this.userService.Login(request.LoginName, request.Password);
+
+            if (user == null)
+            {
+                return this.BadRequest("用户名或者密码错误，请确认后重试");
+            }
+
+            SetCookie(user.Id, user.Cellphone);
+
+            return this.Ok(user.ToDto());
+        }
+
+        /// <summary>
+        ///     Resets the password.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
@@ -223,6 +247,23 @@ namespace ChepingServer.Controllers
             await this.smsService.SendMessage(user.Cellphone, "登录密码：{0}".FormatWith(user.Password));
 
             return this.Ok(user.ToDto());
+        }
+
+        /// <summary>
+        ///     Sets the cookie.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="cellphone">The cellphone.</param>
+        private static void SetCookie(int userId, string cellphone)
+        {
+            if (HttpContext.Current.Request.IsSecureConnection)
+            {
+                DateTime expiry = DateTime.UtcNow.AddHours(8).Date.AddDays(1).AddMilliseconds(-1);
+                string userData = $"{userId},{cellphone},{expiry.ToBinary()}";
+                FormsAuthentication.SetAuthCookie(userData, true);
+                HttpCookie cookie = FormsAuthentication.GetAuthCookie(userData, true);
+                HttpContext.Current.Response.Headers.Add("x-CP", cookie.Value);
+            }
         }
     }
 }
