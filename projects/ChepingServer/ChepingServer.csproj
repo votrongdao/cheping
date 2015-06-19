@@ -130,7 +130,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3-beta1\lib\net45\System.Web.Http.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
@@ -170,12 +170,14 @@
     <Compile Include="Controllers\MiscController.cs" />
     <Compile Include="Controllers\ModelController.cs" />
     <Compile Include="Controllers\OutletController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\TranscationRecordController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\CaseDto.cs" />
     <Compile Include="DTO\CityDto.cs" />
     <Compile Include="DTO\ModelDto.cs" />
     <Compile Include="DTO\OutletDto.cs" />
+    <Compile Include="DTO\PhotoDto.cs" />
     <Compile Include="DTO\TranscationRecordDto.cs" />
     <Compile Include="DTO\UserDto.cs" />
     <Compile Include="Enum\CarType.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="Services\CityService.cs" />
     <Compile Include="Services\ModelService.cs" />
     <Compile Include="Services\OutletService.cs" />
+    <Compile Include="Services\PhotoService.cs" />
     <Compile Include="Services\SmsService.cs" />
     <Compile Include="Services\TranscationRecordService.cs" />
     <Compile Include="Services\UserService.cs" />
