@@ -92,8 +92,47 @@ namespace ChepingServer.Controllers
             return this.Ok(caseDto);
         }
 
-        public async Task<IHttpActionResult> AddYancheInfo()
+        /// <summary>
+        /// Adds the yanche information.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [Route("AddYancheInfo"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
+        public async Task<IHttpActionResult> AddYancheInfo(AddYancheInfoRequest request)
         {
+            User user = await this.userService.Get(this.CurrentUser.Id);
+            if (user == null)
+            {
+                return this.BadRequest("无法加载用户信息");
+            }
+
+            Case @case = await this.caseService.Get(request.CaseId);
+            if (@case == null)
+            {
+                return this.BadRequest("无法加载事项信息");
+            }
+
+            if (@case.ValuerId.GetValueOrDefault(-100) != user.Id)
+            {
+                return this.BadRequest("操作未授权");
+            }
+
+            if (@case.State != State.YancheZhong)
+            {
+                return this.BadRequest("操作未授权");
+            }
+
+            VehicleInspection inspection = new VehicleInspection
+            {
+                VinCode = request.VinCode,
+                EngineCode = request.EngineCode,
+                InsuranceCode = request.InsuranceCode,
+                LicenseCode = request.LicenseCode
+            };
+
+            @case = await this.caseService.AddYancheInfo(@case.Id, inspection);
+
+            return this.Ok(@case.ToDto());
         }
 
         /// <summary>

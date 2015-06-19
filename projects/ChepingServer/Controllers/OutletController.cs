@@ -147,9 +147,10 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        /// Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("{id}"), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Get(int id, [FromUri] bool includeUnavailable = false)
@@ -165,21 +166,23 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the outlets.
+        /// Gets the outlets.
         /// </summary>
         /// <param name="cityId">The city identifier.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Outlets"), ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetOutlets([FromUri] int cityId, [FromUri] bool includeUnavailable = false)
         {
-            return this.Ok(await this.outletService.GetOutlets(cityId,includeUnavailable));
+            return this.Ok(await this.outletService.GetOutlets(cityId, includeUnavailable));
         }
 
         /// <summary>
-        ///     Gets the paginated.
+        /// Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<OutletDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] bool includeUnavailable = false)
