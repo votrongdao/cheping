@@ -48,6 +48,8 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.JobTitle).HasColumnName("JobTitle");
             this.Property(t => t.Cellphone).HasColumnName("Cellphone");
             this.Property(t => t.Password).HasColumnName("Password");
+            this.Property(t => t.ValuerGroup).HasColumnName("ValuerGroup");
+            this.Property(t => t.Available).HasColumnName("Available");
         }
     }
 }

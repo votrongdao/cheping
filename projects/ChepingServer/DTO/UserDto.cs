@@ -38,7 +38,9 @@ namespace ChepingServer.DTO
                 JobTitle = user.JobTitle,
                 OutletId = user.OutletId,
                 UserCode = user.UserCode,
-                UserName = user.UserName
+                UserName = user.UserName,
+                ValuerGroup = user.ValuerGroup,
+                Available = user.Available
             };
         }
     }
@@ -48,6 +50,19 @@ namespace ChepingServer.DTO
     /// </summary>
     public class UserDto
     {
+        /// <summary>
+        ///     是否正常使用
+        /// </summary>
+        [Required, JsonProperty("available")]
+        public bool Available { get; set; }
+
+        /// <summary>
+        ///     用户Id，非必需情况，传默认值0
+        /// </summary>
+        [Required, Range(0, int.MaxValue), JsonProperty("valuerGroup")]
+        public int ValuerGroup { get; set; }
+
+
         /// <summary>
         ///     用户手机号
         /// </summary>

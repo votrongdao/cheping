@@ -24,15 +24,25 @@ using Moe.Lib;
 
 namespace ChepingServer.Controllers
 {
+    /// <summary>
+    /// Class UserController.
+    /// </summary>
     [RoutePrefix("api/Users")]
     public class UserController : ApiControllerBase
     {
+        /// <summary>
+        /// The SMS service
+        /// </summary>
         private readonly SmsService smsService = new SmsService();
+        /// <summary>
+        /// The user service
+        /// </summary>
         private readonly UserService userService = new UserService();
 
         /// <summary>
-        ///     Gets the specified identifier.
+        /// Gets the specified identifier.
         /// </summary>
+        /// <param name="dto">The dto.</param>
         /// <returns>IHttpActionResult.</returns>
         [HttpPost, Route("Create"), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Create(UserDto dto)
@@ -43,7 +53,8 @@ namespace ChepingServer.Controllers
                 JobTitle = dto.JobTitle,
                 OutletId = dto.OutletId,
                 Password = Guid.NewGuid().ToString().Substring(0, 8),
-                UserName = dto.UserName
+                UserName = dto.UserName,
+                Available = dto.Available
             };
 
             int outletCode = user.OutletId + 1000;
@@ -58,7 +69,28 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        /// Disables the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpPost, Route("{id}/Disable"), ResponseType(typeof(UserDto))]
+        public async Task<IHttpActionResult> Disable([FromUri] int id)
+        {
+            User user = await this.userService.Get(id, true);
+
+            if (user == null)
+            {
+                return this.BadRequest("无此用戶，请确认用戶id是否正确");
+            }
+
+            user = await this.userService.Disable(id);
+
+            return this.Ok(user.ToDto());
+        }
+
+
+        /// <summary>
+        /// Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="dto">The dto.</param>
@@ -90,14 +122,35 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        /// Enables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpPost, Route("{id}/Enable"), ResponseType(typeof(UserDto))]
+        public async Task<IHttpActionResult> Enable([FromUri] int id)
+        {
+            User user = await this.userService.Get(id, true);
+
+            if (user == null)
+            {
+                return this.BadRequest("无此用户，请确认用户id是否正确");
+            }
+
+            user = await this.userService.Enable(id);
+
+            return this.Ok(user.ToDto());
+        }
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>IHttpActionResult.</returns>
         [HttpGet, Route("{id}"), ResponseType(typeof(UserDto))]
-        public async Task<IHttpActionResult> Get(int id)
+        public async Task<IHttpActionResult> Get(int id, [FromUri] bool includeUnavailable = false)
         {
-            User user = await this.userService.Get(id);
+            User user = await this.userService.Get(id, includeUnavailable);
 
             if (user == null)
             {
@@ -108,51 +161,55 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        /// Gets the specified identifier.
         /// </summary>
         /// <param name="cellphone">The cellphone.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>IHttpActionResult.</returns>
         [HttpGet, Route("{cellphone}/Cellphone"), ResponseType(typeof(List<UserDto>))]
-        public async Task<IHttpActionResult> GetByCellphone(string cellphone)
+        public async Task<IHttpActionResult> GetByCellphone(string cellphone, [FromUri] bool includeUnavailable = false)
         {
-            List<User> users = await this.userService.GetByCellphone(cellphone);
+            List<User> users = await this.userService.GetByCellphone(cellphone, includeUnavailable);
 
             return this.Ok(users.Select(u => u.ToDto()));
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        /// Gets the specified identifier.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>IHttpActionResult.</returns>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<UserDto>))]
-        public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize)
+        public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] bool includeUnavailable = false)
         {
-            PaginatedList<User> users = await this.userService.GetPaginated(pageIndex, pageSize);
+            PaginatedList<User> users = await this.userService.GetPaginated(pageIndex, pageSize, includeUnavailable);
 
             return this.Ok(users.ToPaginated(u => u.ToDto()));
         }
 
         /// <summary>
-        ///     Indexes this instance.
+        /// Indexes this instance.
         /// </summary>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Index"), ResponseType(typeof(List<UserDto>))]
-        public async Task<IHttpActionResult> Index()
+        public async Task<IHttpActionResult> Index([FromUri] bool includeUnavailable = false)
         {
-            return this.Ok(await this.userService.Index());
+            return this.Ok(await this.userService.Index(includeUnavailable));
         }
 
         /// <summary>
-        ///     Resets the password.
+        /// Resets the password.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("/{id}/ResetPassword"), ResponseType(typeof(UserDto))]
-        public async Task<IHttpActionResult> ResetPassword(int id)
+        public async Task<IHttpActionResult> ResetPassword(int id, [FromUri] bool includeUnavailable = false)
         {
-            User user = await this.userService.Get(id);
+            User user = await this.userService.Get(id, includeUnavailable);
 
             if (user == null)
             {

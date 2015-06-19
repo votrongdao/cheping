@@ -30,5 +30,10 @@ namespace ChepingServer.Models
         public string UserCode { get; set; }
 
         public string UserName { get; set; }
+
+        public int ValuerGroup { get; set; }
+
+        public bool Available { get; set; }
+
     }
 }
