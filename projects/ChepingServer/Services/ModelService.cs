@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  11:10 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  12:21 AM
+// Last Modified On : 2015-06-19  1:38 PM
 // ***********************************************************************
 // <copyright file="ModelService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -35,12 +35,34 @@ namespace ChepingServer.Services
                 throw new ApplicationException("车型信息已经存在");
             }
 
+            model.Available = true;
+
             using (ChePingContext db = new ChePingContext())
             {
                 await db.SaveAsync(model);
             }
 
             return model;
+        }
+
+        /// <summary>
+        ///     Disables the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public async Task<Model> Disable(int id)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Model model = await db.Models.FirstOrDefaultAsync(m => m.Id == id);
+                if (model != null && model.Available)
+                {
+                    model.Available = false;
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                return model;
+            }
         }
 
         /// <summary>
@@ -65,6 +87,26 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
+        /// Enables the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public async Task<Model> Enable(int id)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Model model = await db.Models.FirstOrDefaultAsync(m => m.Id == id);
+                if (model != null && !model.Available)
+                {
+                    model.Available = true;
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                return model;
+            }
+        }
+
+        /// <summary>
         ///     Exists the specified model.
         /// </summary>
         /// <param name="model">The model.</param>
@@ -81,24 +123,36 @@ namespace ChepingServer.Services
         ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;Model&gt;.</returns>
-        public async Task<Model> Get(int id)
+        public async Task<Model> Get(int id, bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Models.FirstOrDefaultAsync(u => u.Id == id);
+                if (includeUnavailable)
+                {
+                    return await db.Models.FirstOrDefaultAsync(u => u.Id == id);
+                }
+
+                return await db.Models.FirstOrDefaultAsync(u => u.Id == id && u.Available);
             }
         }
 
         /// <summary>
         ///     Gets the brands.
         /// </summary>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;List&lt;System.String&gt;&gt;.</returns>
-        public async Task<List<string>> GetBrands()
+        public async Task<List<string>> GetBrands(bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Models.GroupBy(m => m.Brand).Select(m => m.Key).ToListAsync();
+                if (includeUnavailable)
+                {
+                    return await db.Models.GroupBy(m => m.Brand).Select(m => m.Key).ToListAsync();
+                }
+
+                return await db.Models.Where(m => m.Available).GroupBy(m => m.Brand).Select(m => m.Key).ToListAsync();
             }
         }
 
@@ -107,12 +161,18 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="brand">The brand.</param>
         /// <param name="series">The series.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;List&lt;System.String&gt;&gt;.</returns>
-        public async Task<List<string>> GetModelings(string brand, string series)
+        public async Task<List<string>> GetModelings(string brand, string series, bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Models.Where(m => m.Brand == brand && m.Series == series).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
+                if (includeUnavailable)
+                {
+                    return await db.Models.Where(m => m.Brand == brand && m.Series == series).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
+                }
+
+                return await db.Models.Where(m => m.Brand == brand && m.Series == series && m.Available).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
             }
         }
 
@@ -121,13 +181,25 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;PaginatedList&lt;Model&gt;&gt;.</returns>
-        public async Task<PaginatedList<Model>> GetPaginated(int pageIndex, int pageSize)
+        public async Task<PaginatedList<Model>> GetPaginated(int pageIndex, int pageSize, bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                int count = await db.Models.CountAsync();
-                List<Model> models = await db.Models.OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                int count;
+                List<Model> models;
+                if (includeUnavailable)
+                {
+                    count = await db.Models.CountAsync();
+                    models = await db.Models.OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                }
+                else
+                {
+                    count = await db.Models.CountAsync(m => m.Available);
+                    models = await db.Models.Where(m => m.Available).OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                }
+
                 return new PaginatedList<Model>(pageIndex, pageSize, count, models);
             }
         }
@@ -136,12 +208,18 @@ namespace ChepingServer.Services
         ///     Gets the series.
         /// </summary>
         /// <param name="brand">The brand.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;List&lt;System.String&gt;&gt;.</returns>
-        public async Task<List<string>> GetSeries(string brand)
+        public async Task<List<string>> GetSeries(string brand, bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Models.Where(m => m.Brand == brand).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
+                if (includeUnavailable)
+                {
+                    return await db.Models.Where(m => m.Brand == brand).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
+                }
+
+                return await db.Models.Where(m => m.Brand == brand && m.Available).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
             }
         }
 
@@ -149,11 +227,16 @@ namespace ChepingServer.Services
         ///     Indexes this instance.
         /// </summary>
         /// <returns>Task&lt;List&lt;Model&gt;&gt;.</returns>
-        public async Task<List<Model>> Index()
+        public async Task<List<Model>> Index(bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Models.ToListAsync();
+                if (includeUnavailable)
+                {
+                    return await db.Models.ToListAsync();
+                }
+
+                return await db.Models.Where(m => m.Available).ToListAsync();
             }
         }
     }

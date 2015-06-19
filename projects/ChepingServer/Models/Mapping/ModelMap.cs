@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  6:01 PM
+// Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  11:06 PM
+// Last Modified On : 2015-06-19  12:16 PM
 // ***********************************************************************
 // <copyright file="ModelMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -46,6 +46,7 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.Series).HasColumnName("Series");
             this.Property(t => t.Modeling).HasColumnName("Modeling");
             this.Property(t => t.Price).HasColumnName("Price");
+            this.Property(t => t.Available).HasColumnName("Available");
         }
     }
 }

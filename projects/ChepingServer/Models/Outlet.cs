@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  6:01 PM
+// Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  6:21 PM
+// Last Modified On : 2015-06-19  3:21 AM
 // ***********************************************************************
 // <copyright file="Outlet.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -17,7 +17,11 @@ namespace ChepingServer.Models
     {
         public string Address { get; set; }
 
+        public int Available { get; set; }
+
         public string Cellphone { get; set; }
+
+        public int CityId { get; set; }
 
         public string CityName { get; set; }
 

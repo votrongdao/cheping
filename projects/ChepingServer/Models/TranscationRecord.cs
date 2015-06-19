@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  6:01 PM
+// Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  6:21 PM
+// Last Modified On : 2015-06-19  3:21 AM
 // ***********************************************************************
 // <copyright file="TranscationRecord.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -17,20 +17,20 @@ namespace ChepingServer.Models
 {
     public class TranscationRecord
     {
-        public int BrandId { get; set; }
-
         public int Id { get; set; }
 
-        public string Location { get; set; }
+        public int InnerColor { get; set; }
+
+        public DateTime LicenseTime { get; set; }
 
         public int Mileage { get; set; }
 
         public int ModelId { get; set; }
 
+        public int OuterColor { get; set; }
+
         public int Price { get; set; }
 
-        public int SeriesId { get; set; }
-
-        public DateTime? Time { get; set; }
+        public string Source { get; set; }
     }
 }

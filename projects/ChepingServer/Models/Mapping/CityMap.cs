@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  6:01 PM
+// Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  11:57 PM
+// Last Modified On : 2015-06-19  3:18 AM
 // ***********************************************************************
 // <copyright file="CityMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -36,8 +36,6 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.ProvinceName).HasColumnName("ProvinceName");
             this.Property(t => t.CityName).HasColumnName("CityName");
-            this.Property(t => t.ProvinceId).HasColumnName("ProvinceId");
-            this.Property(t => t.CityId).HasColumnName("CityId");
         }
     }
 }

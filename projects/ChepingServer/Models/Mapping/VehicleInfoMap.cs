@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  6:01 PM
+// Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  6:15 PM
+// Last Modified On : 2015-06-19  3:20 AM
 // ***********************************************************************
 // <copyright file="VehicleInfoMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -49,12 +49,10 @@ namespace ChepingServer.Models.Mapping
             // Table & Column Mappings
             this.ToTable("VehicleInfos");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.BrandId).HasColumnName("BrandId");
             this.Property(t => t.BrandName).HasColumnName("BrandName");
-            this.Property(t => t.SeriesId).HasColumnName("SeriesId");
             this.Property(t => t.SeriesName).HasColumnName("SeriesName");
-            this.Property(t => t.ExternalColor).HasColumnName("ExternalColor");
-            this.Property(t => t.InternalColor).HasColumnName("InternalColor");
+            this.Property(t => t.OuterColor).HasColumnName("OuterColor");
+            this.Property(t => t.InnerColor).HasColumnName("InnerColor");
             this.Property(t => t.LicenseLocation).HasColumnName("LicenseLocation");
             this.Property(t => t.LicenseTime).HasColumnName("LicenseTime");
             this.Property(t => t.DisplayMileage).HasColumnName("DisplayMileage");

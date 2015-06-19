@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  11:06 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  11:36 PM
+// Last Modified On : 2015-06-19  12:32 PM
 // ***********************************************************************
 // <copyright file="ModelDto.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -27,7 +27,8 @@ namespace ChepingServer.DTO
                 Id = model.Id,
                 Modeling = model.Modeling,
                 Price = model.Price,
-                Series = model.Series
+                Series = model.Series,
+                Available = model.Available
             };
         }
     }
@@ -38,6 +39,12 @@ namespace ChepingServer.DTO
     public class ModelDto
     {
         /// <summary>
+        ///     是否正常使用
+        /// </summary>
+        [Required, JsonProperty("available")]
+        public bool Available { get; set; }
+
+        /// <summary>
         ///     品牌
         /// </summary>
         [Required, StringLength(200, MinimumLength = 1), JsonProperty("brand")]
@@ -46,7 +53,7 @@ namespace ChepingServer.DTO
         /// <summary>
         ///     车型Id
         /// </summary>
-        [Required, StringLength(200, MinimumLength = 1), JsonProperty("id")]
+        [Required, Range(0, int.MaxValue), JsonProperty("id")]
         public int Id { get; set; }
 
         /// <summary>

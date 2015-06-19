@@ -158,12 +158,18 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
+    <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\MiscController.cs" />
     <Compile Include="Controllers\ModelController.cs" />
+    <Compile Include="Controllers\OutletController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DTO\CityDto.cs" />
     <Compile Include="DTO\ModelDto.cs" />
+    <Compile Include="DTO\OutletDto.cs" />
+    <Compile Include="DTO\TranscationRecordDto.cs" />
     <Compile Include="DTO\UserDto.cs" />
     <Compile Include="Enum\JobTitle.cs" />
+    <Compile Include="Enum\State.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -188,8 +194,11 @@
     <Compile Include="Models\VehicleInspection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Responses\BoolResponse.cs" />
+    <Compile Include="Services\CityService.cs" />
     <Compile Include="Services\ModelService.cs" />
+    <Compile Include="Services\OutletService.cs" />
     <Compile Include="Services\SmsService.cs" />
+    <Compile Include="Services\TranscationRecordService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,24 +1,24 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:15 AM
+// Created          : 2015-06-19  12:26 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:20 AM
+// Last Modified On : 2015-06-19  12:28 PM
 // ***********************************************************************
-// <copyright file="City.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
+// <copyright file="State.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
 
-namespace ChepingServer.Models
+namespace ChepingServer.Enum
 {
-    public class City
+    public enum State
     {
-        public string CityName { get; set; }
-
-        public int Id { get; set; }
-
-        public string ProvinceName { get; set; }
+        Valuing = 10,
+        Checking = 20,
+        CheckFailed = 30,
+        Inspecting = 40,
+        InspectFailed = 50
     }
 }

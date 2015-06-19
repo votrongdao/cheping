@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  6:02 PM
+// Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  6:15 PM
+// Last Modified On : 2015-06-19  3:20 AM
 // ***********************************************************************
 // <copyright file="VehicleInspectionMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -64,6 +64,10 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.BondsNote).HasColumnName("BondsNote");
             this.Property(t => t.ViolationState).HasColumnName("ViolationState");
             this.Property(t => t.ViolationNote).HasColumnName("ViolationNote");
+            this.Property(t => t.PreferentialPrice).HasColumnName("PreferentialPrice");
+            this.Property(t => t.MaxMileage).HasColumnName("MaxMileage");
+            this.Property(t => t.MinMileage).HasColumnName("MinMileage");
+            this.Property(t => t.SaleGrade).HasColumnName("SaleGrade");
         }
     }
 }
