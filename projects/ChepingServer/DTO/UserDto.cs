@@ -57,13 +57,6 @@ namespace ChepingServer.DTO
         public bool Available { get; set; }
 
         /// <summary>
-        ///     用户Id，非必需情况，传默认值0
-        /// </summary>
-        [Required, Range(0, int.MaxValue), JsonProperty("valuerGroup")]
-        public int ValuerGroup { get; set; }
-
-
-        /// <summary>
         ///     用户手机号
         /// </summary>
         [Required, CellphoneFormat, JsonProperty("cellphone")]
@@ -98,5 +91,11 @@ namespace ChepingServer.DTO
         /// </summary>
         [Required, StringLength(100, MinimumLength = 2), JsonProperty("userName")]
         public string UserName { get; set; }
+
+        /// <summary>
+        ///     用户Id，非必需情况，传默认值0
+        /// </summary>
+        [Required, AvailableValues(CarType.Jiao, CarType.Pao, CarType.Fang, CarType.Yueye, CarType.ShangWu), JsonProperty("valuerGroup")]
+        public CarType ValuerGroup { get; set; }
     }
 }

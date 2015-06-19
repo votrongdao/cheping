@@ -17,6 +17,8 @@ namespace ChepingServer.Models
 {
     public class User
     {
+        public bool Available { get; set; }
+
         public string Cellphone { get; set; }
 
         public int Id { get; set; }
@@ -31,9 +33,6 @@ namespace ChepingServer.Models
 
         public string UserName { get; set; }
 
-        public int ValuerGroup { get; set; }
-
-        public bool Available { get; set; }
-
+        public CarType ValuerGroup { get; set; }
     }
 }

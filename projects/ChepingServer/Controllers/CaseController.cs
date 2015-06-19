@@ -4,7 +4,7 @@
 // Created          : 2015-06-12  11:21 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:08 PM
+// Last Modified On : 2015-06-19  5:41 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -18,6 +18,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using ChepingServer.DTO;
+using ChepingServer.Enum;
 using ChepingServer.Filters;
 using ChepingServer.Models;
 using ChepingServer.Requests;
@@ -32,15 +34,15 @@ namespace ChepingServer.Controllers
     [RoutePrefix("api/Case")]
     public class CaseController : ApiControllerBase
     {
+        private readonly CaseService caseService = new CaseService();
         private readonly UserService userService = new UserService();
 
         /// <summary>
-        ///     添加事项信息
+        /// Adds the case.
         /// </summary>
-        /// <response code="200"></response>
-        /// <response code="400"></response>
-        /// <response code="500"></response>
-        [Route("AddCase"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(Case))]
+        /// <param name="request">The request.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [Route("AddCase"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> AddCase(AddCaseRequest request)
         {
             User user = await this.userService.Get(this.CurrentUser.Id);
@@ -49,62 +51,49 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("无法加载用户信息");
             }
 
-            using (ChePingContext db = new ChePingContext())
+            Case @case = new Case
             {
-                user = await db.Users.FirstOrDefaultAsync(u => u.Id == info.CurrentAttn);
-            }
+                Abandon = null,
+                AbandonReason = "",
+                CaseType = request.CaseType,
+                DirectorId = null,
+                ManagerId = null,
+                OutletId = user.OutletId,
+                PurchasePrice = 0,
+                State = State.PingguZhong,
+                PurchaserId = user.Id,
+                QueryingId = null,
+                SerialId = user.UserCode + DateTime.UtcNow.AddHours(8).ToString("yyyyMMddHHmmss"),
+                ValuerId = null,
+                VehicleInfoId = 0,
+                VehicleInspecId = 0
+            };
 
-            if (user == null)
+            VehicleInfo info = new VehicleInfo
             {
-                return this.BadRequest("无法指派给编号{0}的操作人".FormatWith(info.CurrentAttn));
-            }
+                BrandName = request.BrandName,
+                CooperationMethod = request.CooperationMethod,
+                DisplayMileage = request.DisplayMileage,
+                ExpectedPrice = request.ExpectedPrice,
+                FactoryTime = request.FactoryTime,
+                InnerColor = request.InnerColor,
+                LicenseLocation = request.LicenseLocation,
+                LicenseTime = request.LicenseTime,
+                ModelId = request.ModelId,
+                ModelName = request.ModelName,
+                ModifiedContent = request.ModifiedContent,
+                OuterColor = request.OuterColor,
+                SeriesName = request.SeriesName,
+                VehicleLocation = request.VehicleLocation
+            };
 
-            using (ChePingContext db = new ChePingContext())
-            {
-                VehicleInfo vehicleInfo = new VehicleInfo();
-                VehicleInspec vehicleInspec = new VehicleInspec();
+            CaseDto caseDto = await this.caseService.AddCaseAsync(@case, info);
 
-                db.VehicleInfos.Add(vehicleInfo);
-                db.VehicleInspecs.Add(vehicleInspec);
-
-                await db.SaveChangesAsync();
-
-                info.SerialId = user.UserCode + DateTime.Now.ToString("yyyyMMdd");
-                info.VehicleInfoId = vehicleInfo.Id;
-                info.VehicleInspecId = vehicleInspec.Id;
-
-                db.Cases.Add(info);
-                await db.SaveChangesAsync();
-            }
-
-            return this.Ok(info);
+            return this.Ok(caseDto);
         }
 
-        /// <summary>
-        ///     编辑事项信息
-        /// </summary>
-        /// <param name="info">
-        ///     包含事项信息的请求内容
-        /// </param>
-        /// <response code="200"></response>
-        /// <response code="400"></response>
-        /// <response code="500"></response>
-        [Route("EditCase"), ResponseType(typeof(Case))]
-        public async Task<IHttpActionResult> EditCase(Case info)
+        public async Task<IHttpActionResult> AddYancheInfo()
         {
-            Case @case;
-            using (ChePingContext db = new ChePingContext())
-            {
-                @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == info.Id);
-
-                @case.CurrentAttn = info.CurrentAttn;
-                @case.PurchasePrice = info.PurchasePrice;
-                @case.State = info.State;
-
-                await db.SaveChangesAsync();
-            }
-
-            return this.Ok(@case);
         }
 
         /// <summary>

@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:20 AM
+// Last Modified On : 2015-06-19  3:40 PM
 // ***********************************************************************
 // <copyright file="VehicleInfoMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -60,7 +60,7 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.FactoryTime).HasColumnName("FactoryTime");
             this.Property(t => t.CooperationMethod).HasColumnName("CooperationMethod");
             this.Property(t => t.ModifiedContent).HasColumnName("ModifiedContent");
-            this.Property(t => t.PsychologicalPrice).HasColumnName("PsychologicalPrice");
+            this.Property(t => t.ExpectedPrice).HasColumnName("ExpectedPrice");
             this.Property(t => t.ModelId).HasColumnName("ModelId");
             this.Property(t => t.ModelName).HasColumnName("ModelName");
         }

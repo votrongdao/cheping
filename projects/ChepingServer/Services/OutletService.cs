@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  1:40 AM
+// Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  2:29 AM
+// Last Modified On : 2015-06-19  3:40 PM
 // ***********************************************************************
 // <copyright file="OutletService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -49,7 +49,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Disables the specified identifier.
+        ///     Disables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;Outlet&gt;.</returns>
@@ -84,7 +84,6 @@ namespace ChepingServer.Services
             return outlet;
         }
 
-
         public async Task<Outlet> Enable(int id)
         {
             using (ChePingContext db = new ChePingContext())
@@ -118,8 +117,9 @@ namespace ChepingServer.Services
         ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;Outlet&gt;.</returns>
-        public async Task<Outlet> Get(int id,bool includeUnavailable = false)
+        public async Task<Outlet> Get(int id, bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
@@ -127,6 +127,7 @@ namespace ChepingServer.Services
                 {
                     return await db.Outlets.FirstOrDefaultAsync(o => o.Id == id);
                 }
+
                 return await db.Outlets.FirstOrDefaultAsync(o => o.Id == id && o.Available);
             }
         }
@@ -135,6 +136,7 @@ namespace ChepingServer.Services
         ///     Gets the outlet names.
         /// </summary>
         /// <param name="cityId">The city identifier.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;List&lt;System.String&gt;&gt;.</returns>
         public async Task<List<string>> GetOutletNames(int cityId, bool includeUnavailable = false)
         {
@@ -144,6 +146,7 @@ namespace ChepingServer.Services
                 {
                     return await db.Outlets.Where(o => o.CityId == cityId).Select(o => o.OutletName).ToListAsync();
                 }
+
                 return await db.Outlets.Where(o => o.CityId == cityId && o.Available).Select(o => o.OutletName).ToListAsync();
             }
         }
@@ -152,6 +155,7 @@ namespace ChepingServer.Services
         ///     Gets the outlets.
         /// </summary>
         /// <param name="cityId">The city identifier.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;List&lt;Outlet&gt;&gt;.</returns>
         public async Task<List<Outlet>> GetOutlets(int cityId, bool includeUnavailable = false)
         {
@@ -161,15 +165,17 @@ namespace ChepingServer.Services
                 {
                     return await db.Outlets.Where(o => o.CityId == cityId).ToListAsync();
                 }
+
                 return await db.Outlets.Where(o => o.CityId == cityId && o.Available).ToListAsync();
             }
         }
 
         /// <summary>
-        ///     Gets the paginated.
+        /// Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;PaginatedList&lt;Outlet&gt;&gt;.</returns>
         public async Task<PaginatedList<Outlet>> GetPaginated(int pageIndex, int pageSize, bool includeUnavailable = false)
         {
@@ -180,14 +186,14 @@ namespace ChepingServer.Services
                 if (includeUnavailable)
                 {
                     count = await db.Outlets.CountAsync();
-                    outlets = await db.Outlets.OrderBy(o => o.Id).Skip(pageSize*pageIndex).Take(pageSize).ToListAsync();
+                    outlets = await db.Outlets.OrderBy(o => o.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                 }
                 else
                 {
-                    count = await db.Outlets.CountAsync(o=>o.Available);
+                    count = await db.Outlets.CountAsync(o => o.Available);
                     outlets = await db.Outlets.Where(o => o.Available).OrderBy(o => o.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                 }
-         
+
                 return new PaginatedList<Outlet>(pageIndex, pageSize, count, outlets);
             }
         }
@@ -204,7 +210,7 @@ namespace ChepingServer.Services
                 {
                     return await db.Outlets.ToListAsync();
                 }
-                return await db.Outlets.Where(o=>o.Available).ToListAsync();
+                return await db.Outlets.Where(o => o.Available).ToListAsync();
             }
         }
     }
