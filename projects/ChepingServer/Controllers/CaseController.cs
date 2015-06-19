@@ -165,6 +165,44 @@ namespace ChepingServer.Controllers
             return this.Ok(@case.ToDto());
         }
 
+
+        [Route("AddValueInfo"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
+        public async Task<IHttpActionResult> AddValueInfo(AddValueInfoRequest request)
+        {
+            Case @case = await this.caseService.GetAsync(request.CaseId);
+            if (@case == null)
+            {
+                return this.BadRequest("无法加载事项信息");
+            }
+
+            if (@case.ValuerId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+            {
+                return this.BadRequest("操作未授权");
+            }
+
+            if (@case.State != State.Pinggu)
+            {
+                return this.BadRequest("事项状态错误");
+            }
+
+            VehicleInspection inspection = new VehicleInspection
+            {
+                PreferentialPrice = request.PreferentialPrice,
+                MaxMileage = request.MaxMileage,
+                MinMileage = request.MinMileage,
+                SaleGrade = request.SaleGrade,
+                WebAveragePrice = request.WebAveragePrice,
+                WebPrice = request.WebPrice,
+                FloorPrice = request.FloorPrice
+            };
+
+            @case = await this.caseService.AddValueInfoAsync(@case.Id, inspection);
+
+            return this.Ok(@case.ToDto());
+        }
+
+
+
         /// <summary>
         ///     Adds the yanche information.
         /// </summary>
@@ -232,49 +270,50 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     查询事项信息
+        /// 根据订单Id获取订单
         /// </summary>
-        /// <param name="id">
-        ///     二手车编号
-        /// </param>
-        /// <response code="200"></response>
-        /// <response code="400"></response>
-        /// <response code="500"></response>
-        [Route("Get"), ResponseType(typeof(Case))]
-        public async Task<IHttpActionResult> Get(int id)
+        /// <param name="id">The identifier.</param>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpGet, Route("{id}"), ResponseType(typeof(CaseDto))]
+        public async Task<IHttpActionResult> Get([FromUri] int id)
         {
-            Case info;
-            using (ChePingContext db = new ChePingContext())
+            Case @case = await this.caseService.GetAsync(id);
+
+            if (@case == null)
             {
-                info = await db.Cases.FirstOrDefaultAsync(i => i.Id == id);
-                if (info == null)
-                {
-                    return this.BadRequest("无该车辆信息");
-                }
+                return this.BadRequest("无此订单，请确认订单id是否正确");
             }
 
-            return this.Ok(info);
+            return this.Ok(@case.ToDto());
         }
+
 
         /// <summary>
-        ///     查询二手车信息，分页查询
+        /// Gets the paginated.
         /// </summary>
-        /// <param name="pageIndex">分页编号，从0开始</param>
-        /// <param name="pageSize">分页大小</param>
-        /// <response code="200"></response>
-        /// <response code="400"></response>
-        /// <response code="500"></response>
-        [Route("Index"), ResponseType(typeof(List<Case>))]
-        public async Task<IHttpActionResult> Index(int pageIndex, int pageSize)
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<CaseDto>))]
+        public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize)
         {
-            List<Case> infos;
-            using (ChePingContext db = new ChePingContext())
-            {
-                infos = await db.Cases.OrderBy(i => i.Id).Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
-            }
+            PaginatedList<Case> cases = await this.caseService.GetPaginated(pageIndex, pageSize);
 
-            return this.Ok(infos);
+            return this.Ok(cases.ToPaginated(m => m.ToDto()));
         }
+
+
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpGet, Route("Index"), ResponseType(typeof(List<CaseDto>))]
+        public async Task<IHttpActionResult> Index()
+        {
+            return this.Ok(await this.caseService.Index());
+        }
+
 
         /// <summary>
         /// Purchases the specified case identifier.
@@ -305,6 +344,12 @@ namespace ChepingServer.Controllers
             return this.Ok(@case.ToDto());
         }
 
+        /// <summary>
+        /// Rejects the specified case identifier.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="message">The message.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [Route("Reject"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> Reject([FromUri]int caseId, [FromUri]string message)
         {
@@ -328,6 +373,45 @@ namespace ChepingServer.Controllers
             }
             else if (@case.State == State.Yanche)
             {
+                if (@case.PurchaserId != this.CurrentUser.Id)
+                {
+                    return this.BadRequest("操作未授权");
+                }
+            }
+            else if (@case.State == State.Baojia)
+            {
+                if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+                {
+                    return this.BadRequest("操作未授权");
+                }
+            }
+            else if (@case.State == State.Qiatan)
+            {
+                if (@case.PurchaserId != this.CurrentUser.Id)
+                {
+                    return this.BadRequest("操作未授权");
+                }
+            }
+            else if (@case.State == State.ShenqingDakuan)
+            {
+                if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+                {
+                    return this.BadRequest("操作未授权");
+                }
+            }
+            else if (@case.State == State.DakuanShenhe)
+            {
+                if (@case.ManagerId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+                {
+                    return this.BadRequest("操作未授权");
+                }
+            }
+            else if (@case.State == State.Caigou)
+            {
+                if (@case.PurchaserId != this.CurrentUser.Id)
+                {
+                    return this.BadRequest("操作未授权");
+                }
             }
             else
             {
@@ -338,5 +422,93 @@ namespace ChepingServer.Controllers
 
             return this.Ok(@case.ToDto());
         }
+
+
+
+
+        /// <summary>
+        /// Rejections the confirm.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [Route("RejectionConfirm"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        public async Task<IHttpActionResult> RejectionConfirm([FromUri]int caseId)
+        {
+            Case @case = await this.caseService.GetAsync(caseId);
+            if (@case == null)
+            {
+                return this.BadRequest("无法加载事项信息");
+            }
+
+            if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+            {
+                return this.BadRequest("操作未授权");
+            }
+
+            if (@case.Abandon != false)
+            {
+                return this.BadRequest("事项状态错误");
+            }
+
+            @case = await this.caseService.RejectionConfirmAsync(caseId);
+
+            return this.Ok(@case.ToDto());
+        }
+
+
+
+        /// <summary>
+        /// Reviews the case.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="purchasePrice">The purchase price.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [Route("ReviewCase"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        public async Task<IHttpActionResult> ReviewCase([FromUri]int caseId, [FromUri]int purchasePrice)
+        {
+            Case @case = await this.caseService.GetAsync(caseId);
+            if (@case == null)
+            {
+                return this.BadRequest("无法加载事项信息");
+            }
+
+            if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+            {
+                return this.BadRequest("操作未授权");
+            }
+
+            if (@case.State != State.Shenhe || @case.State != State.Baojia)
+            {
+                return this.BadRequest("事项状态错误");
+            }
+
+            @case = await this.caseService.ReviewCaseAsync(caseId, purchasePrice);
+
+            return this.Ok(@case.ToDto());
+        }
+
+        /// <summary>
+        /// Vehicles the information.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpGet, Route("VehicleInfo"), ResponseType(typeof(VehicleInfo))]
+        public async Task<IHttpActionResult> VehicleInfo(int caseId)
+        {
+            return this.Ok(await this.caseService.GetVehicleInfo(caseId));
+        }
+
+
+        /// <summary>
+        /// Vehicles the inspection.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpGet, Route("VehicleInspection"), ResponseType(typeof(VehicleInspection))]
+        public async Task<IHttpActionResult> VehicleInspection(int caseId)
+        {
+            return this.Ok(await this.caseService.GetVehicleInspection(caseId));
+        }
+
     }
 }

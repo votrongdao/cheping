@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using ChepingServer.DTO;
 using ChepingServer.Enum;
 using ChepingServer.Models;
+using Moe.Lib;
 
 namespace ChepingServer.Services
 {
@@ -244,6 +245,36 @@ namespace ChepingServer.Services
             using (ChePingContext db = new ChePingContext())
             {
                 return await db.Cases.FirstOrDefaultAsync(c => c.Id == id);
+            }
+        }
+
+
+        /// <summary>
+        /// Gets the paginated.
+        /// </summary>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns>Task&lt;PaginatedList&lt;Case&gt;&gt;.</returns>
+        public async Task<PaginatedList<Case>> GetPaginated(int pageIndex, int pageSize)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                    int count = await db.Cases.CountAsync();
+                    List<Case> cases = await db.Cases.OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+
+                    return new PaginatedList<Case>(pageIndex, pageSize, count, cases);
+            }
+        }
+
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns>Task&lt;List&lt;Case&gt;&gt;.</returns>
+        public async Task<List<Case>> Index()
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                    return await db.Cases.ToListAsync();
             }
         }
 
@@ -583,5 +614,38 @@ namespace ChepingServer.Services
 
             return newCase.ToDto();
         }
+
+
+         public async Task<VehicleInfo> GetVehicleInfo(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                return await db.VehicleInfos.FirstOrDefaultAsync(v => v.Id == @case.VehicleInfoId);
+            }
+        }
+
+         public async Task<VehicleInspection> GetVehicleInspection(int caseId)
+         {
+             using (ChePingContext db = new ChePingContext())
+             {
+                 Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                 if (@case == null)
+                 {
+                     throw new ApplicationException("未能加载事项信息");
+                 }
+
+                 return await db.VehicleInspections.FirstOrDefaultAsync(v => v.Id == @case.VehicleInspecId);
+             }
+         }
+
+
+
+
     }
 }
