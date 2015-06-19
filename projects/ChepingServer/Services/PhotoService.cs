@@ -103,7 +103,7 @@ namespace ChepingServer.Services
                  int   count = await db.Photos.CountAsync();
                  List<Photo> photos = await db.Photos.OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
 
-                return new PaginatedList<Photo>(pageIndex, pageSize, count, ph阿otos);
+                return new PaginatedList<Photo>(pageIndex, pageSize, count, photos);
             }
         }
 
