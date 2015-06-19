@@ -60,8 +60,8 @@ namespace ChepingServer.Controllers
         /// <param name="maxMileage">The maximum mileage.</param>
         /// <param name="licenseTime">The license time.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpGet, Route("TranscationRecords"), ResponseType(typeof(List<string>))]
-        public async Task<IHttpActionResult> GetBrands([FromUri] int modelId, [FromUri] int minMileage, [FromUri] int maxMileage, [FromUri] DateTime licenseTime)
+        [HttpGet, Route("TranscationRecords"), ResponseType(typeof(List<TranscationRecord>))]
+        public async Task<IHttpActionResult> GetTranscationRecords([FromUri] int modelId, [FromUri] int minMileage, [FromUri] int maxMileage, [FromUri] DateTime licenseTime)
         {
             return this.Ok(await this.transcationRecordService.GetTranscationRecords(modelId, minMileage, maxMileage, licenseTime));
         }
