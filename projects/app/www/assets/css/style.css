@@ -1,0 +1,60 @@
+@charset "utf-8";
+.bar.bar-header {
+  position: relative;
+  background-color: rgb(91, 3, 4);
+  color: white;
+}
+
+.button .button.icon {
+  font-size: 8px;
+}
+
+.bar.bar-stable .title {
+  color: white;
+  font-size: 20px;
+}
+
+.item .item-divider {
+  font-size: 8px;
+  position: relative;
+}
+
+.color-demo {
+  float: left;
+  width: 20px;
+  height: 20px;
+  border: 1px solid;
+  border-radius: 4px;
+}
+
+.btn-middle {
+  position: absolute;
+  width: 100%;
+  left: 50%;
+}
+
+.button-negative {
+  border-color: rgb(132, 214, 0);
+  background-color: rgb(132, 214, 0);
+  color: white;
+}
+
+.button-default {
+  border-color: rgb(91, 3, 4);
+  background-color: rgb(91, 3, 4);
+  color: white;
+}
+
+.button-big {
+  width: 100px;
+  height: 30px;
+}
+
+a > .ion-chevron-left {
+  font-size: 5px;
+}
+
+.item-no-border .item{
+  border-style: none;
+}
+

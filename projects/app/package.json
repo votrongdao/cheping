@@ -1,7 +1,7 @@
 {
-  "name": "splashscreenapp",
+  "name": "Cheping",
   "version": "1.0.0",
-  "description": "splashscreenApp: An Ionic project",
+  "description": "Cheping",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
