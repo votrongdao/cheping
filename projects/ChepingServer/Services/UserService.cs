@@ -106,5 +106,19 @@ namespace ChepingServer.Services
                 return await db.Users.ToListAsync();
             }
         }
+
+        /// <summary>
+        /// Logins the specified login name.
+        /// </summary>
+        /// <param name="loginName">Name of the login.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>Task&lt;User&gt;.</returns>
+        public async Task<User> Login(string loginName, string password)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                return await db.Users.FirstOrDefaultAsync(u => u.Cellphone == loginName && u.Password == password);
+            }
+        }
     }
 }

@@ -75,7 +75,7 @@ namespace ChepingServer.Controllers
             {
                 Id = Convert.ToInt32(tokens[0]),
                 Cellphone = tokens[1],
-                LoginTime = expiryTime
+                ExpireTime = expiryTime
             };
         }
     }
@@ -92,16 +92,16 @@ namespace ChepingServer.Controllers
         public string Cellphone { get; set; }
 
         /// <summary>
-        ///     Gets or sets the identifier.
-        /// </summary>
-        /// <value>The identifier.</value>
-        public int Id { get; set; }
-
-        /// <summary>
         ///     Gets or sets the expiry time.
         /// </summary>
         /// <value>The expiry time.</value>
         [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-        public DateTime LoginTime { get; set; }
+        public DateTime ExpireTime { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the identifier.
+        /// </summary>
+        /// <value>The identifier.</value>
+        public int Id { get; set; }
     }
 }

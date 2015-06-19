@@ -19,6 +19,7 @@ using ChepingServer.DTO;
 using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
+using Moe.AspNet.Filters;
 using Moe.Lib;
 
 namespace ChepingServer.Controllers
@@ -44,7 +45,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("Create"), ResponseType(typeof(OutletDto))]
+        [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Create(OutletDto dto)
         {
             Outlet outlet = new Outlet
@@ -75,7 +76,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("{id}/Edit"), ResponseType(typeof(OutletDto))]
+        [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Edit([FromUri] int id, OutletDto dto)
         {
             Outlet outlet = await this.outletService.Get(id);
@@ -97,7 +98,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpGet, Route("Exist"), ResponseType(typeof(BoolResponse))]
+        [HttpPost, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
         public async Task<IHttpActionResult> Exist(OutletDto dto)
         {
             Outlet outlet = new Outlet

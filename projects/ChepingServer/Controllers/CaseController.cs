@@ -4,7 +4,7 @@
 // Created          : 2015-06-12  11:21 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-12  12:25 PM
+// Last Modified On : 2015-06-19  3:08 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -18,30 +18,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using ChepingServer.Filters;
 using ChepingServer.Models;
-using Moe.Lib;
+using ChepingServer.Requests;
+using ChepingServer.Services;
+using Moe.AspNet.Filters;
 
 namespace ChepingServer.Controllers
 {
     /// <summary>
     ///     CaseController.
     /// </summary>
-    [RoutePrefix("Case")]
-    public class CaseController : ApiController
+    [RoutePrefix("api/Case")]
+    public class CaseController : ApiControllerBase
     {
+        private readonly UserService userService = new UserService();
+
         /// <summary>
         ///     添加事项信息
         /// </summary>
-        /// <param name="info">
-        ///     包含事项信息的请求内容
-        /// </param>
         /// <response code="200"></response>
         /// <response code="400"></response>
         /// <response code="500"></response>
-        [Route("AddCase"), ResponseType(typeof(Case))]
-        public async Task<IHttpActionResult> AddCase(Case info)
+        [Route("AddCase"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(Case))]
+        public async Task<IHttpActionResult> AddCase(AddCaseRequest request)
         {
-            User user;
+            User user = await this.userService.Get(this.CurrentUser.Id);
+            if (user == null)
+            {
+                return this.BadRequest("无法加载用户信息");
+            }
 
             using (ChePingContext db = new ChePingContext())
             {
