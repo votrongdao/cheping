@@ -11,6 +11,9 @@
 // </copyright>
 // ***********************************************************************
 
+using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+
 namespace ChepingServer.Requests
 {
     public class AddYancheInfoRequest
@@ -18,26 +21,31 @@ namespace ChepingServer.Requests
         /// <summary>
         ///     对应的事项Id
         /// </summary>
+        [Required, Range(0, int.MaxValue), JsonProperty("caseId")]
         public int CaseId { get; set; }
 
         /// <summary>
         ///     发动机编号
         /// </summary>
+        [Required, StringLength(200, MinimumLength = 1), JsonProperty("engineCode")]
         public string EngineCode { get; set; }
 
         /// <summary>
         ///     保单号
         /// </summary>
+        [Required, StringLength(200, MinimumLength = 1), JsonProperty("insuranceCode")]
         public string InsuranceCode { get; set; }
 
         /// <summary>
         ///     车牌号
         /// </summary>
+        [Required, StringLength(200, MinimumLength = 1), JsonProperty("licenseCode")]
         public string LicenseCode { get; set; }
 
         /// <summary>
         ///     车架编号
         /// </summary>
+        [Required, StringLength(200, MinimumLength = 1), JsonProperty("vinCode")]
         public string VinCode { get; set; }
     }
 }
