@@ -38,6 +38,7 @@ namespace ChepingServer.Services
             {
                 throw new ApplicationException("网点信息已经存在");
             }
+            outlet.Available = true;
 
             using (ChePingContext db = new ChePingContext())
             {
@@ -45,6 +46,26 @@ namespace ChepingServer.Services
             }
 
             return outlet;
+        }
+
+        /// <summary>
+        /// Disables the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;Outlet&gt;.</returns>
+        public async Task<Outlet> Disable(int id)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Outlet outlet = await db.Outlets.FirstOrDefaultAsync(o => o.Id == id);
+                if (outlet != null && outlet.Available)
+                {
+                    outlet.Available = false;
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                return outlet;
+            }
         }
 
         /// <summary>
@@ -61,6 +82,22 @@ namespace ChepingServer.Services
             }
 
             return outlet;
+        }
+
+
+        public async Task<Outlet> Enable(int id)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Outlet outlet = await db.Outlets.FirstOrDefaultAsync(o => o.Id == id);
+                if (outlet != null && !outlet.Available)
+                {
+                    outlet.Available = true;
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                return outlet;
+            }
         }
 
         /// <summary>
@@ -82,11 +119,15 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;Outlet&gt;.</returns>
-        public async Task<Outlet> Get(int id)
+        public async Task<Outlet> Get(int id,bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Outlets.FirstOrDefaultAsync(o => o.Id == id);
+                if (includeUnavailable)
+                {
+                    return await db.Outlets.FirstOrDefaultAsync(o => o.Id == id);
+                }
+                return await db.Outlets.FirstOrDefaultAsync(o => o.Id == id && o.Available);
             }
         }
 
@@ -95,11 +136,15 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="cityId">The city identifier.</param>
         /// <returns>Task&lt;List&lt;System.String&gt;&gt;.</returns>
-        public async Task<List<string>> GetOutletNames(int cityId)
+        public async Task<List<string>> GetOutletNames(int cityId, bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Outlets.Where(o => o.CityId == cityId).Select(o => o.OutletName).ToListAsync();
+                if (includeUnavailable)
+                {
+                    return await db.Outlets.Where(o => o.CityId == cityId).Select(o => o.OutletName).ToListAsync();
+                }
+                return await db.Outlets.Where(o => o.CityId == cityId && o.Available).Select(o => o.OutletName).ToListAsync();
             }
         }
 
@@ -108,11 +153,15 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="cityId">The city identifier.</param>
         /// <returns>Task&lt;List&lt;Outlet&gt;&gt;.</returns>
-        public async Task<List<Outlet>> GetOutlets(int cityId)
+        public async Task<List<Outlet>> GetOutlets(int cityId, bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Outlets.Where(o => o.CityId == cityId).ToListAsync();
+                if (includeUnavailable)
+                {
+                    return await db.Outlets.Where(o => o.CityId == cityId).ToListAsync();
+                }
+                return await db.Outlets.Where(o => o.CityId == cityId && o.Available).ToListAsync();
             }
         }
 
@@ -122,12 +171,23 @@ namespace ChepingServer.Services
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns>Task&lt;PaginatedList&lt;Outlet&gt;&gt;.</returns>
-        public async Task<PaginatedList<Outlet>> GetPaginated(int pageIndex, int pageSize)
+        public async Task<PaginatedList<Outlet>> GetPaginated(int pageIndex, int pageSize, bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                int count = await db.Outlets.CountAsync();
-                List<Outlet> outlets = await db.Outlets.OrderBy(o => o.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                int count;
+                List<Outlet> outlets;
+                if (includeUnavailable)
+                {
+                    count = await db.Outlets.CountAsync();
+                    outlets = await db.Outlets.OrderBy(o => o.Id).Skip(pageSize*pageIndex).Take(pageSize).ToListAsync();
+                }
+                else
+                {
+                    count = await db.Outlets.CountAsync(o=>o.Available);
+                    outlets = await db.Outlets.Where(o => o.Available).OrderBy(o => o.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                }
+         
                 return new PaginatedList<Outlet>(pageIndex, pageSize, count, outlets);
             }
         }
@@ -136,11 +196,15 @@ namespace ChepingServer.Services
         ///     Indexes this instance.
         /// </summary>
         /// <returns>Task&lt;List&lt;Outlet&gt;&gt;.</returns>
-        public async Task<List<Outlet>> Index()
+        public async Task<List<Outlet>> Index(bool includeUnavailable = false)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Outlets.ToListAsync();
+                if (includeUnavailable)
+                {
+                    return await db.Outlets.ToListAsync();
+                }
+                return await db.Outlets.Where(o=>o.Available).ToListAsync();
             }
         }
     }

@@ -53,7 +53,8 @@ namespace ChepingServer.Controllers
                 Cellphone = dto.Cellphone,
                 CityId = dto.CityId,
                 Contact = dto.Contact,
-                OutletName = dto.OutletName
+                OutletName = dto.OutletName,
+                Available = true
             };
 
             if (await this.outletService.Exist(outlet))
@@ -67,6 +68,26 @@ namespace ChepingServer.Controllers
             outlet.ProvinceName = city.ProvinceName;
 
             return this.Ok((await this.outletService.Create(outlet)).ToDto());
+        }
+
+        /// <summary>
+        /// Disables the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpPost, Route("{id}/Disable"), ResponseType(typeof(OutletDto))]
+        public async Task<IHttpActionResult> Disable([FromUri] int id)
+        {
+            Outlet outlet = await this.outletService.Get(id, true);
+
+            if (outlet == null)
+            {
+                return this.BadRequest("无此网点，请确认网点id是否正确");
+            }
+
+            outlet = await this.outletService.Disable(id);
+
+            return this.Ok(outlet.ToDto());
         }
 
         /// <summary>
@@ -92,6 +113,21 @@ namespace ChepingServer.Controllers
             return this.Ok((await this.outletService.Edit(id, outlet)).ToDto());
         }
 
+        [HttpPost, Route("{id}/Enable"), ResponseType(typeof(OutletDto))]
+        public async Task<IHttpActionResult> Enable([FromUri] int id)
+        {
+            Outlet outlet = await this.outletService.Get(id, true);
+
+            if (outlet == null)
+            {
+                return this.BadRequest("无此网点，请确认网点id是否正确");
+            }
+
+            outlet = await this.outletService.Enable(id);
+
+            return this.Ok(outlet.ToDto());
+        }
+
         /// <summary>
         ///     Exists the specified dto.
         /// </summary>
@@ -115,9 +151,9 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("{id}"), ResponseType(typeof(OutletDto))]
-        public async Task<IHttpActionResult> Get(int id)
+        public async Task<IHttpActionResult> Get(int id, [FromUri] bool includeUnavailable = false)
         {
-            Outlet outlet = await this.outletService.Get(id);
+            Outlet outlet = await this.outletService.Get(id, includeUnavailable);
 
             if (outlet == null)
             {
@@ -133,9 +169,9 @@ namespace ChepingServer.Controllers
         /// <param name="cityId">The city identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Outlets"), ResponseType(typeof(List<string>))]
-        public async Task<IHttpActionResult> GetOutlets([FromUri] string cityId)
+        public async Task<IHttpActionResult> GetOutlets([FromUri] int cityId, [FromUri] bool includeUnavailable = false)
         {
-            return this.Ok(await this.outletService.GetOutlets(int.Parse(cityId)));
+            return this.Ok(await this.outletService.GetOutlets(cityId,includeUnavailable));
         }
 
         /// <summary>
@@ -145,9 +181,9 @@ namespace ChepingServer.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<OutletDto>))]
-        public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize)
+        public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] bool includeUnavailable = false)
         {
-            PaginatedList<Outlet> outlets = await this.outletService.GetPaginated(pageIndex, pageSize);
+            PaginatedList<Outlet> outlets = await this.outletService.GetPaginated(pageIndex, pageSize, includeUnavailable);
 
             return this.Ok(outlets.ToPaginated(o => o.ToDto()));
         }
@@ -157,9 +193,9 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Index"), ResponseType(typeof(List<OutletDto>))]
-        public async Task<IHttpActionResult> Index()
+        public async Task<IHttpActionResult> Index([FromUri] bool includeUnavailable = false)
         {
-            return this.Ok(await this.outletService.Index());
+            return this.Ok(await this.outletService.Index(includeUnavailable));
         }
     }
 }

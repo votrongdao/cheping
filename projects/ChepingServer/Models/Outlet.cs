@@ -17,7 +17,7 @@ namespace ChepingServer.Models
     {
         public string Address { get; set; }
 
-        public int Available { get; set; }
+        public bool Available { get; set; }
 
         public string Cellphone { get; set; }
 

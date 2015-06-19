@@ -39,7 +39,8 @@ namespace ChepingServer.DTO
                 Contact = outlet.CityName,
                 Id = outlet.Id,
                 OutletName = outlet.OutletName,
-                ProvinceName = outlet.ProvinceName
+                ProvinceName = outlet.ProvinceName,
+                Available = outlet.Available
             };
         }
     }
@@ -49,6 +50,13 @@ namespace ChepingServer.DTO
     /// </summary>
     public class OutletDto
     {
+
+        /// <summary>
+        ///     是否正常使用
+        /// </summary>
+        [Required, JsonProperty("available")]
+        public bool Available { get; set; }
+
         /// <summary>
         ///     网点地址
         /// </summary>
