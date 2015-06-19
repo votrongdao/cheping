@@ -206,7 +206,9 @@
     <Compile Include="Models\VehicleInfo.cs" />
     <Compile Include="Models\VehicleInspection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\AcceptPriceRequest.cs" />
     <Compile Include="Requests\AddCaseRequest.cs" />
+    <Compile Include="Requests\AddChaxunInfoRequest.cs" />
     <Compile Include="Requests\AddYancheInfoRequest.cs" />
     <Compile Include="Requests\SignInRequest.cs" />
     <Compile Include="Responses\BoolResponse.cs" />

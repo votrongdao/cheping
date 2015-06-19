@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:20 AM
+// Last Modified On : 2015-06-19  10:32 PM
 // ***********************************************************************
 // <copyright file="VehicleInspectionMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -68,6 +68,9 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.MaxMileage).HasColumnName("MaxMileage");
             this.Property(t => t.MinMileage).HasColumnName("MinMileage");
             this.Property(t => t.SaleGrade).HasColumnName("SaleGrade");
+            this.Property(t => t.WebAveragePrice).HasColumnName("WebAveragePrice");
+            this.Property(t => t.WebPrice).HasColumnName("WebPrice");
+            this.Property(t => t.FloorPrice).HasColumnName("FloorPrice");
         }
     }
 }

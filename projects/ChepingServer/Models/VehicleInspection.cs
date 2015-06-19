@@ -31,6 +31,8 @@ namespace ChepingServer.Models
 
         public string EngineCode { get; set; }
 
+        public int? FloorPrice { get; set; }
+
         public int Id { get; set; }
 
         public string InsuranceCode { get; set; }
@@ -54,5 +56,9 @@ namespace ChepingServer.Models
         public string ViolationNote { get; set; }
 
         public bool? ViolationState { get; set; }
+
+        public int? WebAveragePrice { get; set; }
+
+        public int? WebPrice { get; set; }
     }
 }

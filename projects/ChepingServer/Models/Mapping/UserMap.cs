@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:15 AM
+// Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:19 AM
+// Last Modified On : 2015-06-19  8:35 PM
 // ***********************************************************************
 // <copyright file="UserMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -50,6 +50,7 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.Password).HasColumnName("Password");
             this.Property(t => t.ValuerGroup).HasColumnName("ValuerGroup");
             this.Property(t => t.Available).HasColumnName("Available");
+            this.Property(t => t.HangOn).HasColumnName("HangOn");
         }
     }
 }

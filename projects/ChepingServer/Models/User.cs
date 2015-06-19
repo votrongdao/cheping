@@ -21,6 +21,8 @@ namespace ChepingServer.Models
 
         public string Cellphone { get; set; }
 
+        public bool HangOn { get; set; }
+
         public int Id { get; set; }
 
         public JobTitle JobTitle { get; set; }

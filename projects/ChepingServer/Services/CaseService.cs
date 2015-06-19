@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:46 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  7:28 PM
+// Last Modified On : 2015-06-20  12:11 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -22,13 +22,44 @@ using ChepingServer.Models;
 
 namespace ChepingServer.Services
 {
+    /// <summary>
+    ///     CaseService.
+    /// </summary>
     public class CaseService
     {
-        public static readonly State[] DirectorTodoStates = { State.ShenheZhong, State.ShougouZhong };
-        public static readonly State[] ManagerTodoStates = { State.FukuanZhong };
-        public static readonly State[] PurchaserTodoStates = { State.YancheZhong, State.ShougouZhong, State.RukuZhong };
-        public static readonly State[] QueryingTodoStates = { State.ChaxunZhong };
-        public static readonly State[] ValuerTodoStates = { State.PingguZhong };
+        public static readonly State[] DirectorTodoStates = { State.Shenhe, State.Baojia, State.ShenqingDakuan };
+        public static readonly State[] ManagerTodoStates = { State.DakuanShenhe };
+        public static readonly State[] PurchaserTodoStates = { State.Yanche, State.Qiatan, State.Caigou };
+        public static readonly State[] QueryingTodoStates = { State.Chaxun };
+        public static readonly State[] ValuerTodoStates = { State.Pinggu };
+
+        /// <summary>
+        ///     accept price as an asynchronous operation.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="price">The price.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        /// <exception cref="System.ApplicationException">未能加载事项信息</exception>
+        public async Task<Case> AcceptPriceAsync(int caseId, int price)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                if (@case.State == State.Qiatan)
+                {
+                    @case.State = State.ShenqingDakuan;
+                    @case.PurchasePrice = price;
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                return @case;
+            }
+        }
 
         /// <summary>
         ///     add case as an asynchronous operation.
@@ -47,19 +78,114 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        ///     Adds the yanche information.
+        ///     add chaxun information as an asynchronous operation.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
-        /// <param name="yancheInfo">The yanche information.</param>
+        /// <param name="chaxunInfo">The chaxun information.</param>
         /// <returns>Task&lt;Case&gt;.</returns>
-        /// <exception cref="System.ApplicationException">事项的状态不合法</exception>
-        public async Task<Case> AddYancheInfo(int caseId, VehicleInspection yancheInfo)
+        /// <exception cref="System.ApplicationException">
+        ///     事项的状态不合法
+        ///     or
+        ///     未能加载验车信息
+        /// </exception>
+        public async Task<Case> AddChaxunInfoAsync(int caseId, VehicleInspection chaxunInfo)
         {
             using (ChePingContext db = new ChePingContext())
             {
                 Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
 
-                if (@case == null || @case.State != State.YancheZhong)
+                if (@case == null || @case.State != State.Chaxun)
+                {
+                    throw new ApplicationException("事项的状态不合法");
+                }
+
+                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.Id);
+                if (inspection == null)
+                {
+                    throw new ApplicationException("未能加载验车信息");
+                }
+
+                inspection.RealMileage = chaxunInfo.RealMileage;
+                inspection.LastConservationTime = chaxunInfo.LastConservationTime;
+                inspection.ConservationState = chaxunInfo.ConservationState;
+                inspection.ConservationNote = chaxunInfo.ConservationNote;
+                inspection.ClaimState = chaxunInfo.ClaimState;
+                inspection.ClaimNote = chaxunInfo.ClaimNote;
+                inspection.BondsState = chaxunInfo.BondsState;
+                inspection.BondsNote = chaxunInfo.BondsNote;
+                inspection.ViolationState = chaxunInfo.ViolationState;
+                inspection.ViolationNote = chaxunInfo.ViolationNote;
+
+                @case.State = State.Baojia;
+
+                await db.ExecuteSaveChangesAsync();
+
+                return @case;
+            }
+        }
+
+        /// <summary>
+        ///     add value information as an asynchronous operation.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="valueInfo">The value information.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        /// <exception cref="System.ApplicationException">
+        ///     事项的状态不合法
+        ///     or
+        ///     未能加载验车信息
+        /// </exception>
+        public async Task<Case> AddValueInfoAsync(int caseId, VehicleInspection valueInfo)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+
+                if (@case == null || @case.State != State.Yanche)
+                {
+                    throw new ApplicationException("事项的状态不合法");
+                }
+
+                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.Id);
+                if (inspection == null)
+                {
+                    throw new ApplicationException("未能加载验车信息");
+                }
+
+                inspection.PreferentialPrice = valueInfo.PreferentialPrice;
+                inspection.MaxMileage = valueInfo.MaxMileage;
+                inspection.MinMileage = valueInfo.MinMileage;
+                inspection.SaleGrade = valueInfo.SaleGrade;
+                inspection.WebAveragePrice = valueInfo.WebAveragePrice;
+                inspection.WebPrice = valueInfo.WebPrice;
+                inspection.FloorPrice = valueInfo.FloorPrice;
+
+                @case.State = State.Shenhe;
+
+                await db.ExecuteSaveChangesAsync();
+
+                return @case;
+            }
+        }
+
+        /// <summary>
+        ///     Adds the yanche information.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="yancheInfo">The yanche information.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        /// <exception cref="System.ApplicationException">
+        ///     事项的状态不合法
+        ///     or
+        ///     未能加载验车信息
+        /// </exception>
+        public async Task<Case> AddYancheInfoAsync(int caseId, VehicleInspection yancheInfo)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+
+                if (@case == null || @case.State != State.Yanche)
                 {
                     throw new ApplicationException("事项的状态不合法");
                 }
@@ -75,9 +201,34 @@ namespace ChepingServer.Services
                 inspection.InsuranceCode = yancheInfo.InsuranceCode;
                 inspection.LicenseCode = yancheInfo.LicenseCode;
 
-                @case.State = State.ChaxunZhong;
+                @case.State = State.Chaxun;
 
                 await db.ExecuteSaveChangesAsync();
+
+                return @case;
+            }
+        }
+
+        /// <summary>
+        ///     Approves the payment.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        public async Task<Case> ApprovePaymentAsync(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                if (@case.State == State.ShenqingDakuan)
+                {
+                    @case.State = State.Caigou;
+                    await db.ExecuteSaveChangesAsync();
+                }
 
                 return @case;
             }
@@ -88,7 +239,7 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;Case&gt;.</returns>
-        public async Task<Case> Get(int id)
+        public async Task<Case> GetAsync(int id)
         {
             using (ChePingContext db = new ChePingContext())
             {
@@ -96,6 +247,162 @@ namespace ChepingServer.Services
             }
         }
 
+        /// <summary>
+        ///     Approves the payment.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        public async Task<Case> PurchaseAsync(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                if (@case.State == State.Caigou)
+                {
+                    @case.State = State.Ruku;
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                return @case;
+            }
+        }
+
+        /// <summary>
+        ///     Rejects the specified case identifier.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="message">The message.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        /// <exception cref="System.ApplicationException">未能加载事项信息</exception>
+        public async Task<Case> RejectAsync(int caseId, string message)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                switch (@case.State)
+                {
+                    case State.Shenhe:
+                        @case.State = State.ShenheShibai;
+                        break;
+
+                    case State.Yanche:
+                        @case.State = State.YancheShibai;
+                        break;
+
+                    case State.Baojia:
+                        @case.State = State.FangqiBaojia;
+                        break;
+
+                    case State.Qiatan:
+                        @case.State = State.QiatanShibai;
+                        break;
+
+                    case State.ShenqingDakuan:
+                        @case.State = State.FangqiShenqingDakuan;
+                        break;
+
+                    case State.DakuanShenhe:
+                        @case.State = State.DakuanShenheShibai;
+                        break;
+
+                    case State.Caigou:
+                        @case.State = State.CaigouShibai;
+                        break;
+                }
+
+                @case.AbandonReason = message;
+                @case.Abandon = false;
+                await db.ExecuteSaveChangesAsync();
+
+                return @case;
+            }
+        }
+
+        /// <summary>
+        ///     Rejections the confirm.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        /// <exception cref="System.ApplicationException">未能加载事项信息</exception>
+        public async Task<Case> RejectionConfirmAsync(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                if (@case.Abandon == false)
+                {
+                    @case.Abandon = true;
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                return @case;
+            }
+        }
+
+        /// <summary>
+        ///     review case as an asynchronous operation.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="purchasePrice">The purchase price.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        public async Task<Case> ReviewCaseAsync(int caseId, int purchasePrice)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                if (@case.State == State.Shenhe)
+                {
+                    @case.PurchasePrice = purchasePrice;
+                    @case.State = State.Yanche;
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                if (@case.State == State.Baojia)
+                {
+                    @case.PurchasePrice = purchasePrice;
+                    @case.State = State.Qiatan;
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                return @case;
+            }
+        }
+
+        /// <summary>
+        ///     add general case as an asynchronous operation.
+        /// </summary>
+        /// <param name="case">The case.</param>
+        /// <param name="info">The information.</param>
+        /// <returns>Task&lt;CaseDto&gt;.</returns>
+        /// <exception cref="System.ApplicationException">
+        ///     无法加载车型信息
+        ///     or
+        ///     无法加载用户信息
+        ///     or
+        ///     无在岗评估师，事项添加失败
+        ///     or
+        ///     评估师分配错误，事项添加失败
+        /// </exception>
         private async Task<CaseDto> AddGeneralCaseAsync(Case @case, VehicleInfo info)
         {
             Case newCase = new Case
@@ -110,7 +417,7 @@ namespace ChepingServer.Services
                 PurchaserId = @case.PurchaserId,
                 QueryingId = null,
                 SerialId = @case.SerialId,
-                State = State.PingguZhong,
+                State = State.Pinggu,
                 ValuerId = null, // need update
                 VehicleInfoId = 0, // need update
                 VehicleInspecId = 0 // need update
@@ -161,12 +468,32 @@ namespace ChepingServer.Services
                     throw new ApplicationException("无法加载用户信息");
                 }
 
-                List<User> valuers = await db.Users.Where(u => u.Available && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Valuer && u.ValuerGroup == newCase.CaseType).ToListAsync();
+                int valuerId;
+                List<User> valuers = await db.Users.Where(u => u.Available && !u.HangOn && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Valuer && u.ValuerGroup == newCase.CaseType).ToListAsync();
 
-                int caseCount = await db.Cases.CountAsync(c => c.OutletId == user.OutletId && ValuerTodoStates.Contains(c.State) && c.ValuerId != null);
-                int index = caseCount % valuers.Count;
+                var workingValuers = await db.Cases.Where(c => c.OutletId == user.OutletId && ValuerTodoStates.Contains(c.State) && c.ValuerId != null)
+                    .GroupBy(c => c.ValuerId).Select(g => new { g.Key, Count = g.Count() }).ToListAsync();
 
-                int valuerId = valuers[index].Id;
+                valuers.RemoveAll(v => workingValuers.Select(i => i.Key).Contains(v.Id));
+
+                if (valuers.Count > 0)
+                {
+                    valuerId = valuers[0].Id;
+                }
+                else
+                {
+                    if (workingValuers.Count == 0)
+                    {
+                        throw new ApplicationException("无在岗评估师，事项添加失败");
+                    }
+
+                    valuerId = workingValuers.OrderBy(v => v.Count).Select(v => v.Key).First().GetValueOrDefault();
+
+                    if (valuerId == 0)
+                    {
+                        throw new ApplicationException("评估师分配错误，事项添加失败");
+                    }
+                }
 
                 newCase.ValuerId = valuerId;
                 newCase.OutletId = user.OutletId;
@@ -200,7 +527,7 @@ namespace ChepingServer.Services
                 PurchaserId = @case.PurchaserId,
                 QueryingId = null,
                 SerialId = @case.SerialId,
-                State = State.ShenheZhong,
+                State = State.Shenhe,
                 ValuerId = null,
                 VehicleInfoId = 0, // need update
                 VehicleInspecId = 0 // need update

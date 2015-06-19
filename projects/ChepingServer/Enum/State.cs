@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  12:26 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  4:05 PM
+// Last Modified On : 2015-06-19  10:16 PM
 // ***********************************************************************
 // <copyright file="State.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -15,17 +15,22 @@ namespace ChepingServer.Enum
 {
     public enum State
     {
-        PingguZhong = 10,
-        ShenheZhong = 20,
-        ShenheShibai = 30,
-        YancheZhong = 40,
-        YancheShibai = 50,
-        ChaxunZhong = 60,
-        ShougouZhong = 70,
-        ShougouShibai = 80,
-        FukuanZhong = 90,
-        FangqiFukuan = 100,
-        RukuZhong = 110,
-        Ruku = 120
+        Pinggu = 10,
+        Shenhe = 20,
+        ShenheShibai = 25,
+        Yanche = 30,
+        YancheShibai = 35,
+        Chaxun = 40,
+        Baojia = 50,
+        FangqiBaojia = 55,
+        Qiatan = 60,
+        QiatanShibai = 65,
+        ShenqingDakuan = 70,
+        FangqiShenqingDakuan = 75,
+        DakuanShenhe = 80,
+        DakuanShenheShibai = 85,
+        Caigou = 90,
+        CaigouShibai = 95,
+        Ruku = 100
     }
 }

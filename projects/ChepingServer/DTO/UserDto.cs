@@ -40,7 +40,8 @@ namespace ChepingServer.DTO
                 UserCode = user.UserCode,
                 UserName = user.UserName,
                 ValuerGroup = user.ValuerGroup,
-                Available = user.Available
+                Available = user.Available,
+                HangOn = user.HangOn
             };
         }
     }
@@ -61,6 +62,11 @@ namespace ChepingServer.DTO
         /// </summary>
         [Required, CellphoneFormat, JsonProperty("cellphone")]
         public string Cellphone { get; set; }
+
+        /// <summary>
+        /// 是否挂起
+        /// </summary>
+        public bool HangOn { get; set; }
 
         /// <summary>
         ///     用户Id，非必需情况，传默认值0
