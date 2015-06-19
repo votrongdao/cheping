@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:46 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  6:21 PM
+// Last Modified On : 2015-06-19  7:28 PM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -30,6 +30,12 @@ namespace ChepingServer.Services
         public static readonly State[] QueryingTodoStates = { State.ChaxunZhong };
         public static readonly State[] ValuerTodoStates = { State.PingguZhong };
 
+        /// <summary>
+        ///     add case as an asynchronous operation.
+        /// </summary>
+        /// <param name="case">The case.</param>
+        /// <param name="info">The information.</param>
+        /// <returns>Task&lt;CaseDto&gt;.</returns>
         public async Task<CaseDto> AddCaseAsync(Case @case, VehicleInfo info)
         {
             if (info.ModelId == -1)
@@ -41,7 +47,44 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Adds the yanche information.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="yancheInfo">The yanche information.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        /// <exception cref="System.ApplicationException">事项的状态不合法</exception>
+        public async Task<Case> AddYancheInfo(int caseId, VehicleInspection yancheInfo)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+
+                if (@case == null || @case.State != State.YancheZhong)
+                {
+                    throw new ApplicationException("事项的状态不合法");
+                }
+
+                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.Id);
+                if (inspection == null)
+                {
+                    throw new ApplicationException("未能加载验车信息");
+                }
+
+                inspection.VinCode = yancheInfo.VinCode;
+                inspection.EngineCode = yancheInfo.EngineCode;
+                inspection.InsuranceCode = yancheInfo.InsuranceCode;
+                inspection.LicenseCode = yancheInfo.LicenseCode;
+
+                @case.State = State.ChaxunZhong;
+
+                await db.ExecuteSaveChangesAsync();
+
+                return @case;
+            }
+        }
+
+        /// <summary>
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;Case&gt;.</returns>

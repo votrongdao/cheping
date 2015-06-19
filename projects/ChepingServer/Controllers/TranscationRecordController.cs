@@ -1,8 +1,18 @@
-﻿using System;
+// ***********************************************************************
+// Project          : ChepingServer
+// Author           : Siqi Lu
+// Created          : 2015-06-19  7:14 PM
+//
+// Last Modified By : Siqi Lu
+// Last Modified On : 2015-06-19  7:16 PM
+// ***********************************************************************
+// <copyright file="TranscationRecordController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
+//     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -14,25 +24,23 @@ using Moe.Lib;
 namespace ChepingServer.Controllers
 {
     /// <summary>
-    /// Class TranscationRecordController.
+    ///     Class TranscationRecordController.
     /// </summary>
     [RoutePrefix("api/TranscationRecord")]
     public class TranscationRecordController : ApiControllerBase
     {
-
         /// <summary>
-        /// The transcation record service
+        ///     The transcation record service
         /// </summary>
         private readonly TranscationRecordService transcationRecordService = new TranscationRecordService();
 
-
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("{id}"), ResponseType(typeof(TranscationRecordDto))]
-        public async Task<IHttpActionResult> Get([FromUri] int id )
+        public async Task<IHttpActionResult> Get([FromUri] int id)
         {
             TranscationRecord transcationRecord = await this.transcationRecordService.Get(id);
 
@@ -45,7 +53,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the brands.
+        ///     Gets the brands.
         /// </summary>
         /// <param name="modelId">The model identifier.</param>
         /// <param name="minMileage">The minimum mileage.</param>
@@ -55,12 +63,11 @@ namespace ChepingServer.Controllers
         [HttpGet, Route("TranscationRecords"), ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetBrands([FromUri] int modelId, [FromUri] int minMileage, [FromUri] int maxMileage, [FromUri] DateTime licenseTime)
         {
-            return this.Ok(await this.transcationRecordService.GetTranscationRecords(modelId,minMileage,maxMileage,licenseTime));
+            return this.Ok(await this.transcationRecordService.GetTranscationRecords(modelId, minMileage, maxMileage, licenseTime));
         }
 
-
         /// <summary>
-        /// Gets the paginated.
+        ///     Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -70,15 +77,15 @@ namespace ChepingServer.Controllers
         /// <param name="licenseTime">The license time.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<TranscationRecordDto>))]
-        public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri]int modelId, [FromUri]int minMileage, [FromUri]int maxMileage, [FromUri] DateTime licenseTime)
+        public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] int modelId, [FromUri] int minMileage, [FromUri] int maxMileage, [FromUri] DateTime licenseTime)
         {
-            PaginatedList<TranscationRecord> transcationRecords = await this.transcationRecordService.GetPaginated(pageIndex, pageSize, modelId,minMileage,maxMileage,licenseTime);
+            PaginatedList<TranscationRecord> transcationRecords = await this.transcationRecordService.GetPaginated(pageIndex, pageSize, modelId, minMileage, maxMileage, licenseTime);
 
             return this.Ok(transcationRecords.ToPaginated(m => m.ToDto()));
         }
 
         /// <summary>
-        /// Indexes this instance.
+        ///     Indexes this instance.
         /// </summary>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Index"), ResponseType(typeof(List<TranscationRecordDto>))]
@@ -86,6 +93,5 @@ namespace ChepingServer.Controllers
         {
             return this.Ok(await this.transcationRecordService.Index());
         }
-
     }
 }
