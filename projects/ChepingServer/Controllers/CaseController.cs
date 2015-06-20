@@ -229,10 +229,10 @@ namespace ChepingServer.Controllers
                 SaleGrade = request.SaleGrade,
                 WebAveragePrice = request.WebAveragePrice,
                 WebPrice = request.WebPrice,
-                FloorPrice = request.FloorPrice
+                FloorPrice = request.FloorPrice,
             };
 
-            @case = await this.caseService.AddValueInfoAsync(@case.Id, inspection);
+            @case = await this.caseService.AddValueInfoAsync(@case.Id, inspection, request.Price);
 
             return this.Ok(@case.ToDto());
         }
