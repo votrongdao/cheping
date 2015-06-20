@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  10:38 AM
+// Last Modified On : 2015-06-20  12:32 PM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -20,6 +20,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Security;
 using ChepingServer.DTO;
+using ChepingServer.Filters;
 using ChepingServer.Models;
 using ChepingServer.Requests;
 using ChepingServer.Services;
@@ -55,21 +56,28 @@ namespace ChepingServer.Controllers
         {
             User user = new User
             {
+                Available = true,
                 Cellphone = dto.Cellphone,
+                HangOn = false,
                 JobTitle = dto.JobTitle,
                 OutletId = dto.OutletId,
-                Password = Guid.NewGuid().ToString().Substring(0, 8),
                 UserName = dto.UserName,
-                Available = dto.Available
+                ValuerGroup = dto.ValuerGroup
             };
 
             int outletCode = user.OutletId + 1000;
 
-            string titleCode = "0" + dto.JobTitle;
+            string titleCode = "0" + (int)dto.JobTitle;
             titleCode = titleCode.Substring(titleCode.Length - 3, 3);
 
             string userCode = "{0}{1}{2}".FormatWith(outletCode, titleCode, user.Cellphone.Substring(user.Cellphone.Length - 4, 4));
             user.UserCode = userCode;
+
+            string password = Guid.NewGuid().ToString().Substring(0, 8);
+
+            user.Password = MD5Hash.ComputeMD5Hash(password);
+
+            await this.smsService.SendMessage(user.Cellphone, "登录密码：{0}".FormatWith(password));
 
             return this.Ok((await this.userService.Create(user)).ToDto());
         }
@@ -182,7 +190,31 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
+<<<<<<< HEAD
         ///     通过手机号获取用户列表
+=======
+        ///     获取当前登录用户的信息
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="400">无此用户，请确认用户id是否正确</response>
+        /// <response code="401">请登陆</response>
+        /// <response code="500"></response>
+        [HttpGet, Route(""), CookieAuthorize, ResponseType(typeof(UserDto))]
+        public async Task<IHttpActionResult> Get()
+        {
+            User user = await this.userService.Get(this.CurrentUser.Id, true);
+
+            if (user == null)
+            {
+                return this.BadRequest("无此用户，请确认用户id是否正确");
+            }
+
+            return this.Ok(user.ToDto());
+        }
+
+        /// <summary>
+        ///     Gets the specified identifier.
+>>>>>>> 181abc32145ccd02ee5027a1a4899eeb266f0cb4
         /// </summary>
         /// <param name="cellphone">The cellphone.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
@@ -270,7 +302,7 @@ namespace ChepingServer.Controllers
 
             string password = Guid.NewGuid().ToString().Substring(0, 8);
 
-            user.Password = MD5Hash.ComputeHashString(password);
+            user.Password = MD5Hash.ComputeMD5Hash(password);
             user = await this.userService.Edit(id, user);
 
             await this.smsService.SendMessage(user.Cellphone, "登录密码：{0}".FormatWith(password));

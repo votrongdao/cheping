@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  8:08 PM
+// Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  10:45 PM
+// Last Modified On : 2015-06-20  11:49 AM
 // ***********************************************************************
 // <copyright file="UserDto.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -64,8 +64,9 @@ namespace ChepingServer.DTO
         public string Cellphone { get; set; }
 
         /// <summary>
-        /// 是否挂起
+        ///     是否挂起
         /// </summary>
+        [Required, JsonProperty("hangOn")]
         public bool HangOn { get; set; }
 
         /// <summary>
