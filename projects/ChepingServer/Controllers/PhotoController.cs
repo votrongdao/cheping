@@ -20,6 +20,11 @@ using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
 using Moe.AspNet.Filters;
+using System.Web;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ChepingServer.Controllers
 {
@@ -37,16 +42,31 @@ namespace ChepingServer.Controllers
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(string))]
-        public async Task<IHttpActionResult> Create(PhotoDto dto)
+        public async Task<IHttpActionResult> Create()
         {
+            var httpRequest = HttpContext.Current.Request;
+
+            byte[] buff = null;
+
+            // Check if files are available
+            if (httpRequest.Files.Count > 0 && httpRequest.Files[0].ContentLength > 0)
+            {
+                HttpPostedFile postedFile = httpRequest.Files[0];
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    IFormatter iFormatter = new BinaryFormatter();
+                    iFormatter.Serialize(ms, postedFile);
+                    buff = ms.GetBuffer();
+                }
+            }
+
             Photo photo = new Photo
             {
-                Content = dto.Content, //decode byte stream before
-                UploadTime = DateTime.UtcNow,
+                Content = buff, //decode byte stream before
                 CaseId = 0
             };
 
-            return this.Ok(new { Result = (await this.photoService.Create(photo)).Id.ToString() });
+            return this.Ok(new { Result = (await this.photoService.Create(photo))});
         }
 
         /// <summary>
@@ -54,8 +74,8 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("{id}/Delete"), ResponseType(typeof(string))]
-        public async Task<IHttpActionResult> Disable([FromUri] int id)
+        [HttpPost, Route("{id}/Delete"), ResponseType(typeof(BoolResponse))]
+        public async Task<IHttpActionResult> Delete([FromUri] int id)
         {
             Photo photo = await this.photoService.Get(id);
 
@@ -66,5 +86,20 @@ namespace ChepingServer.Controllers
 
             return this.Ok(new BoolResponse { Result = await this.photoService.Delete(id) });
         }
+
+
+        [HttpPost, Route("{id}"), ResponseType(typeof(Photo))]
+        public async Task<IHttpActionResult> Get([FromUri] int id)
+        {
+            Photo photo = await this.photoService.Get(id);
+
+            if (photo == null)
+            {
+                return this.BadRequest("无此图片，请确认图片id是否正确");
+            }
+
+            return this.Ok(photo);
+        }
+
     }
 }

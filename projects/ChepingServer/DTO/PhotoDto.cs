@@ -11,7 +11,9 @@
 // </copyright>
 // ***********************************************************************
 
+using System.ComponentModel.DataAnnotations;
 using System;
+using Newtonsoft.Json;
 
 namespace ChepingServer.DTO
 {
@@ -45,21 +47,25 @@ namespace ChepingServer.DTO
         /// <summary>
         ///     订单Id
         /// </summary>
+        [Required, Range(0, int.MaxValue), JsonProperty("caseId")]
         public int CaseId { get; set; }
 
         /// <summary>
         ///     图片内容
         /// </summary>
+        [Required, JsonProperty("content")]
         public byte[] Content { get; set; }
 
         /// <summary>
         ///     图片Id
         /// </summary>
+        [Required, Range(0, int.MaxValue), JsonProperty("id")]
         public int Id { get; set; }
 
         /// <summary>
         ///     上传时间
         /// </summary>
+        [JsonProperty("uploadTime")]
         public DateTime UploadTime { get; set; }
     }
 }
