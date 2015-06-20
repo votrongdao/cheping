@@ -2,16 +2,16 @@
   <ion-header-bar>
     <h1 class="title">待办事项</h1>
   </ion-header-bar>
-  <!--<ion-content>-->
-    <!--<ion-list>-->
-      <!--<ion-item class="item-avatar item-icon-right" ng-repeat="order in todosCtrl.orders" type="item-text-wrap" ui-sref="tabs.orderDetail({orderNo: order.orderNo})">-->
-        <!--<img ng-src="{{ order.thumbnail }}">-->
-        <!--<h2>{{ order.brand }}&nbsp;{{ order.model }}&nbsp;{{ order.city }}</h2>-->
-        <!--<p>{{ order.year }}&nbsp;{{ order.color }}/{{ order.innerColor }}</p>-->
-        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
-      <!--</ion-item>-->
-    <!--</ion-list>-->
-  <!--</ion-content>-->
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-avatar item-icon-right" ng-repeat="order in todosCtrl.orders" type="item-text-wrap" ui-sref="cheping.index.todoDetail({ orderNo: order.orderNo })">
+        <img ng-src="{{ order.thumbnail }}">
+        <h2>{{ order.brand }}&nbsp;{{ order.model }}&nbsp;{{ order.city }}</h2>
+        <p>{{ order.year }}&nbsp;{{ order.color }}/{{ order.innerColor }}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 
   <!--<ion-content>-->
     <!--<div class="list card" ng-repeat="todo in todos" type="item-text-wrap" >-->
@@ -57,44 +57,44 @@
   <!--</ion-content>-->
 
 
-  <ion-content>
-    <ion-list>
-      <ion-item class="item item-thumbnail-left item-icon-right" href="/">
-        <img src="assets/img/LaFerrari_4.jpg">
-        <h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>
-        <p>2013款 红/红</p>
-        <p>已审核</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </ion-item>
-      <ion-item class="item item-thumbnail-left item-icon-right" href="/">
-        <img src="assets/img/LaFerrari_4.jpg">
-        <h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>
-        <p>2013款 红/红</p>
-        <p>已审核</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </ion-item>
-      <ion-item class="item item-thumbnail-left item-icon-right" href="/">
-      <img src="assets/img/LaFerrari_4.jpg">
-      <h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>
-      <p>2013款 红/红</p>
-      <p>已审核</p>
-      <i class="icon ion-chevron-right icon-accessory"></i>
-    </ion-item>
-      <ion-item class="item item-thumbnail-left item-icon-right" href="/">
-      <img src="assets/img/LaFerrari_4.jpg">
-      <h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>
-      <p>2013款 红/红</p>
-      <p>已审核</p>
-      <i class="icon ion-chevron-right icon-accessory"></i>
-    </ion-item>
-      <ion-item class="item item-thumbnail-left item-icon-right" href="/">
-      <img src="assets/img/LaFerrari_4.jpg">
-      <h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>
-      <p>2013款 红/红</p>
-      <p>已审核</p>
-      <i class="icon ion-chevron-right icon-accessory"></i>
-    </ion-item>
-    </ion-list>
+  <!--<ion-content>-->
+    <!--<ion-list>-->
+      <!--<ion-item class="item item-thumbnail-left item-icon-right" sref="/">-->
+        <!--<img src="assets/img/LaFerrari_4.jpg">-->
+        <!--<h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>-->
+        <!--<p>2013款 红/红</p>-->
+        <!--<p>已审核</p>-->
+        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+      <!--</ion-item>-->
+      <!--<ion-item class="item item-thumbnail-left item-icon-right" href="/">-->
+        <!--<img src="assets/img/LaFerrari_4.jpg">-->
+        <!--<h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>-->
+        <!--<p>2013款 红/红</p>-->
+        <!--<p>已审核</p>-->
+        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+      <!--</ion-item>-->
+      <!--<ion-item class="item item-thumbnail-left item-icon-right" href="/">-->
+      <!--<img src="assets/img/LaFerrari_4.jpg">-->
+      <!--<h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>-->
+      <!--<p>2013款 红/红</p>-->
+      <!--<p>已审核</p>-->
+      <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+    <!--</ion-item>-->
+      <!--<ion-item class="item item-thumbnail-left item-icon-right" href="/">-->
+      <!--<img src="assets/img/LaFerrari_4.jpg">-->
+      <!--<h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>-->
+      <!--<p>2013款 红/红</p>-->
+      <!--<p>已审核</p>-->
+      <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+    <!--</ion-item>-->
+      <!--<ion-item class="item item-thumbnail-left item-icon-right" href="/">-->
+      <!--<img src="assets/img/LaFerrari_4.jpg">-->
+      <!--<h2>奥迪A4L 运动版 上海 <em>22.5万元</em></h2>-->
+      <!--<p>2013款 红/红</p>-->
+      <!--<p>已审核</p>-->
+      <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+    <!--</ion-item>-->
+    <!--</ion-list>-->
 
   </ion-content>
 </ion-view>

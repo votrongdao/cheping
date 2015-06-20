@@ -54,6 +54,12 @@ namespace ChepingServer.Requests
         public int PreferentialPrice { get; set; }
 
         /// <summary>
+        /// 评估价格或者实际采购价格
+        /// </summary>
+        [Required, Range(0, int.MaxValue), JsonProperty("price")]
+        public int Price { get; set; }
+
+        /// <summary>
         ///     售卖等级
         /// </summary>
         [Required, AvailableValues(SaleGrade.A, SaleGrade.B, SaleGrade.C, SaleGrade.D), JsonProperty("saleGrade")]

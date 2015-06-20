@@ -27,7 +27,7 @@ angular.module('cheping', [
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('cheping', {
             url: "/index",
-            abstract: true,
+            //abstract: true,
             views: {
                 '@': {
                     controller: 'MainCtrl as ctrl',
@@ -76,6 +76,7 @@ angular.module('cheping', [
     })
     .controller('MainCtrl', function($state, UserService, UtilityService) {
         var ctrl = this;
+        console.log('this is main ctrl');
 
         ctrl.showNewTab = false;
         ctrl.showWarningTab = false;

@@ -1,9 +1,9 @@
 angular.module('cheping.interceptors', [
-    'cheping.services'
+    'cheping.services',
+    'cheping.user.login'
 ])
     .factory('globalInterceptor', function($q, $log, $rootScope, $timeout, $injector) {
         var authService = $injector.get('AuthService');
-        var utilityService = $injector.get('UtilityService');
 
         return {
             'request': function(config) {
@@ -33,10 +33,6 @@ angular.module('cheping.interceptors', [
                         disableBack: true
                     });
                     $state.go('cheping.user-login');
-                }
-
-                if (rejection.status == 400) {
-                    utilityService.showAlert(rejection.data.message);
                 }
 
                 if(rejection.status >= 500){
