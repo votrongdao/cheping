@@ -1,5 +1,6 @@
 angular.module('cheping.interceptors', [
-    'cheping.services'
+    'cheping.services',
+    'cheping.user.login'
 ])
     .factory('globalInterceptor', function($q, $log, $rootScope, $timeout, $injector) {
         var authService = $injector.get('AuthService');
