@@ -144,12 +144,12 @@ namespace ChepingServer.Services
             {
                 Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
 
-                if (@case == null || @case.State != State.Yanche)
+                if (@case == null || @case.State != State.Pinggu)
                 {
                     throw new ApplicationException("事项的状态不合法");
                 }
 
-                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.Id);
+                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.VehicleInspecId);
                 if (inspection == null)
                 {
                     throw new ApplicationException("未能加载验车信息");
@@ -328,7 +328,7 @@ namespace ChepingServer.Services
                         return await db.Cases.Where(c => PurchaserTodoStates.Contains(c.State) && c.PurchaserId == user.Id).ToListAsync();
 
                     case JobTitle.Valuer:
-                        return await db.Cases.Where(c => QueryingTodoStates.Contains(c.State) && c.ValuerId == user.Id).ToListAsync();
+                        return await db.Cases.Where(c => ValuerTodoStates.Contains(c.State) && c.ValuerId == user.Id).ToListAsync();
 
                     case JobTitle.Querying:
                         return await db.Cases.Where(c => QueryingTodoStates.Contains(c.State) && c.QueryingId == user.Id).ToListAsync();
