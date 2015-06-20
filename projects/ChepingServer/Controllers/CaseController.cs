@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-20  9:02 AM
+// Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  10:38 AM
+// Last Modified On : 2015-06-20  1:18 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -38,16 +38,16 @@ namespace ChepingServer.Controllers
         private readonly UserService userService = new UserService();
 
         /// <summary>
-        ///    接受报价
+        ///     接受报价
         /// </summary>
         /// <param name="request">The request.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载事项信息
-        /// <br />
-        /// 操作未授权
-        /// <br />
-        /// 事项状态错误
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
@@ -81,7 +81,7 @@ namespace ChepingServer.Controllers
         /// <param name="request">The request.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载用户信息
+        ///     无法加载用户信息
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
@@ -142,11 +142,11 @@ namespace ChepingServer.Controllers
         /// <param name="request">The request.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载事项信息
-        /// <br />
-        /// 操作未授权
-        /// <br />
-        /// 事项状态错误
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
@@ -194,11 +194,11 @@ namespace ChepingServer.Controllers
         /// <param name="request">The request.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载事项信息
-        /// <br />
-        /// 操作未授权
-        /// <br />
-        /// 事项状态错误
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
@@ -243,11 +243,11 @@ namespace ChepingServer.Controllers
         /// <param name="request">The request.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载事项信息
-        /// <br />
-        /// 操作未授权
-        /// <br />
-        /// 事项状态错误
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
@@ -289,11 +289,11 @@ namespace ChepingServer.Controllers
         /// <param name="caseId">The case identifier.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载事项信息
-        /// <br />
-        /// 操作未授权
-        /// <br />
-        /// 事项状态错误
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
@@ -327,7 +327,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此订单，请确认订单id是否正确
+        ///     无此订单，请确认订单id是否正确
         /// </response>
         /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(CaseDto))]
@@ -344,21 +344,19 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// 按车类型获取分页订单信息
+        ///     按车类型获取分页订单信息
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="carType">Type of the car.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        /// <response code="200">
-        /// </response code="400">
-        /// <response>
-        /// 无法加载用户信息
+        /// <response code="200"></response>
+        /// <response code="400">
+        ///     无法加载用户信息
         /// </response>
-        /// <response code="500">
-        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("List"), CookieAuthorize, ResponseType(typeof(PaginatedList<CaseDto>))]
-        public async Task<IHttpActionResult> GetCases([FromUri]int pageIndex, [FromUri]int pageSize, [FromUri]CarType carType)
+        public async Task<IHttpActionResult> GetCases([FromUri] int pageIndex, [FromUri] int pageSize, [FromUri] CarType carType)
         {
             User user = await this.userService.Get(this.CurrentUser.Id);
             if (user == null)
@@ -379,7 +377,7 @@ namespace ChepingServer.Controllers
         /// <response code="200"></response>
         /// <response code="500"></response>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<CaseDto>))]
-        public async Task<IHttpActionResult> GetPaginated([FromUri]int pageIndex, [FromUri]int pageSize)
+        public async Task<IHttpActionResult> GetPaginated([FromUri] int pageIndex, [FromUri] int pageSize)
         {
             PaginatedList<Case> cases = await this.caseService.GetPaginatedAsync(pageIndex, pageSize);
 
@@ -391,7 +389,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载用户信息
+        ///     无法加载用户信息
         /// </response>
         /// <response code="500"></response>
         [HttpGet, Route("Todos"), ResponseType(typeof(List<CaseDto>))]
@@ -408,13 +406,12 @@ namespace ChepingServer.Controllers
             return this.Ok(cases.Select(c => c.ToDto()));
         }
 
-
         /// <summary>
-        ///    获取警告信息
+        ///     获取警告信息
         /// </summary>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载用户信息
+        ///     无法加载用户信息
         /// </response>
         /// <response code="500"></response>
         [HttpGet, Route("Warnings"), ResponseType(typeof(List<CaseDto>))]
@@ -448,11 +445,11 @@ namespace ChepingServer.Controllers
         /// <param name="caseId">The case identifier.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载事项信息
-        /// <br />
-        /// 操作未授权
-        /// <br />
-        /// 事项状态错误
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
@@ -487,13 +484,13 @@ namespace ChepingServer.Controllers
         /// <param name="message">The message.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 失败原因不能为空
-        /// <br />
-        /// 无法加载事项信息
-        /// <br />
-        /// 操作未授权
-        /// <br />
-        /// 事项状态错误
+        ///     失败原因不能为空
+        ///     <br />
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
@@ -577,11 +574,11 @@ namespace ChepingServer.Controllers
         /// <param name="caseId">The case identifier.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无法加载事项信息
-        /// <br />
-        /// 操作未授权
-        /// <br />
-        /// 事项状态错误
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
@@ -658,7 +655,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///    获取订单车型信息
+        ///     获取订单车型信息
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <response code="200"></response>

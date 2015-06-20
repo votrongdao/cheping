@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:33 PM
+// Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:32 PM
+// Last Modified On : 2015-06-20  1:18 PM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -190,9 +190,6 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-<<<<<<< HEAD
-        ///     通过手机号获取用户列表
-=======
         ///     获取当前登录用户的信息
         /// </summary>
         /// <response code="200"></response>
@@ -213,11 +210,10 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
->>>>>>> 181abc32145ccd02ee5027a1a4899eeb266f0cb4
+        ///     通过手机号获取用户列表
         /// </summary>
-        /// <param name="cellphone">The cellphone.</param>
-        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
+        /// <param name="cellphone">手机号</param>
+        /// <param name="includeUnavailable">是否包含已经禁用的用户</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
         [HttpGet, Route("{cellphone}/Cellphone"), ResponseType(typeof(List<UserDto>))]

@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:33 PM
+// Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:04 PM
+// Last Modified On : 2015-06-20  1:16 PM
 // ***********************************************************************
 // <copyright file="OutletController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -46,7 +46,7 @@ namespace ChepingServer.Controllers
         /// <param name="dto">The dto.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 网点信息已经存在
+        ///     网点信息已经存在
         /// </response>
         /// <response code="500"></response>
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
@@ -81,7 +81,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此网点，请确认网点id是否正确
+        ///     无此网点，请确认网点id是否正确
         /// </response>
         /// <response code="500"></response>
         [HttpPost, Route("{id}/Disable"), ResponseType(typeof(OutletDto))]
@@ -106,7 +106,7 @@ namespace ChepingServer.Controllers
         /// <param name="dto">The dto.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此网点，请确认网点id是否正确
+        ///     无此网点，请确认网点id是否正确
         /// </response>
         /// <response code="500"></response>
         [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
@@ -132,7 +132,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此网点，请确认网点id是否正确
+        ///     无此网点，请确认网点id是否正确
         /// </response>
         /// <response code="500"></response>
         [HttpPost, Route("{id}/Enable"), ResponseType(typeof(OutletDto))]
@@ -175,7 +175,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此网点，请确认网点id是否正确
+        ///     无此网点，请确认网点id是否正确
         /// </response>
         /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(OutletDto))]

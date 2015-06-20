@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  11:33 PM
+// Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:08 PM
+// Last Modified On : 2015-06-20  1:16 PM
 // ***********************************************************************
 // <copyright file="ModelController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -38,7 +38,7 @@ namespace ChepingServer.Controllers
         /// <param name="dto">The dto.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 车型信息已经存在
+        ///     车型信息已经存在
         /// </response>
         /// <response code="500"></response>
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(ModelDto))]
@@ -46,11 +46,12 @@ namespace ChepingServer.Controllers
         {
             Model model = new Model
             {
+                Available = true,
                 Brand = dto.Brand,
+                Id = dto.Id,
                 Modeling = dto.Modeling,
                 Price = dto.Price,
-                Series = dto.Series,
-                Available = true
+                Series = dto.Series
             };
 
             if (await this.modelService.Exist(model))
@@ -67,7 +68,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此车型，请确认车型id是否正确
+        ///     无此车型，请确认车型id是否正确
         /// </response>
         /// <response code="500"></response>
         [HttpPost, Route("{id}/Disable"), ResponseType(typeof(ModelDto))]
@@ -92,9 +93,9 @@ namespace ChepingServer.Controllers
         /// <param name="dto">The dto.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此车型，请确认车型id是否正确
-        /// <br />
-        /// 车型信息已经存在
+        ///     无此车型，请确认车型id是否正确
+        ///     <br />
+        ///     车型信息已经存在
         /// </response>
         /// <response code="500"></response>
         [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(ModelDto))]
@@ -126,7 +127,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此车型，请确认车型id是否正确
+        ///     无此车型，请确认车型id是否正确
         /// </response>
         /// <response code="500"></response>
         [HttpPost, Route("{id}/Enable"), ResponseType(typeof(ModelDto))]
@@ -171,7 +172,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此车型，请确认车型id是否正确
+        ///     无此车型，请确认车型id是否正确
         /// </response>
         /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(ModelDto))]
@@ -214,7 +215,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///    获取车型分页信息
+        ///     获取车型分页信息
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
