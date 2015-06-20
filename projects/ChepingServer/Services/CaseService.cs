@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  9:02 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  10:46 AM
+// Last Modified On : 2015-06-20  10:49 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -27,14 +27,14 @@ namespace ChepingServer.Services
     /// </summary>
     public class CaseService
     {
-        public static readonly State[] DirectorTodoStates = { State.Shenhe, State.Baojia, State.ShenqingDakuan };
-        public static readonly State[] DirectorWarningStates = { State.YancheShibai, State.QiatanShibai, State.DakuanShenheShibai };
-        public static readonly State[] ManagerTodoStates = { State.DakuanShenhe };
-        public static readonly State[] ManagerWarningStates = { State.CaigouShibai };
-        public static readonly State[] PurchaserTodoStates = { State.Yanche, State.Qiatan, State.Caigou };
-        public static readonly State[] PurchaserWarningStates = { State.ShenheShibai, State.FangqiBaojia, State.FangqiShenqingDakuan };
-        public static readonly State[] QueryingTodoStates = { State.Chaxun };
-        public static readonly State[] ValuerTodoStates = { State.Pinggu };
+        private static readonly State[] DirectorTodoStates = { State.Shenhe, State.Baojia, State.ShenqingDakuan };
+        private static readonly State[] DirectorWarningStates = { State.YancheShibai, State.QiatanShibai, State.DakuanShenheShibai };
+        private static readonly State[] ManagerTodoStates = { State.DakuanShenhe };
+        private static readonly State[] ManagerWarningStates = { State.CaigouShibai };
+        private static readonly State[] PurchaserTodoStates = { State.Yanche, State.Qiatan, State.Caigou };
+        private static readonly State[] PurchaserWarningStates = { State.ShenheShibai, State.FangqiBaojia, State.FangqiShenqingDakuan };
+        private static readonly State[] QueryingTodoStates = { State.Chaxun };
+        private static readonly State[] ValuerTodoStates = { State.Pinggu };
 
         /// <summary>
         ///     accept price as an asynchronous operation.

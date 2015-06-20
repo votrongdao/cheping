@@ -165,6 +165,7 @@
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\CaseController.cs" />
     <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\DevController.cs" />
     <Compile Include="Controllers\MiscController.cs" />
     <Compile Include="Controllers\ModelController.cs" />
     <Compile Include="Controllers\OutletController.cs" />
