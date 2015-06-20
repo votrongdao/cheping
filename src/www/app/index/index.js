@@ -1,5 +1,5 @@
 angular.module('cheping.index', [
-    'cheping.index.todo',
+    'cheping.index.todos',
     'cheping.index.orders',
     'cheping.index.create',
     'cheping.services.cache'
