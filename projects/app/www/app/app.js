@@ -31,10 +31,15 @@ angular.module('cheping', [
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile):|data:image\//);
     })
     .config(function($stateProvider, $urlRouterProvider) {
-        $stateProvider.state('jym', {
-            url: "",
+        $stateProvider.state('cheping', {
+            url: "/index",
             abstract: true,
-            templateUrl: 'app/index.tpl.html'
+            views: {
+                '@': {
+                    controller: 'MainCtrl as ctrl',
+                    templateUrl: 'app/index.tpl.html'
+                }
+            }
         });
 
         $urlRouterProvider.otherwise('/jinbaoyin');

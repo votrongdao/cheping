@@ -2,9 +2,9 @@
 // Project          : ChepingServer
 // Author           : Siqi Lu
 // Created          : 2015-06-12  7:15 AM
-//
+// 
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  2:31 PM
+// Last Modified On : 2015-06-20  12:30 PM
 // ***********************************************************************
 // <copyright file="WebApiConfig.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Web.Cors;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Tracing;
 using Moe.AspNet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -55,6 +56,10 @@ namespace ChepingServer
             config.SetCorsPolicyProviderFactory(new CorsPolicyFactory());
             config.EnableCors();
 
+            SystemDiagnosticsTraceWriter traceWriter = config.EnableSystemDiagnosticsTracing();
+            traceWriter.IsVerbose = true;
+            traceWriter.MinimumLevel = TraceLevel.Info;
+
             // Web API routes
             config.MapHttpAttributeRoutes();
         }
@@ -79,7 +84,7 @@ namespace ChepingServer
             return this.provider;
         }
 
-        #endregion ICorsPolicyProviderFactory Members
+        #endregion
     }
 
     /// <summary>
@@ -133,6 +138,6 @@ namespace ChepingServer
             return Task.FromResult(this.policy);
         }
 
-        #endregion ICorsPolicyProvider Members
+        #endregion
     }
 }

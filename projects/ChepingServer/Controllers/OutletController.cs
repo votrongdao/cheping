@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  10:29 AM
+// Last Modified On : 2015-06-20  12:04 PM
 // ***********************************************************************
 // <copyright file="OutletController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -50,12 +50,12 @@ namespace ChepingServer.Controllers
         {
             Outlet outlet = new Outlet
             {
+                Available = true,
                 Address = dto.Address,
                 Cellphone = dto.Cellphone,
                 CityId = dto.CityId,
                 Contact = dto.Contact,
-                OutletName = dto.OutletName,
-                Available = true
+                OutletName = dto.OutletName
             };
 
             if (await this.outletService.Exist(outlet))
