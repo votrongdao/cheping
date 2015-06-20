@@ -45,10 +45,11 @@ namespace ChepingServer.Controllers
         private readonly UserService userService = new UserService();
 
         /// <summary>
-        ///     Gets the specified identifier.
+        ///     用户注册
         /// </summary>
         /// <param name="dto">The dto.</param>
-        /// <returns>IHttpActionResult.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Create(UserDto dto)
         {
@@ -74,10 +75,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Disables the specified identifier.
+        ///     停用用户
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        ///     无此用户，请确认用户id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("{id}/Disable"), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Disable([FromUri] int id)
         {
@@ -94,7 +99,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        ///     用户登录
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="dto">The dto.</param>
@@ -102,7 +107,6 @@ namespace ChepingServer.Controllers
         /// <response code="400">
         ///     无此用户，请确认用户id是否正确
         /// </response>
-        /// <response code="401">请登录</response>
         /// <response code="500"></response>
         [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Edit([FromUri] int id, UserDto dto)
@@ -131,10 +135,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Enables the specified identifier.
+        ///     启用用户
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        ///     无此用户，请确认用户id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("{id}/Enable"), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Enable([FromUri] int id)
         {
@@ -151,11 +159,15 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        ///     获取用户信息
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>IHttpActionResult.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        ///     无此用户，请确认用户id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Get(int id, [FromUri] bool includeUnavailable = false)
         {
@@ -170,11 +182,12 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        ///     通过手机号获取用户列表
         /// </summary>
         /// <param name="cellphone">The cellphone.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>IHttpActionResult.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("{cellphone}/Cellphone"), ResponseType(typeof(List<UserDto>))]
         public async Task<IHttpActionResult> GetByCellphone(string cellphone, [FromUri] bool includeUnavailable = false)
         {
@@ -184,12 +197,13 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        ///     获取分页用户信息
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>IHttpActionResult.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<UserDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] bool includeUnavailable = false)
         {
@@ -199,10 +213,11 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Indexes this instance.
+        ///     获取所有用户信息
         /// </summary>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Index"), ResponseType(typeof(List<UserDto>))]
         public async Task<IHttpActionResult> Index([FromUri] bool includeUnavailable = false)
         {
@@ -210,10 +225,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Logins the specified request.
+        ///     用户登录
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        ///     用户名或者密码错误，请确认后重试
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("Login"), ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Login(SignInRequest request)
         {
@@ -230,11 +249,15 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Resets the password.
+        ///     用户重置密码
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        ///     无此用户，请确认用户id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("{id}/ResetPassword"), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> ResetPassword(int id, [FromUri] bool includeUnavailable = false)
         {
@@ -256,7 +279,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Sets the cookie.
+        ///     设置 Cookie.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="cellphone">The cellphone.</param>

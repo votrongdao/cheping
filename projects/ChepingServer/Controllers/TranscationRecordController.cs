@@ -35,10 +35,14 @@ namespace ChepingServer.Controllers
         private readonly TranscationRecordService transcationRecordService = new TranscationRecordService();
 
         /// <summary>
-        ///     Gets the specified identifier.
+        ///     根据Id获取交易数据
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此交易数据，请确认交易数据id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(TranscationRecordDto))]
         public async Task<IHttpActionResult> Get([FromUri] int id)
         {
@@ -52,14 +56,18 @@ namespace ChepingServer.Controllers
             return this.Ok(transcationRecord.ToDto());
         }
 
+
         /// <summary>
-        ///     Gets the brands.
+        /// 根据查询条件获取交易数据信息
         /// </summary>
         /// <param name="modelId">The model identifier.</param>
         /// <param name="minMileage">The minimum mileage.</param>
         /// <param name="maxMileage">The maximum mileage.</param>
         /// <param name="licenseTime">The license time.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200">
+        /// </response>
+        /// <response code="500">
+        /// </response>
         [HttpGet, Route("TranscationRecords"), ResponseType(typeof(List<TranscationRecord>))]
         public async Task<IHttpActionResult> GetTranscationRecords([FromUri] int modelId, [FromUri] int minMileage, [FromUri] int maxMileage, [FromUri] DateTime licenseTime)
         {
@@ -67,7 +75,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the paginated.
+        ///     根据查询条件获取交易数据分页信息
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -75,7 +83,8 @@ namespace ChepingServer.Controllers
         /// <param name="minMileage">The minimum mileage.</param>
         /// <param name="maxMileage">The maximum mileage.</param>
         /// <param name="licenseTime">The license time.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<TranscationRecordDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] int modelId, [FromUri] int minMileage, [FromUri] int maxMileage, [FromUri] DateTime licenseTime)
         {
@@ -85,9 +94,10 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Indexes this instance.
+        ///     获取所有交易数据信息
         /// </summary>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Index"), ResponseType(typeof(List<TranscationRecordDto>))]
         public async Task<IHttpActionResult> Index()
         {
