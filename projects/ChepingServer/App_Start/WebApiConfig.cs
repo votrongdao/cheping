@@ -2,7 +2,7 @@
 // Project          : ChepingServer
 // Author           : Siqi Lu
 // Created          : 2015-06-12  7:15 AM
-// 
+//
 // Last Modified By : Siqi Lu
 // Last Modified On : 2015-06-20  12:30 PM
 // ***********************************************************************
@@ -84,7 +84,7 @@ namespace ChepingServer
             return this.provider;
         }
 
-        #endregion
+        #endregion ICorsPolicyProviderFactory Members
     }
 
     /// <summary>
@@ -107,10 +107,9 @@ namespace ChepingServer
                 AllowAnyOrigin = false
             };
 
+            this.policy.Origins.Add("http://localhost:8100");
             this.policy.Origins.Add("http://cheping.yuyidev.com");
-            this.policy.Origins.Add("https://cheping.yuyidev.com");
             this.policy.Origins.Add("http://cheping-local.yuyidev.com");
-            this.policy.Origins.Add("https://cheping-local.yuyidev.com");
 
             this.policy.Headers.Add("x-CP");
             this.policy.Headers.Add("x-cp");
@@ -138,6 +137,6 @@ namespace ChepingServer
             return Task.FromResult(this.policy);
         }
 
-        #endregion
+        #endregion ICorsPolicyProvider Members
     }
 }

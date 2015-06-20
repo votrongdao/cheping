@@ -48,7 +48,7 @@ angular.module('cheping.services', [
       return CacheFactory.get(cacheName);
     };
   })
-  .service('ConfigService', function($http, $q, URLS, JYMCacheService) {
+  .service('ConfigService', function($http, $q, URLS, CacheService) {
     var service = this;
 
 
