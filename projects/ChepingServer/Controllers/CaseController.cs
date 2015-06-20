@@ -295,7 +295,7 @@ namespace ChepingServer.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<CaseDto>))]
-        public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize)
+        public async Task<IHttpActionResult> GetPaginated([FromUri]int pageIndex, [FromUri]int pageSize)
         {
             PaginatedList<Case> cases = await this.caseService.GetPaginatedAsync(pageIndex, pageSize);
 
