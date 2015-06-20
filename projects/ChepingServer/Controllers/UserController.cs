@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  7:28 PM
+// Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  2:33 PM
+// Last Modified On : 2015-06-20  1:56 AM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -29,22 +29,23 @@ using Moe.Lib;
 namespace ChepingServer.Controllers
 {
     /// <summary>
-    /// Class UserController.
+    ///     Class UserController.
     /// </summary>
     [RoutePrefix("api/Users")]
     public class UserController : ApiControllerBase
     {
         /// <summary>
-        /// The SMS service
+        ///     The SMS service
         /// </summary>
         private readonly SmsService smsService = new SmsService();
+
         /// <summary>
-        /// The user service
+        ///     The user service
         /// </summary>
         private readonly UserService userService = new UserService();
 
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns>IHttpActionResult.</returns>
@@ -73,7 +74,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Disables the specified identifier.
+        ///     Disables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
@@ -92,9 +93,8 @@ namespace ChepingServer.Controllers
             return this.Ok(user.ToDto());
         }
 
-
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="dto">The dto.</param>
@@ -126,7 +126,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Enables the specified identifier.
+        ///     Enables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
@@ -146,7 +146,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
@@ -165,7 +165,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="cellphone">The cellphone.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
@@ -179,7 +179,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -194,7 +194,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Indexes this instance.
+        ///     Indexes this instance.
         /// </summary>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
@@ -240,11 +240,12 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("无此用户，请确认用户id是否正确");
             }
 
-            user.Password = Guid.NewGuid().ToString().Substring(0, 8);
+            string password = Guid.NewGuid().ToString().Substring(0, 8);
 
+            user.Password = MD5Hash.ComputeHashString(password);
             user = await this.userService.Edit(id, user);
 
-            await this.smsService.SendMessage(user.Cellphone, "登录密码：{0}".FormatWith(user.Password));
+            await this.smsService.SendMessage(user.Cellphone, "登录密码：{0}".FormatWith(password));
 
             return this.Ok(user.ToDto());
         }
