@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-20  9:02 AM
+// Created          : 2015-06-20  11:17 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  6:49 PM
+// Last Modified On : 2015-06-20  11:37 PM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -132,13 +132,19 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <param name="valueInfo">The value information.</param>
+        /// <param name="price">The price.</param>
         /// <returns>Task&lt;Case&gt;.</returns>
+        /// <exception cref="ApplicationException">
+        ///     事项的状态不合法
+        ///     or
+        ///     未能加载验车信息
+        /// </exception>
         /// <exception cref="System.ApplicationException">
         ///     事项的状态不合法
         ///     or
         ///     未能加载验车信息
         /// </exception>
-        public async Task<Case> AddValueInfoAsync(int caseId, VehicleInspection valueInfo)
+        public async Task<Case> AddValueInfoAsync(int caseId, VehicleInspection valueInfo, int price)
         {
             using (ChePingContext db = new ChePingContext())
             {
@@ -164,6 +170,7 @@ namespace ChepingServer.Services
                 inspection.FloorPrice = valueInfo.FloorPrice;
 
                 @case.State = State.Shenhe;
+                @case.PurchasePrice = price;
 
                 await db.ExecuteSaveChangesAsync();
 
