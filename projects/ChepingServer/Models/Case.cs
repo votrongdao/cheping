@@ -12,6 +12,7 @@
 // ***********************************************************************
 
 using ChepingServer.Enum;
+using System;
 
 namespace ChepingServer.Models
 {
@@ -109,5 +110,18 @@ namespace ChepingServer.Models
         /// </summary>
         /// <value>The vehicle inspec identifier.</value>
         public int VehicleInspecId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the create time identifier.
+        /// </summary>
+        /// <value>The create time identifier.</value>
+        public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the times identifier.
+        /// </summary>
+        /// <value>The times identifier.</value>
+        public string Times { get; set; }
+
     }
 }

@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using ChepingServer.Enum;
 using ChepingServer.Models;
 using Moe.Lib;
+using Newtonsoft.Json;
 
 namespace ChepingServer.Services
 {
@@ -57,6 +58,23 @@ namespace ChepingServer.Services
                 {
                     @case.State = State.ShenqingDakuan;
                     @case.PurchasePrice = price;
+                    this.RecordTime(@case, State.Qiatan);
+
+                    //alloc managerId
+                    User user = await db.Users.FirstOrDefaultAsync(u => u.Id == @case.PurchaserId && u.JobTitle == JobTitle.Purchaser && u.Available);
+                    if (user == null)
+                    {
+                        throw new ApplicationException("无法加载用户信息");
+                    }
+
+                    List<User> managers = await db.Users.Where(u => u.Available && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Manager).ToListAsync();
+
+                    int caseCount = await db.Cases.CountAsync(c => c.OutletId == user.OutletId && ManagerTodoStates.Contains(c.State) && c.ManagerId != null);
+                    int index = caseCount % managers.Count;
+                    int managerId = managers[index].Id;
+
+                    @case.ManagerId = managerId;
+
                     await db.ExecuteSaveChangesAsync();
                 }
 
@@ -120,6 +138,7 @@ namespace ChepingServer.Services
                 inspection.ViolationNote = chaxunInfo.ViolationNote;
 
                 @case.State = State.Baojia;
+                this.RecordTime(@case, State.Chaxun);
 
                 await db.ExecuteSaveChangesAsync();
 
@@ -164,6 +183,21 @@ namespace ChepingServer.Services
                 inspection.FloorPrice = valueInfo.FloorPrice;
 
                 @case.State = State.Shenhe;
+                this.RecordTime(@case, State.Pinggu);
+
+                //alloc directorId
+                User user = await db.Users.FirstOrDefaultAsync(u => u.Id == @case.PurchaserId && u.JobTitle == JobTitle.Purchaser && u.Available);
+                if (user == null)
+                {
+                    throw new ApplicationException("无法加载用户信息");
+                }
+
+                List<User> directors = await db.Users.Where(u => u.Available && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Director).ToListAsync();
+
+                int caseCount = await db.Cases.CountAsync(c => c.OutletId == user.OutletId && DirectorTodoStates.Contains(c.State) && c.DirectorId != null);
+                int index = caseCount % directors.Count;
+
+                int directorId = directors[index].Id;
 
                 await db.ExecuteSaveChangesAsync();
 
@@ -205,6 +239,22 @@ namespace ChepingServer.Services
                 inspection.LicenseCode = yancheInfo.LicenseCode;
 
                 @case.State = State.Chaxun;
+                this.RecordTime(@case, State.Yanche);
+
+                //alloc queryingId
+                User user = await db.Users.FirstOrDefaultAsync(u => u.Id == @case.PurchaserId && u.JobTitle == JobTitle.Purchaser && u.Available);
+                if (user == null)
+                {
+                    throw new ApplicationException("无法加载用户信息");
+                }
+
+                List<User> queryings = await db.Users.Where(u => u.Available && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Querying).ToListAsync();
+
+                int caseCount = await db.Cases.CountAsync(c => c.OutletId == user.OutletId && QueryingTodoStates.Contains(c.State) && c.QueryingId != null);
+                int index = caseCount % queryings.Count;
+                int queryingId = queryings[index].Id;
+
+                @case.QueryingId = queryingId;
 
                 await db.ExecuteSaveChangesAsync();
 
@@ -230,6 +280,7 @@ namespace ChepingServer.Services
                 if (@case.State == State.ShenqingDakuan)
                 {
                     @case.State = State.Caigou;
+                    this.RecordTime(@case, State.ShenqingDakuan);
                     await db.ExecuteSaveChangesAsync();
                 }
 
@@ -441,6 +492,7 @@ namespace ChepingServer.Services
                 if (@case.State == State.Caigou)
                 {
                     @case.State = State.Ruku;
+                    this.RecordTime(@case, State.Caigou);
                     await db.ExecuteSaveChangesAsync();
                 }
 
@@ -464,6 +516,8 @@ namespace ChepingServer.Services
                 {
                     throw new ApplicationException("未能加载事项信息");
                 }
+
+                this.RecordTime(@case, @case.State);
 
                 switch (@case.State)
                 {
@@ -550,6 +604,7 @@ namespace ChepingServer.Services
                 {
                     @case.PurchasePrice = purchasePrice;
                     @case.State = State.Yanche;
+                    this.RecordTime(@case, State.Shenhe);
                     await db.ExecuteSaveChangesAsync();
                 }
 
@@ -557,6 +612,7 @@ namespace ChepingServer.Services
                 {
                     @case.PurchasePrice = purchasePrice;
                     @case.State = State.Qiatan;
+                    this.RecordTime(@case, State.Baojia);
                     await db.ExecuteSaveChangesAsync();
                 }
 
@@ -596,7 +652,8 @@ namespace ChepingServer.Services
                 State = State.Pinggu,
                 ValuerId = null, // need update
                 VehicleInfoId = 0, // need update
-                VehicleInspecId = 0 // need update
+                VehicleInspecId = 0, // need update
+                CreateTime = DateTime.UtcNow.AddHours(8)
             };
 
             VehicleInfo newInfo = new VehicleInfo
@@ -706,7 +763,8 @@ namespace ChepingServer.Services
                 State = State.Shenhe,
                 ValuerId = null,
                 VehicleInfoId = 0, // need update
-                VehicleInspecId = 0 // need update
+                VehicleInspecId = 0, // need update
+                CreateTime = DateTime.UtcNow.AddHours(8)
             };
 
             VehicleInfo newInfo = new VehicleInfo
@@ -759,5 +817,22 @@ namespace ChepingServer.Services
 
             return newCase;
         }
+
+        private void RecordTime(Case @case, State state)
+        {
+           string times = @case.Times;
+            DateTime now = DateTime.UtcNow.AddHours(8);
+            Dictionary<State, DateTime> dir = JsonConvert.DeserializeObject<Dictionary<State, DateTime>>(times);
+            if (dir.ContainsKey(state))
+            {
+                dir[state] = now;
+            }
+            else
+            {
+                dir.Add(state, now);
+            }
+           @case.Times =  dir.ToJson();
+        }
+
     }
 }
