@@ -1,21 +1,32 @@
-﻿using System;
+// ***********************************************************************
+// Project          : ChepingServer
+// Author           : Siqi Lu
+// Created          : 2015-06-20  9:02 AM
+//
+// Last Modified By : Siqi Lu
+// Last Modified On : 2015-06-20  9:05 AM
+// ***********************************************************************
+// <copyright file="PhotoService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
+//     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using ChepingServer.Models;
 using Moe.Lib;
 
 namespace ChepingServer.Services
 {
     /// <summary>
-    /// Class PhotoService.
+    ///     Class PhotoService.
     /// </summary>
     public class PhotoService
     {
         /// <summary>
-        /// Creates the specified photo.
+        ///     Creates the specified photo.
         /// </summary>
         /// <param name="photo">The photo.</param>
         /// <returns>Task&lt;Photo&gt;.</returns>
@@ -28,26 +39,12 @@ namespace ChepingServer.Services
             return photo;
         }
 
-
         /// <summary>
-        /// Deletes the specified identifier.
+        ///     Deletes the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
         public async Task<bool> Delete(int id)
-        {
-            using (ChePingContext db = new ChePingContext())
-            {
-                return await this.TryRemovePhoto(id);
-            }
-        }
-
-        /// <summary>
-        /// Tries the remove photo.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;System.Boolean&gt;.</returns>
-        private async Task<bool> TryRemovePhoto(int id)
         {
             bool isSuccess = false;
             using (ChePingContext db = new ChePingContext())
@@ -63,9 +60,8 @@ namespace ChepingServer.Services
             }
         }
 
-
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;Photo&gt;.</returns>
@@ -73,25 +69,12 @@ namespace ChepingServer.Services
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.Photos.FirstOrDefaultAsync(p=> p.Id == id);
+                return await db.Photos.FirstOrDefaultAsync(p => p.Id == id);
             }
         }
 
         /// <summary>
-        /// Gets the photos.
-        /// </summary>
-        /// <param name="caseId">The case identifier.</param>
-        /// <returns>Task&lt;List&lt;Photo&gt;&gt;.</returns>
-        public async Task<List<Photo>> GetPhotos(int caseId)
-        {
-            using (ChePingContext db = new ChePingContext())
-            {
-                    return await db.Photos.Where(p=>p.CaseId == caseId).ToListAsync();
-            }
-        }
-
-        /// <summary>
-        /// Gets the paginated.
+        ///     Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -100,24 +83,36 @@ namespace ChepingServer.Services
         {
             using (ChePingContext db = new ChePingContext())
             {
-                 int   count = await db.Photos.CountAsync();
-                 List<Photo> photos = await db.Photos.OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                int count = await db.Photos.CountAsync();
+                List<Photo> photos = await db.Photos.OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
 
                 return new PaginatedList<Photo>(pageIndex, pageSize, count, photos);
             }
         }
 
         /// <summary>
-        /// Indexes this instance.
+        ///     Gets the photos.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;List&lt;Photo&gt;&gt;.</returns>
+        public async Task<List<Photo>> GetPhotos(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                return await db.Photos.Where(p => p.CaseId == caseId).ToListAsync();
+            }
+        }
+
+        /// <summary>
+        ///     Indexes this instance.
         /// </summary>
         /// <returns>Task&lt;List&lt;Photo&gt;&gt;.</returns>
         public async Task<List<Photo>> Index()
         {
             using (ChePingContext db = new ChePingContext())
             {
-                    return await db.Photos.ToListAsync();
+                return await db.Photos.ToListAsync();
             }
         }
-
     }
 }

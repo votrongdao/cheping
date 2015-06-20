@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  1:56 AM
+// Last Modified On : 2015-06-20  10:38 AM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -98,8 +98,13 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="dto">The dto.</param>
-        /// <returns>IHttpActionResult.</returns>
-        [HttpPost, Route("/{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
+        /// <response code="200"></response>
+        /// <response code="400">
+        ///     无此用户，请确认用户id是否正确
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
+        [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Edit([FromUri] int id, UserDto dto)
         {
             User user = await this.userService.Get(id);
@@ -230,7 +235,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpGet, Route("/{id}/ResetPassword"), ResponseType(typeof(UserDto))]
+        [HttpGet, Route("{id}/ResetPassword"), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> ResetPassword(int id, [FromUri] bool includeUnavailable = false)
         {
             User user = await this.userService.Get(id, includeUnavailable);

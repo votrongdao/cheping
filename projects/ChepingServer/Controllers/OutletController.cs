@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  2:03 AM
+// Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  2:28 AM
+// Last Modified On : 2015-06-20  10:29 AM
 // ***********************************************************************
 // <copyright file="OutletController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -72,7 +72,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Disables the specified identifier.
+        ///     Disables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
@@ -114,6 +114,11 @@ namespace ChepingServer.Controllers
             return this.Ok((await this.outletService.Edit(id, outlet)).ToDto());
         }
 
+        /// <summary>
+        ///     Enables the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpPost, Route("{id}/Enable"), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Enable([FromUri] int id)
         {
@@ -147,7 +152,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
@@ -166,7 +171,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the outlets.
+        ///     Gets the outlets.
         /// </summary>
         /// <param name="cityId">The city identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
@@ -178,7 +183,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the paginated.
+        ///     Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>

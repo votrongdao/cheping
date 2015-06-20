@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:46 PM
+// Created          : 2015-06-20  9:02 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:11 AM
+// Last Modified On : 2015-06-20  9:15 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using ChepingServer.DTO;
 using ChepingServer.Enum;
 using ChepingServer.Models;
 using Moe.Lib;
@@ -29,8 +28,11 @@ namespace ChepingServer.Services
     public class CaseService
     {
         public static readonly State[] DirectorTodoStates = { State.Shenhe, State.Baojia, State.ShenqingDakuan };
+        public static readonly State[] DirectorWarningStates = { State.YancheShibai, State.QiatanShibai, State.DakuanShenheShibai };
         public static readonly State[] ManagerTodoStates = { State.DakuanShenhe };
+        public static readonly State[] ManagerWarningStates = { State.CaigouShibai };
         public static readonly State[] PurchaserTodoStates = { State.Yanche, State.Qiatan, State.Caigou };
+        public static readonly State[] PurchaserWarningStates = { State.ShenheShibai, State.FangqiBaojia, State.FangqiShenqingDakuan };
         public static readonly State[] QueryingTodoStates = { State.Chaxun };
         public static readonly State[] ValuerTodoStates = { State.Pinggu };
 
@@ -68,7 +70,7 @@ namespace ChepingServer.Services
         /// <param name="case">The case.</param>
         /// <param name="info">The information.</param>
         /// <returns>Task&lt;CaseDto&gt;.</returns>
-        public async Task<CaseDto> AddCaseAsync(Case @case, VehicleInfo info)
+        public async Task<Case> AddCaseAsync(Case @case, VehicleInfo info)
         {
             if (info.ModelId == -1)
             {
@@ -248,33 +250,168 @@ namespace ChepingServer.Services
             }
         }
 
-
-        /// <summary>
-        /// Gets the paginated.
-        /// </summary>
-        /// <param name="pageIndex">Index of the page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <returns>Task&lt;PaginatedList&lt;Case&gt;&gt;.</returns>
-        public async Task<PaginatedList<Case>> GetPaginated(int pageIndex, int pageSize)
+        public async Task<PaginatedList<Case>> GetCasesAsync(User user, int pageIndex, int pageSize)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                    int count = await db.Cases.CountAsync();
-                    List<Case> cases = await db.Cases.OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                int totalCount = 0;
+                List<Case> cases = new List<Case>();
+                switch (user.JobTitle)
+                {
+                    case JobTitle.Purchaser:
+                        totalCount = await db.Cases.Where(c => c.PurchaserId == user.Id).CountAsync();
+                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        break;
 
-                    return new PaginatedList<Case>(pageIndex, pageSize, count, cases);
+                    case JobTitle.Valuer:
+                        totalCount = await db.Cases.Where(c => c.ValuerId == user.Id).CountAsync();
+                        cases = await db.Cases.Where(c => c.ValuerId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        break;
+
+                    case JobTitle.Querying:
+                        totalCount = await db.Cases.Where(c => c.QueryingId == user.Id).CountAsync();
+                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        break;
+
+                    case JobTitle.Director:
+                        totalCount = await db.Cases.Where(c => c.DirectorId == user.Id).CountAsync();
+                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        break;
+
+                    case JobTitle.Manager:
+                        totalCount = await db.Cases.Where(c => c.ManagerId == user.Id).CountAsync();
+                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        break;
+                }
+
+                return new PaginatedList<Case>(pageIndex, pageSize, totalCount, cases);
             }
         }
 
         /// <summary>
-        /// Indexes this instance.
+        ///     Gets the paginated.
         /// </summary>
-        /// <returns>Task&lt;List&lt;Case&gt;&gt;.</returns>
-        public async Task<List<Case>> Index()
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns>Task&lt;PaginatedList&lt;Case&gt;&gt;.</returns>
+        public async Task<PaginatedList<Case>> GetPaginatedAsync(int pageIndex, int pageSize)
         {
             using (ChePingContext db = new ChePingContext())
             {
-                    return await db.Cases.ToListAsync();
+                int count = await db.Cases.CountAsync();
+                List<Case> cases = await db.Cases.OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+
+                return new PaginatedList<Case>(pageIndex, pageSize, count, cases);
+            }
+        }
+
+        /// <summary>
+        /// get todos as an asynchronous operation.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>Task&lt;List&lt;Case&gt;&gt;.</returns>
+        public async Task<List<Case>> GetTodosAsync(User user)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                switch (user.JobTitle)
+                {
+                    case JobTitle.Purchaser:
+                        return await db.Cases.Where(c => PurchaserTodoStates.Contains(c.State) && c.PurchaserId == user.Id).ToListAsync();
+
+                    case JobTitle.Valuer:
+                        return await db.Cases.Where(c => QueryingTodoStates.Contains(c.State) && c.ValuerId == user.Id).ToListAsync();
+
+                    case JobTitle.Querying:
+                        return await db.Cases.Where(c => QueryingTodoStates.Contains(c.State) && c.QueryingId == user.Id).ToListAsync();
+
+                    case JobTitle.Director:
+                        return await db.Cases.Where(c => DirectorTodoStates.Contains(c.State) && c.DirectorId == user.Id).ToListAsync();
+
+                    case JobTitle.Manager:
+                        return await db.Cases.Where(c => ManagerTodoStates.Contains(c.State) && c.ManagerId == user.Id).ToListAsync();
+
+                    default:
+                        return new List<Case>();
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Gets the vehicle information.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;VehicleInfo&gt;.</returns>
+        /// <exception cref="System.ApplicationException">未能加载事项信息</exception>
+        public async Task<VehicleInfo> GetVehicleInfoAsync(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                return await db.VehicleInfos.FirstOrDefaultAsync(v => v.Id == @case.VehicleInfoId);
+            }
+        }
+
+        /// <summary>
+        ///     Gets the vehicle inspection.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;VehicleInspection&gt;.</returns>
+        /// <exception cref="System.ApplicationException">未能加载事项信息</exception>
+        public async Task<VehicleInspection> GetVehicleInspectionAsync(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                return await db.VehicleInspections.FirstOrDefaultAsync(v => v.Id == @case.VehicleInspecId);
+            }
+        }
+
+        /// <summary>
+        /// get warning as an asynchronous operation.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>Task&lt;List&lt;Case&gt;&gt;.</returns>
+        public async Task<List<Case>> GetWarningAsync(User user)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                switch (user.JobTitle)
+                {
+                    case JobTitle.Purchaser:
+                        return await db.Cases.Where(c => PurchaserWarningStates.Contains(c.State) && c.PurchaserId == user.Id).ToListAsync();
+
+                    case JobTitle.Director:
+                        return await db.Cases.Where(c => DirectorWarningStates.Contains(c.State) && c.DirectorId == user.Id).ToListAsync();
+
+                    case JobTitle.Manager:
+                        return await db.Cases.Where(c => ManagerWarningStates.Contains(c.State) && c.ManagerId == user.Id).ToListAsync();
+
+                    default:
+                        return new List<Case>();
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Indexes this instance.
+        /// </summary>
+        /// <returns>Task&lt;List&lt;Case&gt;&gt;.</returns>
+        public async Task<List<Case>> IndexAsync()
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                return await db.Cases.ToListAsync();
             }
         }
 
@@ -424,7 +561,7 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="case">The case.</param>
         /// <param name="info">The information.</param>
-        /// <returns>Task&lt;CaseDto&gt;.</returns>
+        /// <returns>System.Threading.Tasks.Task&lt;ChepingServer.Models.Case&gt;.</returns>
         /// <exception cref="System.ApplicationException">
         ///     无法加载车型信息
         ///     or
@@ -434,7 +571,7 @@ namespace ChepingServer.Services
         ///     or
         ///     评估师分配错误，事项添加失败
         /// </exception>
-        private async Task<CaseDto> AddGeneralCaseAsync(Case @case, VehicleInfo info)
+        private async Task<Case> AddGeneralCaseAsync(Case @case, VehicleInfo info)
         {
             Case newCase = new Case
             {
@@ -534,7 +671,7 @@ namespace ChepingServer.Services
                 await db.SaveAsync(@case);
             }
 
-            return newCase.ToDto();
+            return newCase;
         }
 
         /// <summary>
@@ -544,7 +681,7 @@ namespace ChepingServer.Services
         /// <param name="info">The information.</param>
         /// <returns>Task&lt;CaseDto&gt;.</returns>
         /// <exception cref="System.ApplicationException">无法加载用户信息</exception>
-        private async Task<CaseDto> AddSpecialCaseAsync(Case @case, VehicleInfo info)
+        private async Task<Case> AddSpecialCaseAsync(Case @case, VehicleInfo info)
         {
             Case newCase = new Case
             {
@@ -612,40 +749,7 @@ namespace ChepingServer.Services
                 await db.SaveAsync(@case);
             }
 
-            return newCase.ToDto();
+            return newCase;
         }
-
-
-         public async Task<VehicleInfo> GetVehicleInfo(int caseId)
-        {
-            using (ChePingContext db = new ChePingContext())
-            {
-                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
-                if (@case == null)
-                {
-                    throw new ApplicationException("未能加载事项信息");
-                }
-
-                return await db.VehicleInfos.FirstOrDefaultAsync(v => v.Id == @case.VehicleInfoId);
-            }
-        }
-
-         public async Task<VehicleInspection> GetVehicleInspection(int caseId)
-         {
-             using (ChePingContext db = new ChePingContext())
-             {
-                 Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
-                 if (@case == null)
-                 {
-                     throw new ApplicationException("未能加载事项信息");
-                 }
-
-                 return await db.VehicleInspections.FirstOrDefaultAsync(v => v.Id == @case.VehicleInspecId);
-             }
-         }
-
-
-
-
     }
 }

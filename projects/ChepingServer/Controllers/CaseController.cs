@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-12  11:21 AM
+// Created          : 2015-06-20  9:02 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  8:35 PM
+// Last Modified On : 2015-06-20  10:38 AM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -13,7 +13,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -39,7 +38,7 @@ namespace ChepingServer.Controllers
         private readonly UserService userService = new UserService();
 
         /// <summary>
-        /// Accepts the price.
+        ///     Accepts the price.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
@@ -117,13 +116,13 @@ namespace ChepingServer.Controllers
                 VehicleLocation = request.VehicleLocation
             };
 
-            CaseDto caseDto = await this.caseService.AddCaseAsync(@case, info);
+            @case = await this.caseService.AddCaseAsync(@case, info);
 
-            return this.Ok(caseDto);
+            return this.Ok(@case.ToDto());
         }
 
         /// <summary>
-        /// Adds the chaxun information.
+        ///     Adds the chaxun information.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
@@ -165,7 +164,11 @@ namespace ChepingServer.Controllers
             return this.Ok(@case.ToDto());
         }
 
-
+        /// <summary>
+        ///     Adds the value information.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [Route("AddValueInfo"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> AddValueInfo(AddValueInfoRequest request)
         {
@@ -200,8 +203,6 @@ namespace ChepingServer.Controllers
 
             return this.Ok(@case.ToDto());
         }
-
-
 
         /// <summary>
         ///     Adds the yanche information.
@@ -241,12 +242,12 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Approves the payment.
+        ///     Approves the payment.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [Route("ApprovePayment"), CookieAuthorize, ResponseType(typeof(CaseDto))]
-        public async Task<IHttpActionResult> ApprovePayment([FromUri]int caseId)
+        public async Task<IHttpActionResult> ApprovePayment([FromUri] int caseId)
         {
             Case @case = await this.caseService.GetAsync(caseId);
             if (@case == null)
@@ -270,10 +271,9 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// 根据订单Id获取订单
+        ///     根据订单Id获取订单
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("{id}"), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> Get([FromUri] int id)
@@ -288,9 +288,8 @@ namespace ChepingServer.Controllers
             return this.Ok(@case.ToDto());
         }
 
-
         /// <summary>
-        /// Gets the paginated.
+        ///     Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -298,30 +297,64 @@ namespace ChepingServer.Controllers
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<CaseDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize)
         {
-            PaginatedList<Case> cases = await this.caseService.GetPaginated(pageIndex, pageSize);
+            PaginatedList<Case> cases = await this.caseService.GetPaginatedAsync(pageIndex, pageSize);
 
             return this.Ok(cases.ToPaginated(m => m.ToDto()));
         }
 
+        /// <summary>
+        ///     Gets the todos.
+        /// </summary>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpGet, Route("Todos"), ResponseType(typeof(List<CaseDto>))]
+        public async Task<IHttpActionResult> GetTodos()
+        {
+            User user = await this.userService.Get(this.CurrentUser.Id);
+            if (user == null)
+            {
+                return this.BadRequest("无法加载用户信息");
+            }
+
+            List<Case> cases = await this.caseService.GetTodosAsync(user);
+
+            return this.Ok(cases.Select(c => c.ToDto()));
+        }
 
         /// <summary>
-        /// Indexes this instance.
+        ///     Gets the warnings.
+        /// </summary>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpGet, Route("Warnings"), ResponseType(typeof(List<CaseDto>))]
+        public async Task<IHttpActionResult> GetWarnings()
+        {
+            User user = await this.userService.Get(this.CurrentUser.Id);
+            if (user == null)
+            {
+                return this.BadRequest("无法加载用户信息");
+            }
+
+            List<Case> cases = await this.caseService.GetWarningAsync(user);
+
+            return this.Ok(cases.Select(c => c.ToDto()));
+        }
+
+        /// <summary>
+        ///     Indexes this instance.
         /// </summary>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("Index"), ResponseType(typeof(List<CaseDto>))]
         public async Task<IHttpActionResult> Index()
         {
-            return this.Ok(await this.caseService.Index());
+            return this.Ok(await this.caseService.IndexAsync());
         }
 
-
         /// <summary>
-        /// Purchases the specified case identifier.
+        ///     Purchases the specified case identifier.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [Route("Purchase"), CookieAuthorize, ResponseType(typeof(CaseDto))]
-        public async Task<IHttpActionResult> Purchase([FromUri]int caseId)
+        public async Task<IHttpActionResult> Purchase([FromUri] int caseId)
         {
             Case @case = await this.caseService.GetAsync(caseId);
             if (@case == null)
@@ -345,13 +378,13 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Rejects the specified case identifier.
+        ///     Rejects the specified case identifier.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <param name="message">The message.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [Route("Reject"), CookieAuthorize, ResponseType(typeof(CaseDto))]
-        public async Task<IHttpActionResult> Reject([FromUri]int caseId, [FromUri]string message)
+        public async Task<IHttpActionResult> Reject([FromUri] int caseId, [FromUri] string message)
         {
             if (message.IsNullOrEmpty())
             {
@@ -364,58 +397,59 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("无法加载事项信息");
             }
 
-            if (@case.State == State.Shenhe)
+            switch (@case.State)
             {
-                if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
-                {
-                    return this.BadRequest("操作未授权");
-                }
-            }
-            else if (@case.State == State.Yanche)
-            {
-                if (@case.PurchaserId != this.CurrentUser.Id)
-                {
-                    return this.BadRequest("操作未授权");
-                }
-            }
-            else if (@case.State == State.Baojia)
-            {
-                if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
-                {
-                    return this.BadRequest("操作未授权");
-                }
-            }
-            else if (@case.State == State.Qiatan)
-            {
-                if (@case.PurchaserId != this.CurrentUser.Id)
-                {
-                    return this.BadRequest("操作未授权");
-                }
-            }
-            else if (@case.State == State.ShenqingDakuan)
-            {
-                if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
-                {
-                    return this.BadRequest("操作未授权");
-                }
-            }
-            else if (@case.State == State.DakuanShenhe)
-            {
-                if (@case.ManagerId.GetValueOrDefault(-100) != this.CurrentUser.Id)
-                {
-                    return this.BadRequest("操作未授权");
-                }
-            }
-            else if (@case.State == State.Caigou)
-            {
-                if (@case.PurchaserId != this.CurrentUser.Id)
-                {
-                    return this.BadRequest("操作未授权");
-                }
-            }
-            else
-            {
-                return this.BadRequest("事项状态错误");
+                case State.Shenhe:
+                    if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+                    {
+                        return this.BadRequest("操作未授权");
+                    }
+                    break;
+
+                case State.Yanche:
+                    if (@case.PurchaserId != this.CurrentUser.Id)
+                    {
+                        return this.BadRequest("操作未授权");
+                    }
+                    break;
+
+                case State.Baojia:
+                    if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+                    {
+                        return this.BadRequest("操作未授权");
+                    }
+                    break;
+
+                case State.Qiatan:
+                    if (@case.PurchaserId != this.CurrentUser.Id)
+                    {
+                        return this.BadRequest("操作未授权");
+                    }
+                    break;
+
+                case State.ShenqingDakuan:
+                    if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+                    {
+                        return this.BadRequest("操作未授权");
+                    }
+                    break;
+
+                case State.DakuanShenhe:
+                    if (@case.ManagerId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+                    {
+                        return this.BadRequest("操作未授权");
+                    }
+                    break;
+
+                case State.Caigou:
+                    if (@case.PurchaserId != this.CurrentUser.Id)
+                    {
+                        return this.BadRequest("操作未授权");
+                    }
+                    break;
+
+                default:
+                    return this.BadRequest("事项状态错误");
             }
 
             @case = await this.caseService.RejectAsync(caseId, message);
@@ -423,16 +457,13 @@ namespace ChepingServer.Controllers
             return this.Ok(@case.ToDto());
         }
 
-
-
-
         /// <summary>
-        /// Rejections the confirm.
+        ///     Rejections the confirm.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [Route("RejectionConfirm"), CookieAuthorize, ResponseType(typeof(CaseDto))]
-        public async Task<IHttpActionResult> RejectionConfirm([FromUri]int caseId)
+        public async Task<IHttpActionResult> RejectionConfirm([FromUri] int caseId)
         {
             Case @case = await this.caseService.GetAsync(caseId);
             if (@case == null)
@@ -455,16 +486,20 @@ namespace ChepingServer.Controllers
             return this.Ok(@case.ToDto());
         }
 
-
-
         /// <summary>
-        /// Reviews the case.
+        ///     Reviews the case.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <param name="purchasePrice">The purchase price.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="400">
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
+        /// </response>
         [Route("ReviewCase"), CookieAuthorize, ResponseType(typeof(CaseDto))]
-        public async Task<IHttpActionResult> ReviewCase([FromUri]int caseId, [FromUri]int purchasePrice)
+        public async Task<IHttpActionResult> ReviewCase([FromUri] int caseId, [FromUri] int purchasePrice)
         {
             Case @case = await this.caseService.GetAsync(caseId);
             if (@case == null)
@@ -488,27 +523,25 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Vehicles the information.
+        ///     Vehicles the information.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("VehicleInfo"), ResponseType(typeof(VehicleInfo))]
         public async Task<IHttpActionResult> VehicleInfo(int caseId)
         {
-            return this.Ok(await this.caseService.GetVehicleInfo(caseId));
+            return this.Ok(await this.caseService.GetVehicleInfoAsync(caseId));
         }
 
-
         /// <summary>
-        /// Vehicles the inspection.
+        ///     Vehicles the inspection.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpGet, Route("VehicleInspection"), ResponseType(typeof(VehicleInspection))]
         public async Task<IHttpActionResult> VehicleInspection(int caseId)
         {
-            return this.Ok(await this.caseService.GetVehicleInspection(caseId));
+            return this.Ok(await this.caseService.GetVehicleInspectionAsync(caseId));
         }
-
     }
 }

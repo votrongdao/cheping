@@ -33,6 +33,7 @@ namespace ChepingServer.Services
         public async Task<User> Create(User user)
         {
             user.Available = true;
+            user.Password = MD5Hash.ComputeMD5Hash(user.Password);
 
             using (ChePingContext db = new ChePingContext())
             {
@@ -126,7 +127,7 @@ namespace ChepingServer.Services
         {
             using (ChePingContext db = new ChePingContext())
             {
-                if ( includeUnavailable )
+                if (includeUnavailable)
                 {
                     return await db.Users.Where(u => u.Cellphone == cellphone).ToListAsync();
                 }
@@ -150,14 +151,14 @@ namespace ChepingServer.Services
                 if (includeUnavailable)
                 {
                     count = await db.Users.CountAsync();
-                    users = await db.Users.OrderBy(u => u.Id).Skip(pageSize*pageIndex).Take(pageSize).ToListAsync();
+                    users = await db.Users.OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                 }
                 else
                 {
-                    count = await db.Users.CountAsync(u=>u.Available);
-                    users = await db.Users.Where(u=>u.Available).OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                    count = await db.Users.CountAsync(u => u.Available);
+                    users = await db.Users.Where(u => u.Available).OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                 }
-                 
+
                 return new PaginatedList<User>(pageIndex, pageSize, count, users);
             }
         }
@@ -171,11 +172,11 @@ namespace ChepingServer.Services
         {
             using (ChePingContext db = new ChePingContext())
             {
-                if ( includeUnavailable)
+                if (includeUnavailable)
                 {
                     return await db.Users.ToListAsync();
                 }
-                return await db.Users.Where(u=>u.Available).ToListAsync();
+                return await db.Users.Where(u => u.Available).ToListAsync();
             }
         }
 
@@ -187,6 +188,7 @@ namespace ChepingServer.Services
         /// <returns>Task&lt;User&gt;.</returns>
         public async Task<User> Login(string loginName, string password)
         {
+            password = MD5Hash.ComputeMD5Hash(password);
             using (ChePingContext db = new ChePingContext())
             {
                 return await db.Users.FirstOrDefaultAsync(u => u.Cellphone == loginName && u.Password == password);

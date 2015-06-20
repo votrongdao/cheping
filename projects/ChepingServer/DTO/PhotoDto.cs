@@ -1,17 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+// ***********************************************************************
+// Project          : ChepingServer
+// Author           : Siqi Lu
+// Created          : 2015-06-20  12:13 AM
+//
+// Last Modified By : Siqi Lu
+// Last Modified On : 2015-06-20  9:03 AM
+// ***********************************************************************
+// <copyright file="PhotoDto.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
+//     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System;
 
 namespace ChepingServer.DTO
 {
-
     /// <summary>
-    /// Class PhotoEx.
+    ///     Class PhotoEx.
     /// </summary>
-    public static class PhotoEx {
+    public static class PhotoEx
+    {
         /// <summary>
-        /// To the dto.
+        ///     To the dto.
         /// </summary>
         /// <param name="photo">The photo.</param>
         /// <returns>PhotoDto.</returns>
@@ -27,31 +37,29 @@ namespace ChepingServer.DTO
         }
     }
 
-
     /// <summary>
-    /// Class PhotoDto.
+    ///     Class PhotoDto.
     /// </summary>
     public class PhotoDto
     {
         /// <summary>
-        /// 订单Id
+        ///     订单Id
         /// </summary>
         public int CaseId { get; set; }
 
         /// <summary>
-        /// 图片内容
+        ///     图片内容
         /// </summary>
         public byte[] Content { get; set; }
 
         /// <summary>
-        /// 图片Id
+        ///     图片Id
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// 上传时间
+        ///     上传时间
         /// </summary>
         public DateTime UploadTime { get; set; }
-
     }
 }

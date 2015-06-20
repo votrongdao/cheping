@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:22 AM
+// Last Modified On : 2015-06-20  9:09 AM
 // ***********************************************************************
 // <copyright file="VehicleInspection.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -12,6 +12,7 @@
 // ***********************************************************************
 
 using System;
+using ChepingServer.Enum;
 
 namespace ChepingServer.Models
 {
@@ -49,7 +50,7 @@ namespace ChepingServer.Models
 
         public int? RealMileage { get; set; }
 
-        public int? SaleGrade { get; set; }
+        public SaleGrade? SaleGrade { get; set; }
 
         public string VinCode { get; set; }
 
