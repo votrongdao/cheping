@@ -30,11 +30,15 @@ namespace ChepingServer.Controllers
         private readonly UserService userService = new UserService();
 
         /// <summary>
-        ///     Sends the specified identifier.
+        ///     发送验证码
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="message">The message.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此用户，请确认用户id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [Route("Send")]
         public async Task<IHttpActionResult> Send(int id, string message)
         {
@@ -50,10 +54,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Sends the password.
+        ///     发送重置密码
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此用户，请确认用户id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [Route("SendPassword")]
         public async Task<IHttpActionResult> SendPassword(int id)
         {

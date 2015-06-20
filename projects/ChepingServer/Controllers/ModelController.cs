@@ -33,10 +33,14 @@ namespace ChepingServer.Controllers
         private readonly ModelService modelService = new ModelService();
 
         /// <summary>
-        ///     Creates the specified dto.
+        ///     创建车型信息
         /// </summary>
         /// <param name="dto">The dto.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 车型信息已经存在
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Create(ModelDto dto)
         {
@@ -58,10 +62,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Disables the specified identifier.
+        ///     停用车型
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此车型，请确认车型id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("{id}/Disable"), ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Disable([FromUri] int id)
         {
@@ -78,11 +86,17 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Edits the specified identifier.
+        ///     编辑车型信息
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="dto">The dto.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此车型，请确认车型id是否正确
+        /// <br />
+        /// 车型信息已经存在
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Edit([FromUri] int id, ModelDto dto)
         {
@@ -107,10 +121,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Enables the specified identifier.
+        ///     启用车型
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此车型，请确认车型id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("{id}/Enable"), ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Enable([FromUri] int id)
         {
@@ -127,10 +145,11 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Exists the specified dto.
+        ///     车型是否存在
         /// </summary>
         /// <param name="dto">The dto.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
         public async Task<IHttpActionResult> Exist(ModelDto dto)
         {
@@ -146,11 +165,15 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        ///     根据Id获取车型信息
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此车型，请确认车型id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Get([FromUri] int id, [FromUri] bool includeUnavailable = false)
         {
@@ -165,10 +188,11 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the brands.
+        ///     获取所有品牌
         /// </summary>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Brands"), ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetBrands([FromUri] bool includeUnavailable = false)
         {
@@ -176,12 +200,13 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the modelings.
+        ///     根据品牌和车系获取车型
         /// </summary>
         /// <param name="brand">The brand.</param>
         /// <param name="series">The series.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Modelings"), ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetModelings([FromUri] string brand, [FromUri] string series, [FromUri] bool includeUnavailable = false)
         {
@@ -189,12 +214,13 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the paginated.
+        ///    获取车型分页信息
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<ModelDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] bool includeUnavailable = false)
         {
@@ -204,11 +230,12 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the series.
+        ///     根据品牌获取车系信息
         /// </summary>
         /// <param name="brand">The brand.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Series"), ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetSeries([FromUri] string brand, [FromUri] bool includeUnavailable = false)
         {
@@ -216,10 +243,11 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Indexes this instance.
+        ///     获取所有车型信息
         /// </summary>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Index"), ResponseType(typeof(List<ModelDto>))]
         public async Task<IHttpActionResult> Index([FromUri] bool includeUnavailable = false)
         {

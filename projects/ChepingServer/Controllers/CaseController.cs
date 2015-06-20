@@ -38,10 +38,19 @@ namespace ChepingServer.Controllers
         private readonly UserService userService = new UserService();
 
         /// <summary>
-        ///     Accepts the price.
+        ///    接受报价
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载事项信息
+        /// <br />
+        /// 操作未授权
+        /// <br />
+        /// 事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
         [Route("AcceptPrice"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> AcceptPrice(AcceptPriceRequest request)
         {
@@ -67,14 +76,20 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Adds the case.
+        ///     新增订单
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载用户信息
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
         [Route("AddCase"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> AddCase(AddCaseRequest request)
         {
             User user = await this.userService.Get(this.CurrentUser.Id);
+
             if (user == null)
             {
                 return this.BadRequest("无法加载用户信息");
@@ -122,10 +137,19 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Adds the chaxun information.
+        ///     添加查询师查询信息
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载事项信息
+        /// <br />
+        /// 操作未授权
+        /// <br />
+        /// 事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
         [Route("AddChaxunInfo"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> AddChaxunInfo(AddChaxunInfoRequest request)
         {
@@ -165,10 +189,19 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Adds the value information.
+        ///     添加评估师评估信息
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载事项信息
+        /// <br />
+        /// 操作未授权
+        /// <br />
+        /// 事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
         [Route("AddValueInfo"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> AddValueInfo(AddValueInfoRequest request)
         {
@@ -205,10 +238,19 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Adds the yanche information.
+        ///     添加验车信息
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载事项信息
+        /// <br />
+        /// 操作未授权
+        /// <br />
+        /// 事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
         [Route("AddYancheInfo"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> AddYancheInfo(AddYancheInfoRequest request)
         {
@@ -242,10 +284,19 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Approves the payment.
+        ///     打款审核
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载事项信息
+        /// <br />
+        /// 操作未授权
+        /// <br />
+        /// 事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
         [Route("ApprovePayment"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> ApprovePayment([FromUri] int caseId)
         {
@@ -274,7 +325,11 @@ namespace ChepingServer.Controllers
         ///     根据订单Id获取订单
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此订单，请确认订单id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> Get([FromUri] int id)
         {
@@ -289,9 +344,19 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        /// Gets the warnings.
+        /// 按车类型获取分页订单信息
         /// </summary>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="carType">Type of the car.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200">
+        /// </response code="400">
+        /// <response>
+        /// 无法加载用户信息
+        /// </response>
+        /// <response code="500">
+        /// </response>
         [HttpGet, Route("List"), CookieAuthorize, ResponseType(typeof(PaginatedList<CaseDto>))]
         public async Task<IHttpActionResult> GetCases([FromUri]int pageIndex, [FromUri]int pageSize, [FromUri]CarType carType)
         {
@@ -307,13 +372,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the paginated.
+        ///     获取订单分页信息
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<CaseDto>))]
-        public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize)
+        public async Task<IHttpActionResult> GetPaginated([FromUri]int pageIndex, [FromUri]int pageSize)
         {
             PaginatedList<Case> cases = await this.caseService.GetPaginatedAsync(pageIndex, pageSize);
 
@@ -321,9 +387,13 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the todos.
+        ///     获取待办事项
         /// </summary>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载用户信息
+        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("Todos"), ResponseType(typeof(List<CaseDto>))]
         public async Task<IHttpActionResult> GetTodos()
         {
@@ -338,10 +408,15 @@ namespace ChepingServer.Controllers
             return this.Ok(cases.Select(c => c.ToDto()));
         }
 
+
         /// <summary>
-        ///     Gets the warnings.
+        ///    获取警告信息
         /// </summary>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载用户信息
+        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("Warnings"), ResponseType(typeof(List<CaseDto>))]
         public async Task<IHttpActionResult> GetWarnings()
         {
@@ -357,9 +432,10 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Indexes this instance.
+        ///     获取所有订单信息
         /// </summary>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Index"), ResponseType(typeof(List<CaseDto>))]
         public async Task<IHttpActionResult> Index()
         {
@@ -367,10 +443,19 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Purchases the specified case identifier.
+        ///     采购
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载事项信息
+        /// <br />
+        /// 操作未授权
+        /// <br />
+        /// 事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
         [Route("Purchase"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> Purchase([FromUri] int caseId)
         {
@@ -396,11 +481,22 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Rejects the specified case identifier.
+        ///     放弃订单
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <param name="message">The message.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 失败原因不能为空
+        /// <br />
+        /// 无法加载事项信息
+        /// <br />
+        /// 操作未授权
+        /// <br />
+        /// 事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
         [Route("Reject"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> Reject([FromUri] int caseId, [FromUri] string message)
         {
@@ -476,10 +572,19 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Rejections the confirm.
+        ///     确认放弃订单
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无法加载事项信息
+        /// <br />
+        /// 操作未授权
+        /// <br />
+        /// 事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
         [Route("RejectionConfirm"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> RejectionConfirm([FromUri] int caseId)
         {
@@ -505,7 +610,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Reviews the case.
+        ///     审核订单
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <param name="purchasePrice">The purchase price.</param>
@@ -541,10 +646,11 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Vehicles the information.
+        ///     获取订单车辆信息
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("VehicleInfo"), ResponseType(typeof(VehicleInfo))]
         public async Task<IHttpActionResult> VehicleInfo(int caseId)
         {
@@ -552,10 +658,11 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Vehicles the inspection.
+        ///    获取订单车型信息
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("VehicleInspection"), ResponseType(typeof(VehicleInspection))]
         public async Task<IHttpActionResult> VehicleInspection(int caseId)
         {

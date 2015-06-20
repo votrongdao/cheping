@@ -41,10 +41,14 @@ namespace ChepingServer.Controllers
         private readonly OutletService outletService = new OutletService();
 
         /// <summary>
-        ///     Creates the specified dto.
+        ///     新增网点信息
         /// </summary>
         /// <param name="dto">The dto.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 网点信息已经存在
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Create(OutletDto dto)
         {
@@ -72,10 +76,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Disables the specified identifier.
+        ///     停用网点
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此网点，请确认网点id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("{id}/Disable"), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Disable([FromUri] int id)
         {
@@ -92,11 +100,15 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Edits the specified identifier.
+        ///     编辑网点信息
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="dto">The dto.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此网点，请确认网点id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Edit([FromUri] int id, OutletDto dto)
         {
@@ -115,10 +127,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Enables the specified identifier.
+        ///     启用网点
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此网点，请确认网点id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("{id}/Enable"), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Enable([FromUri] int id)
         {
@@ -135,10 +151,11 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Exists the specified dto.
+        ///     网点是否存在
         /// </summary>
         /// <param name="dto">The dto.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpPost, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
         public async Task<IHttpActionResult> Exist(OutletDto dto)
         {
@@ -152,11 +169,15 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        ///     根据Id获取网点信息
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此网点，请确认网点id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Get(int id, [FromUri] bool includeUnavailable = false)
         {
@@ -171,24 +192,26 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the outlets.
+        ///     根据城市Id获取网点列表
         /// </summary>
         /// <param name="cityId">The city identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpGet, Route("Outlets"), ResponseType(typeof(List<string>))]
+        /// <response code="200"></response>
+        /// <response code="500"></response>
+        [HttpGet, Route("Outlets"), ResponseType(typeof(List<Outlet>))]
         public async Task<IHttpActionResult> GetOutlets([FromUri] int cityId, [FromUri] bool includeUnavailable = false)
         {
             return this.Ok(await this.outletService.GetOutlets(cityId, includeUnavailable));
         }
 
         /// <summary>
-        ///     Gets the paginated.
+        ///     获取网点分页信息
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<OutletDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] bool includeUnavailable = false)
         {
@@ -198,9 +221,10 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Indexes this instance.
+        ///     获取所有网点信息
         /// </summary>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Index"), ResponseType(typeof(List<OutletDto>))]
         public async Task<IHttpActionResult> Index([FromUri] bool includeUnavailable = false)
         {

@@ -36,10 +36,14 @@ namespace ChepingServer.Controllers
         private readonly CityService cityService = new CityService();
 
         /// <summary>
-        ///     Creates the specified dto.
+        ///     创建城市信息
         /// </summary>
         /// <param name="dto">The dto.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 城市信息已经存在
+        /// </response>
+        /// <response code="500"></response>
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(CityDto))]
         public async Task<IHttpActionResult> Create(CityDto dto)
         {
@@ -58,10 +62,11 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Exists the specified dto.
+        ///     是否存在城市信息
         /// </summary>
         /// <param name="dto">The dto.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
         public async Task<IHttpActionResult> Exist(CityDto dto)
         {
@@ -75,10 +80,14 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the specified identifier.
+        ///     获取城市信息
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此城市，请确认城市id是否正确
+        /// </response>
+        /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(CityDto))]
         public async Task<IHttpActionResult> Get(int id)
         {
@@ -93,10 +102,11 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the cities.
+        ///     根据省份名获取城市列表
         /// </summary>
         /// <param name="provinceName">Name of the province.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Cities"), ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetCities([FromUri] string provinceName)
         {
@@ -104,11 +114,12 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the paginated.
+        ///     获取城市分页信息
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<CityDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize)
         {
@@ -118,9 +129,10 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Gets the provinces.
+        ///     获取所有省份名列表
         /// </summary>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Provinces"), ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetProvinces()
         {
@@ -128,9 +140,10 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     Indexes this instance.
+        ///    获取所有城市信息
         /// </summary>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
         [HttpGet, Route("Index"), ResponseType(typeof(List<CityDto>))]
         public async Task<IHttpActionResult> Index()
         {
