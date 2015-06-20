@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  12:29 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  12:40 AM
+// Last Modified On : 2015-06-20  12:52 PM
 // ***********************************************************************
 // <copyright file="CityDto.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -17,8 +17,15 @@ using Newtonsoft.Json;
 
 namespace ChepingServer.DTO
 {
+    /// <summary>
+    /// </summary>
     public static class CityEx
     {
+        /// <summary>
+        ///     To the dto.
+        /// </summary>
+        /// <param name="city">The city.</param>
+        /// <returns>CityDto.</returns>
         public static CityDto ToDto(this City city)
         {
             return new CityDto

@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:19 AM
+// Last Modified On : 2015-06-20  12:50 PM
 // ***********************************************************************
 // <copyright file="TranscationRecordMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -16,8 +16,14 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ChepingServer.Models.Mapping
 {
+    /// <summary>
+    ///     TranscationRecordMap.
+    /// </summary>
     public class TranscationRecordMap : EntityTypeConfiguration<TranscationRecord>
     {
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TranscationRecordMap" /> class.
+        /// </summary>
         public TranscationRecordMap()
         {
             // Primary Key

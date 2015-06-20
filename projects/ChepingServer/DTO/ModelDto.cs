@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  11:06 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  12:32 PM
+// Last Modified On : 2015-06-20  12:51 PM
 // ***********************************************************************
 // <copyright file="ModelDto.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -17,8 +17,16 @@ using Newtonsoft.Json;
 
 namespace ChepingServer.DTO
 {
+    /// <summary>
+    ///     ModelEx.
+    /// </summary>
     public static class ModelEx
     {
+        /// <summary>
+        ///     To the dto.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>ModelDto.</returns>
         public static ModelDto ToDto(this Model model)
         {
             return new ModelDto

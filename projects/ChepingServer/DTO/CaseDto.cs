@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  1:57 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  6:19 PM
+// Last Modified On : 2015-06-20  12:52 PM
 // ***********************************************************************
 // <copyright file="CaseDto.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -19,8 +19,16 @@ using Newtonsoft.Json;
 
 namespace ChepingServer.DTO
 {
+    /// <summary>
+    ///     CaseEx.
+    /// </summary>
     public static class CaseEx
     {
+        /// <summary>
+        ///     To the dto.
+        /// </summary>
+        /// <param name="case">The case.</param>
+        /// <returns>CaseDto.</returns>
         public static CaseDto ToDto(this Case @case)
         {
             return new CaseDto

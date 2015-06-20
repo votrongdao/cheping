@@ -13,11 +13,15 @@
 
 namespace ChepingServer.Responses
 {
+    /// <summary>
+    /// BoolResponse.
+    /// </summary>
     public class BoolResponse
     {
         /// <summary>
-        ///     Boolean 值
+        /// Boolean 值
         /// </summary>
+        /// <value><c>true</c> if result; otherwise, <c>false</c>.</value>
         public bool Result { get; set; }
     }
 }

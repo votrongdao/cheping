@@ -15,8 +15,14 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ChepingServer.Models.Mapping
 {
+    /// <summary>
+    /// VehicleInfoMap.
+    /// </summary>
     public class VehicleInfoMap : EntityTypeConfiguration<VehicleInfo>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VehicleInfoMap"/> class.
+        /// </summary>
         public VehicleInfoMap()
         {
             // Primary Key

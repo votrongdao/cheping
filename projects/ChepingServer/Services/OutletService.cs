@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:40 PM
+// Last Modified On : 2015-06-20  12:52 PM
 // ***********************************************************************
 // <copyright file="OutletService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -31,6 +31,7 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="outlet">The outlet.</param>
         /// <returns>Task&lt;Outlet&gt;.</returns>
+        /// <exception cref="System.ApplicationException">网点信息已经存在</exception>
         /// <exception cref="ApplicationException">网点信息已经存在</exception>
         public async Task<Outlet> Create(Outlet outlet)
         {
@@ -84,6 +85,11 @@ namespace ChepingServer.Services
             return outlet;
         }
 
+        /// <summary>
+        ///     Enables the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;Outlet&gt;.</returns>
         public async Task<Outlet> Enable(int id)
         {
             using (ChePingContext db = new ChePingContext())
@@ -171,7 +177,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Gets the paginated.
+        ///     Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -201,6 +207,7 @@ namespace ChepingServer.Services
         /// <summary>
         ///     Indexes this instance.
         /// </summary>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;List&lt;Outlet&gt;&gt;.</returns>
         public async Task<List<Outlet>> Index(bool includeUnavailable = false)
         {

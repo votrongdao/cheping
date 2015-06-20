@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  12:16 PM
+// Last Modified On : 2015-06-20  12:50 PM
 // ***********************************************************************
 // <copyright file="ModelMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -16,8 +16,14 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ChepingServer.Models.Mapping
 {
+    /// <summary>
+    ///     ModelMap.
+    /// </summary>
     public class ModelMap : EntityTypeConfiguration<Model>
     {
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ModelMap" /> class.
+        /// </summary>
         public ModelMap()
         {
             // Primary Key

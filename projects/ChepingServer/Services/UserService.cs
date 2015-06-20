@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-18  7:42 PM
+// Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-18  10:26 PM
+// Last Modified On : 2015-06-20  1:05 PM
 // ***********************************************************************
 // <copyright file="UserService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -21,19 +21,18 @@ using Moe.Lib;
 namespace ChepingServer.Services
 {
     /// <summary>
-    /// Class UserService.
+    ///     Class UserService.
     /// </summary>
     public class UserService
     {
         /// <summary>
-        /// Creates the specified user.
+        ///     Creates the specified user.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns>Task&lt;User&gt;.</returns>
         public async Task<User> Create(User user)
         {
             user.Available = true;
-            user.Password = MD5Hash.ComputeMD5Hash(user.Password);
 
             using (ChePingContext db = new ChePingContext())
             {
@@ -44,7 +43,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Disables the specified identifier.
+        ///     Disables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;User&gt;.</returns>
@@ -64,7 +63,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Edits the specified identifier.
+        ///     Edits the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="user">The user.</param>
@@ -80,7 +79,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Enables the specified identifier.
+        ///     Enables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;User&gt;.</returns>
@@ -100,7 +99,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        ///     Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
@@ -118,7 +117,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Gets the by cellphone.
+        ///     Gets the by cellphone.
         /// </summary>
         /// <param name="cellphone">The cellphone.</param>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
@@ -136,7 +135,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Gets the paginated.
+        ///     Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -164,7 +163,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Indexes this instance.
+        ///     Indexes this instance.
         /// </summary>
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;List&lt;User&gt;&gt;.</returns>
@@ -181,7 +180,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Logins the specified login name.
+        ///     Logins the specified login name.
         /// </summary>
         /// <param name="loginName">Name of the login.</param>
         /// <param name="password">The password.</param>

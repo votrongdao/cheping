@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  8:35 PM
+// Last Modified On : 2015-06-20  12:52 PM
 // ***********************************************************************
 // <copyright file="UserMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -15,8 +15,14 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ChepingServer.Models.Mapping
 {
+    /// <summary>
+    ///     UserMap.
+    /// </summary>
     public class UserMap : EntityTypeConfiguration<User>
     {
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="UserMap" /> class.
+        /// </summary>
         public UserMap()
         {
             // Primary Key

@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  11:10 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  1:38 PM
+// Last Modified On : 2015-06-20  12:50 PM
 // ***********************************************************************
 // <copyright file="ModelService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -21,6 +21,9 @@ using Moe.Lib;
 
 namespace ChepingServer.Services
 {
+    /// <summary>
+    ///     ModelService.
+    /// </summary>
     public class ModelService
     {
         /// <summary>
@@ -28,6 +31,7 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Task&lt;Model&gt;.</returns>
+        /// <exception cref="System.ApplicationException">车型信息已经存在</exception>
         public async Task<Model> Create(Model model)
         {
             if (await this.Exist(model))
@@ -71,6 +75,7 @@ namespace ChepingServer.Services
         /// <param name="id">The identifier.</param>
         /// <param name="model">The model.</param>
         /// <returns>Task&lt;Model&gt;.</returns>
+        /// <exception cref="System.ApplicationException">车型信息已经存在</exception>
         public async Task<Model> Edit(int id, Model model)
         {
             if (await this.Exist(model))
@@ -87,7 +92,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Enables the specified identifier.
+        ///     Enables the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;Model&gt;.</returns>
@@ -226,6 +231,7 @@ namespace ChepingServer.Services
         /// <summary>
         ///     Indexes this instance.
         /// </summary>
+        /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <returns>Task&lt;List&lt;Model&gt;&gt;.</returns>
         public async Task<List<Model>> Index(bool includeUnavailable = false)
         {
