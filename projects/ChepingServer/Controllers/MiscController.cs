@@ -30,7 +30,7 @@ namespace ChepingServer.Controllers
         private readonly UserService userService = new UserService();
 
         /// <summary>
-        ///     发送验证码
+        ///     发送短信
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="message">The message.</param>
