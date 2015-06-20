@@ -11,6 +11,9 @@
 // </copyright>
 // ***********************************************************************
 
+using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+
 namespace ChepingServer.Requests
 {
     public class AcceptPriceRequest
@@ -18,11 +21,13 @@ namespace ChepingServer.Requests
         /// <summary>
         ///     相关事项Id
         /// </summary>
+        [Required, Range(0, int.MaxValue), JsonProperty("caseId")]
         public int CaseId { get; set; }
 
         /// <summary>
         ///     最终确定价格
         /// </summary>
+        [Required, Range(0, int.MaxValue), JsonProperty("price")]
         public int Price { get; set; }
     }
 }
