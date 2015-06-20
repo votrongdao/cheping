@@ -213,6 +213,7 @@
     <Compile Include="Requests\AddChaxunInfoRequest.cs" />
     <Compile Include="Requests\AddValueInfoRequest.cs" />
     <Compile Include="Requests\AddYancheInfoRequest.cs" />
+    <Compile Include="Requests\QueryTranscationRecordRequest.cs" />
     <Compile Include="Requests\SignInRequest.cs" />
     <Compile Include="Responses\BoolResponse.cs" />
     <Compile Include="Services\CaseService.cs" />
