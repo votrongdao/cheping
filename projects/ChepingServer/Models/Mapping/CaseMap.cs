@@ -36,6 +36,12 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.AbandonReason)
                 .HasMaxLength(200);
 
+            this.Property(t => t.CreateTime)
+                .IsRequired();
+
+            this.Property(t => t.Times)
+                .IsRequired();
+
             // Table & Column Mappings
             this.ToTable("Cases");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -53,6 +59,8 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.AbandonReason).HasColumnName("AbandonReason");
             this.Property(t => t.OutletId).HasColumnName("OutletId");
             this.Property(t => t.CaseType).HasColumnName("CaseType");
+            this.Property(t => t.CreateTime).HasColumnName("CreateTime");
+            this.Property(t => t.Times).HasColumnName("Times");
         }
     }
 }

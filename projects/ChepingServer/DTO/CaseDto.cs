@@ -16,6 +16,7 @@ using ChepingServer.Enum;
 using ChepingServer.Models;
 using Moe.AspNet.Validations;
 using Newtonsoft.Json;
+using System;
 
 namespace ChepingServer.DTO
 {
@@ -145,5 +146,18 @@ namespace ChepingServer.DTO
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("vehicleInspecId")]
         public int VehicleInspecId { get; set; }
+
+        /// <summary>
+        ///     订单创建时间
+        /// </summary>
+        [Required, JsonProperty("createTime")]
+        public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        ///     状态转换时间记录
+        /// </summary>
+        [StringLength(int.MaxValue,MinimumLength =1), JsonProperty("times")]
+        public string Times { get; set; }
+
     }
 }
