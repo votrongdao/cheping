@@ -289,6 +289,24 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
+        /// Gets the warnings.
+        /// </summary>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        [HttpGet, Route("List"), CookieAuthorize, ResponseType(typeof(PaginatedList<CaseDto>))]
+        public async Task<IHttpActionResult> GetCases([FromUri]int pageIndex, [FromUri]int pageSize, [FromUri]CarType carType)
+        {
+            User user = await this.userService.Get(this.CurrentUser.Id);
+            if (user == null)
+            {
+                return this.BadRequest("无法加载用户信息");
+            }
+
+            PaginatedList<Case> cases = await this.caseService.GetCasesAsync(user, pageIndex, pageSize, carType);
+
+            return this.Ok(cases.ToPaginated(c => c.ToDto()));
+        }
+
+        /// <summary>
         ///     Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>

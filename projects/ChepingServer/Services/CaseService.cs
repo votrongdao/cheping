@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  9:02 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  9:15 AM
+// Last Modified On : 2015-06-20  10:46 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -250,7 +250,15 @@ namespace ChepingServer.Services
             }
         }
 
-        public async Task<PaginatedList<Case>> GetCasesAsync(User user, int pageIndex, int pageSize)
+        /// <summary>
+        ///     get cases as an asynchronous operation.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="carType">Type of the car.</param>
+        /// <returns>Task&lt;PaginatedList&lt;Case&gt;&gt;.</returns>
+        public async Task<PaginatedList<Case>> GetCasesAsync(User user, int pageIndex, int pageSize, CarType carType)
         {
             using (ChePingContext db = new ChePingContext())
             {
@@ -259,23 +267,23 @@ namespace ChepingServer.Services
                 switch (user.JobTitle)
                 {
                     case JobTitle.Purchaser:
-                        totalCount = await db.Cases.Where(c => c.PurchaserId == user.Id).CountAsync();
-                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        totalCount = await db.Cases.Where(c => c.PurchaserId == user.Id && c.CaseType == carType).CountAsync();
+                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id && c.CaseType == carType).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                         break;
 
                     case JobTitle.Valuer:
-                        totalCount = await db.Cases.Where(c => c.ValuerId == user.Id).CountAsync();
-                        cases = await db.Cases.Where(c => c.ValuerId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        totalCount = await db.Cases.Where(c => c.ValuerId == user.Id && c.CaseType == carType).CountAsync();
+                        cases = await db.Cases.Where(c => c.ValuerId == user.Id && c.CaseType == carType).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                         break;
 
                     case JobTitle.Querying:
-                        totalCount = await db.Cases.Where(c => c.QueryingId == user.Id).CountAsync();
-                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        totalCount = await db.Cases.Where(c => c.QueryingId == user.Id && c.CaseType == carType).CountAsync();
+                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id && c.CaseType == carType).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                         break;
 
                     case JobTitle.Director:
-                        totalCount = await db.Cases.Where(c => c.DirectorId == user.Id).CountAsync();
-                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        totalCount = await db.Cases.Where(c => c.DirectorId == user.Id && c.CaseType == carType).CountAsync();
+                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id && c.CaseType == carType).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                         break;
 
                     case JobTitle.Manager:
@@ -306,7 +314,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// get todos as an asynchronous operation.
+        ///     get todos as an asynchronous operation.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns>Task&lt;List&lt;Case&gt;&gt;.</returns>
@@ -378,7 +386,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// get warning as an asynchronous operation.
+        ///     get warning as an asynchronous operation.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns>Task&lt;List&lt;Case&gt;&gt;.</returns>
