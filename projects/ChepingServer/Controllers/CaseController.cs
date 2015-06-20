@@ -89,6 +89,7 @@ namespace ChepingServer.Controllers
         public async Task<IHttpActionResult> AddCase(AddCaseRequest request)
         {
             User user = await this.userService.Get(this.CurrentUser.Id);
+
             if (user == null)
             {
                 return this.BadRequest("无法加载用户信息");
@@ -343,7 +344,35 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     获取分页订单信息
+        /// 按车类型获取分页订单信息
+        /// </summary>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="carType">Type of the car.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200">
+        /// </response code="400">
+        /// <response>
+        /// 无法加载用户信息
+        /// </response>
+        /// <response code="500">
+        /// </response>
+        [HttpGet, Route("List"), CookieAuthorize, ResponseType(typeof(PaginatedList<CaseDto>))]
+        public async Task<IHttpActionResult> GetCases([FromUri]int pageIndex, [FromUri]int pageSize, [FromUri]CarType carType)
+        {
+            User user = await this.userService.Get(this.CurrentUser.Id);
+            if (user == null)
+            {
+                return this.BadRequest("无法加载用户信息");
+            }
+
+            PaginatedList<Case> cases = await this.caseService.GetCasesAsync(user, pageIndex, pageSize, carType);
+
+            return this.Ok(cases.ToPaginated(c => c.ToDto()));
+        }
+
+        /// <summary>
+        ///     获取订单分页信息
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -378,6 +407,7 @@ namespace ChepingServer.Controllers
 
             return this.Ok(cases.Select(c => c.ToDto()));
         }
+
 
         /// <summary>
         ///    获取警告信息
