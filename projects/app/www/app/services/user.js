@@ -20,13 +20,13 @@ angular.module('cheping.services.user', [
       });
     };
 
-    service.login = function(loginName, password) {
+    service.login = function(loginName, password, AuthService) {
       return $http.post(URLS.USER.SIGNIN, {
         loginName: loginName,
         password: password
       })
         .then(function(result) {
-          return result.data;
+          AuthService.setToken(result.data.result);
         });
     };
   });

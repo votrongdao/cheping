@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  1:18 PM
+// Last Modified On : 2015-06-20  6:38 PM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -23,6 +23,7 @@ using ChepingServer.DTO;
 using ChepingServer.Filters;
 using ChepingServer.Models;
 using ChepingServer.Requests;
+using ChepingServer.Responses;
 using ChepingServer.Services;
 using Moe.AspNet.Filters;
 using Moe.Lib;
@@ -77,9 +78,11 @@ namespace ChepingServer.Controllers
 
             user.Password = MD5Hash.ComputeMD5Hash(password);
 
+            user = await this.userService.Create(user);
+
             await this.smsService.SendMessage(user.Cellphone, "登录密码：{0}".FormatWith(password));
 
-            return this.Ok((await this.userService.Create(user)).ToDto());
+            return this.Ok(user.ToDto());
         }
 
         /// <summary>
@@ -261,7 +264,7 @@ namespace ChepingServer.Controllers
         ///     用户名或者密码错误，请确认后重试
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("Login"), ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
+        [HttpPost, Route("Login"), ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(StringResponse))]
         public async Task<IHttpActionResult> Login(SignInRequest request)
         {
             User user = await this.userService.Login(request.LoginName, request.Password);
@@ -271,9 +274,9 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("用户名或者密码错误，请确认后重试");
             }
 
-            SetCookie(user.Id, user.Cellphone);
+            string token = SetCookie(user.Id, user.Cellphone);
 
-            return this.Ok(user.ToDto());
+            return this.Ok(new StringResponse { Result = token });
         }
 
         /// <summary>
@@ -311,16 +314,13 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="cellphone">The cellphone.</param>
-        private static void SetCookie(int userId, string cellphone)
+        private static string SetCookie(int userId, string cellphone)
         {
-            if (HttpContext.Current.Request.IsSecureConnection)
-            {
-                DateTime expiry = DateTime.UtcNow.AddHours(8).Date.AddDays(1).AddMilliseconds(-1);
-                string userData = $"{userId},{cellphone},{expiry.ToBinary()}";
-                FormsAuthentication.SetAuthCookie(userData, true);
-                HttpCookie cookie = FormsAuthentication.GetAuthCookie(userData, true);
-                HttpContext.Current.Response.Headers.Add("x-CP", cookie.Value);
-            }
+            DateTime expiry = DateTime.UtcNow.AddHours(8).Date.AddDays(1).AddMilliseconds(-1);
+            string userData = $"{userId},{cellphone},{expiry.ToBinary()}";
+            FormsAuthentication.SetAuthCookie(userData, true);
+            HttpCookie cookie = FormsAuthentication.GetAuthCookie(userData, true);
+            return cookie.Value;
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  9:02 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  10:49 AM
+// Last Modified On : 2015-06-20  6:49 PM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -676,7 +676,7 @@ namespace ChepingServer.Services
                 newCase.VehicleInfoId = newInfo.Id;
                 newCase.VehicleInspecId = newVehicleInspection.Id;
 
-                await db.SaveAsync(@case);
+                await db.SaveAsync(newCase);
             }
 
             return newCase;

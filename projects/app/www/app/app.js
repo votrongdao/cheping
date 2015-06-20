@@ -1,20 +1,14 @@
 angular.module('cheping', [
     'ionic',
-    'ngCordova'
+    'ngCordova',
+    'cheping.interceptors',
+    'cheping.services',
+    'cheping.services.user'
 ])
     .constant('URLS', {
-        CONFIG: {
-            FETCH: 'https://jymstoredev.blob.core.chinacloudapi.cn/publicfiles/Configs/AppConfig/3.0.0'
-        },
-        JINBOAYIN: {
-            FETCH: 'https://jym-dev-api.jinyinmao.com.cn/Product/Current/JBY'
-        },
-        INVESTING: {
-            JBY: 'https://jym-dev-api.jinyinmao.com.cn/Investing/JBY'
-        },
         USER: {
-            GETINFO: 'https://jym-dev-api.jinyinmao.com.cn/User',
-            SIGNIN: 'https://jym-dev-api.jinyinmao.com.cn/User/Auth/SignIn'
+            GETINFO: 'http://cheping.chinacloudsites.cn:80/api/Users',
+            SIGNIN: 'http://cheping.chinacloudsites.cn:80/api/Users/Login'
         }
     })
     .config(function($ionicConfigProvider) {
@@ -42,7 +36,7 @@ angular.module('cheping', [
             }
         });
 
-        $urlRouterProvider.otherwise('/jinbaoyin');
+        $urlRouterProvider.otherwise('/index');
     })
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -79,5 +73,23 @@ angular.module('cheping', [
                 duration: 3000
             });
         });
+    })
+    .controller('MainCtrl', function($state, UserService, UtilityService) {
+        var ctrl = this;
+
+        ctrl.showNewTab = false;
+        ctrl.showWarningTab = false;
+
+        UserService.getUserInfo()
+            .then(function(result) {
+                if (result.jobTitle === 40 || result.jobTitle === 50) {
+                    ctrl.showNewTab = true;
+                } else if (result.jobTitle === 10) {
+                    ctrl.showNewTab = true;
+                } else {
+                    UtilityService.showAlert('请先登录');
+                    $state.go('cheping.user-login');
+                }
+            });
     });
 

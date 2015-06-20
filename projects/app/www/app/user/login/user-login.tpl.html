@@ -1,0 +1,40 @@
+<ion-view title="用户登录">
+  <ion-content>
+    <div>
+      <img src="assets/img/LaFerrari_4.jpg">
+    </div>
+
+    <div class="padding">
+      <form name="login">
+        <div class="list list-inset padding">
+          <label class="item item-input">
+            <i class="icon ion-person placeholder-icon"></i>
+            <input type="text" name="userName" ng-model="user.viewModel.cellphone" placeholder="请输入用户名" ng-required="true" ng-minlength="11" ng-maxlength="11" ng-pattern="/^(13|14|15|17|18)\d{9}$/" ng-trim="true">
+          </label>
+        </div>
+        <div ng-messages="login.userName.$error" role="alert" class="padding ng-input-error">
+          <div ng-message="required">必须填写用户名</div>
+          <div ng-message="minlength, maxlength, pattern">
+            手机号码格式不正确
+          </div>
+        </div>
+        <div class="list list-inset padding">
+          <label class="item item-input">
+            <i class="icon ion-ios-locked placeholder-icon"></i>
+            <input type="password" name="password" ng-model="user.viewModel.password" placeholder="请输入密码" ng-required="true" ng-pattern="/^[a-zA-Z\d~!@#$%^&*_]{6,18}$/" ng-trim="true">
+          </label>
+        </div>
+        <div ng-messages="login.password.$error" role="alert" class="padding ng-input-error">
+          <div ng-message="required">必须填写密码</div>
+          <div ng-message="minlength, maxlength, pattern">
+            密码格式错误
+          </div>
+        </div>
+      </form>
+
+      <div class="padding">
+        <button class="button button-block button-cp-dark button-sign-in" ng-disabled="!user.loginButtonEnable()" ng-click="user.login()">登陆</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

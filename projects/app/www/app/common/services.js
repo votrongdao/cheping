@@ -1,9 +1,9 @@
 angular.module('cheping.services', [
   'angular-cache'
 ])
-  .service('AuthService', function(JYMCacheService) {
+  .service('AuthService', function(CacheService) {
     var service = this;
-    var tokenStorage = JYMCacheService.get('authTokenCache');
+    var tokenStorage = CacheService.get('authTokenCache');
 
     service.clearToken = function() {
       tokenStorage.put('auth', '');
@@ -89,7 +89,7 @@ angular.module('cheping.services', [
 
       $timeout(function() {
         alertPopup.close();
-      }, 1000);
+      }, 2000);
     }
 
     service.isUrl = isUrl;
