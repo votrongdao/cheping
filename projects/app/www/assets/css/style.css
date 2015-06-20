@@ -257,3 +257,17 @@ h2 {
 em {
   color: red;
 }
+
+
+/*.login start*/
+.login img {
+  width: 100%;
+}
+.login .list-inset {
+  margin: 5px 10px;
+}
+/*.login .padding {*/
+  /*position: relative;*/
+  /*margin-top: 20px;*/
+/*}*/
+/*.login end*/
