@@ -700,11 +700,20 @@ angular.module('cheping.filters', [])
     })
     .filter('time', function() {
         return function(time) {
-            if (!isFinite(time)) {
+            if (time.indexOf('选择') >= 0) {
                 return time;
             }
 
             return moment(time).format('LL');
+        };
+    })
+    .filter('jobTitle', function() {
+        return function(jobId) {
+            if (!isFinite(jobId)) {
+                return jobId;
+            }
+
+            return jobId;
         };
     })
     .filter('state', function() {

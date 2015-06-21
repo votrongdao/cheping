@@ -17,7 +17,7 @@ angular.module('cheping.daiban', [
     })
     .controller('DaibanCtrl', function($scope, $state, $timeout, UserService, CaseService, UtilityService) {
         var cases = this;
-        var user = UserService.getUserInfo();
+        UserService.getUserInfo();
 
         cases.items = [];
 
