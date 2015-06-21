@@ -7,96 +7,122 @@ angular.module('cheping.new.detail', [
                 url: '/new/detail/{carType}',
                 views: {
                     'new': {
-                        controller: 'NewCtrl as case',
+                        controller: 'NewCtrl as _case',
                         templateUrl: 'app/create/detail/create-detail.tpl.html'
                     }
                 }
             })
-            .state('cheping.index.createDetail', {
-                url: '/create/{carType}',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailCtrl as createDetailCtrl',
-                        templateUrl: 'app/index/create/create-detail.tpl.html'
-                    }
-                }
-            }).state('cheping.index.createDetail-brand', {
-                url: '/create/brand',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailBrandCtrl as createDetailBrandCtrl',
-                        templateUrl: 'app/index/create/create-brand.tpl.html'
-                    }
-                }
-            }).state('cheping.index.createDetail-serial', {
-                url: '/create/serial',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailSerialCtrl as createDetailSerialCtrl',
-                        templateUrl: 'app/index/create/create-serial.tpl.html'
-                    }
-                }
-            }).state('cheping.index.createDetail-model', {
-                url: '/create/model',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailModelCtrl as createDetailModelCtrl',
-                        templateUrl: 'app/index/create/create-model.tpl.html'
-                    }
-                }
-            }).state('cheping.index.createDetail-color', {
-                url: '/create/color',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailColorCtrl as createDetailColorCtrl',
-                        templateUrl: 'app/index/create/create-color.tpl.html'
-                    }
-                }
-            }).state('cheping.index.createDetail-inner-color', {
-                url: '/create/inner-color',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailInnerColorCtrl as createDetailInnerColorCtrl',
-                        templateUrl: 'app/index/create/create-inner-color.tpl.html'
-                    }
-                }
-            }).state('cheping.index.createDetail-city', {
-                url: '/create/city',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailCityCtrl as createDetailCityCtrl',
-                        templateUrl: 'app/index/create/create-city.tpl.html'
-                    }
-                }
-            }).state('cheping.index.createDetail-driving', {
-                url: '/create/driving',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailDrivingCtrl as createDetailDrivingCtrl',
-                        templateUrl: 'app/index/create/create-driving.tpl.html'
-                    }
-                }
-            }).state('cheping.index.createDetail-cooperation', {
-                url: '/create/cooperation',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailCooperationCtrl as createDetailCooperationCtrl',
-                        templateUrl: 'app/index/create/create-cooperation.tpl.html'
-                    }
-                }
-            }).state('cheping.index.createDetail-content', {
-                url: '/create/content',
-                views: {
-                    'index.create': {
-                        controller: 'CreateDetailContentCtrl as createDetailContentCtrl',
-                        templateUrl: 'app/index/create/create-content.tpl.html'
-                    }
-                }
-            });
+            //.state('cheping.index.createDetail', {
+            //    url: '/create/{carType}',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailCtrl as createDetailCtrl',
+            //            templateUrl: 'app/index/create/create-detail.tpl.html'
+            //        }
+            //    }
+            //}).state('cheping.index.createDetail-brand', {
+            //    url: '/create/brand',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailBrandCtrl as createDetailBrandCtrl',
+            //            templateUrl: 'app/index/create/create-brand.tpl.html'
+            //        }
+            //    }
+            //}).state('cheping.index.createDetail-serial', {
+            //    url: '/create/serial',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailSerialCtrl as createDetailSerialCtrl',
+            //            templateUrl: 'app/index/create/create-serial.tpl.html'
+            //        }
+            //    }
+            //}).state('cheping.index.createDetail-model', {
+            //    url: '/create/model',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailModelCtrl as createDetailModelCtrl',
+            //            templateUrl: 'app/index/create/create-model.tpl.html'
+            //        }
+            //    }
+            //}).state('cheping.index.createDetail-color', {
+            //    url: '/create/color',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailColorCtrl as createDetailColorCtrl',
+            //            templateUrl: 'app/index/create/create-color.tpl.html'
+            //        }
+            //    }
+            //}).state('cheping.index.createDetail-inner-color', {
+            //    url: '/create/inner-color',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailInnerColorCtrl as createDetailInnerColorCtrl',
+            //            templateUrl: 'app/index/create/create-inner-color.tpl.html'
+            //        }
+            //    }
+            //}).state('cheping.index.createDetail-city', {
+            //    url: '/create/city',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailCityCtrl as createDetailCityCtrl',
+            //            templateUrl: 'app/index/create/create-city.tpl.html'
+            //        }
+            //    }
+            //}).state('cheping.index.createDetail-driving', {
+            //    url: '/create/driving',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailDrivingCtrl as createDetailDrivingCtrl',
+            //            templateUrl: 'app/index/create/create-driving.tpl.html'
+            //        }
+            //    }
+            //}).state('cheping.index.createDetail-cooperation', {
+            //    url: '/create/cooperation',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailCooperationCtrl as createDetailCooperationCtrl',
+            //            templateUrl: 'app/index/create/create-cooperation.tpl.html'
+            //        }
+            //    }
+            //}).state('cheping.index.createDetail-content', {
+            //    url: '/create/content',
+            //    views: {
+            //        'index.create': {
+            //            controller: 'CreateDetailContentCtrl as createDetailContentCtrl',
+            //            templateUrl: 'app/index/create/create-content.tpl.html'
+            //        }
+            //    }
+            //});
+        ;
     })
-    .controller('CreateCtrl', function() {
-        var createCtrl = this;
-        createCtrl.ordes = [];
+    .controller('NewCtrl', function($stateParams, CaseCreateService) {
+        var _case = this;
+
+        _case.viewModel = {};
+        CaseCreateService.resetNewCase($stateParams.carType);
+
+        var newCase = CaseCreateService.getNewCase();
+
+        _case.resetViewModel = function() {
+            var view = _case.viewModel;
+
+            view.caseType = newCase.caseType || '车辆类型';
+            view.brandName = newCase.brandName || '选择品牌';
+            view.seriesName = newCase.seriesName || '选择车系';
+            view.modelName = newCase.modelName || '选择车型';
+            view.outerColor = newCase.outerColor || '选择车辆外部颜色';
+            view.innerColor = newCase.innerColor || '选择车辆内饰颜色';
+            view.licenseTime = newCase.licenseTime || '选择车辆上牌时间';
+            view.vehicleLocation = newCase.vehicleLocation || '选择车辆所在地区';
+            view.displayMileage = newCase.displayMileage || '输入里程数';
+            view.cooperationMethod = newCase.cooperationMethod || '选择合作方式';
+            view.factoryTime = newCase.factoryTime || '选择车辆出厂时间';
+            view.licenseLocation = newCase.licenseLocation || '选择车辆牌照所在地';
+            view.expectedPrice = newCase.expectedPrice || '车主心理价位';
+            view.modifiedContent = newCase.modifiedContent || '改装内容';
+        };
+
+        _case.resetViewModel();
 
     })
     .controller('CreateDetailCtrl', function($state, $stateParams, ChepingOrderService) {

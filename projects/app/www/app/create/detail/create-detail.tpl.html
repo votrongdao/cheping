@@ -1,10 +1,88 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-</head>
-<body>
+<ion-view view-title="新增事项">
+  <ion-content>
+    <ion-list class="item-icon-right">
+      <ion-item class="item-divider">
+        <p>必填信息</p>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-brand">
+        <span>车辆品牌：</span>
+        <span ng-bind="_case.viewModel.brandName" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-serial">
+        <span>所属车系：</span>
+        <span ng-bind="_case.viewModel.seriesName" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-model">
+        <span>车辆型号：</span>
+        <span ng-bind="_case.viewModel.modelName" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-color">
+        <span>外部颜色：</span>
+        <span ng-bind="(_case.viewModel.outerColor | colorName)" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-inner-color">
+        <span>内饰颜色：</span>
+        <span ng-bind="(_case.viewModel.innerColor | colorName)" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-city">
+        <span>上牌时间：</span>
+        <span ng-bind="(_case.viewModel.licenseTime | time)" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-city">
+        <span>车辆所在地：</span>
+        <span ng-bind="(_case.viewModel.vehicleLocation | city)" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-driving">
+        <span>表显里程：</span>
+        <span ng-bind="_case.viewModel.displayMileage" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-cooperation">
+        <span>合作方式：</span>
+        <span ng-bind="(_case.viewModel.cooperationMethod | cooperationMethod)" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item class="item-divider">
+        <p>选填信息</p>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>出厂时间：</span>
+        <span ng-bind="(_case.viewModel.factoryTime | time)" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>牌照所在地：</span>
+        <span ng-bind="(_case.viewModel.licenseLocation | city)" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>心理价位：</span>
+        <span ng-bind="_case.viewModel.expectedPrice" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-content">
+        <span>改装内容：</span>
+        <span ng-bind="_case.viewModel.modifiedContent" class="pull-right"></span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
 
-</body>
-</html>
+    <ion-list class="item-no-border">
+      <ion-item>
+        <button class="button button-block button-cp-dark" ng-click="createDetailCtrl.create()">确认</button>
+        <button class="button button-block button-cp-green" ng-click="createDetailCtrl.reset()">放弃</button>
+      </ion-item>
+    </ion-list>
+    
+    <div>照片们</div>
+
+    <button>确认创建</button>
+  </ion-content>
+</ion-view>

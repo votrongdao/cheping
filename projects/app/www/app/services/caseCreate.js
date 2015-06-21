@@ -4,8 +4,17 @@ angular.module('cheping.services.caseCreate', [])
 
         var newCase = {};
 
-        service.resetNewOrder = function(carType) {
+        service.resetNewCase = function(carType) {
             newCase = {};
             newCase.caseType = carType;
+            newCase.modifiedContent = '无';
+        };
+
+        service.getNewCase = function() {
+            return newCase;
+        };
+
+        service.createCase = function() {
+            return newCase;
         };
     });

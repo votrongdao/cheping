@@ -1,21 +1,37 @@
 angular.module('cheping.filters', [])
     .filter('colorName', function() {
         return function(colorId) {
+            if(!isFinite(colorId)) {
+                return colorId;
+            }
+
             return '白色';
         };
     })
     .filter('colorCode', function() {
         return function(colorId) {
-            return '#FFFFFF';
+            if(!isFinite(colorId)) {
+                return colorId;
+            }
+
+            return 'FFFFFF';
         };
     })
     .filter('city', function() {
         return function(cityId) {
+            if(!isFinite(cityId)) {
+                return cityId;
+            }
+
             return '上海';
         };
     })
     .filter('cooperationMethod', function() {
         return function(cooperationMethodId) {
+            if(!isFinite(cooperationMethodId)) {
+                return cooperationMethodId;
+            }
+
             switch(cooperationMethodId) {
                 case 10:
                     return '1973';
@@ -28,11 +44,19 @@ angular.module('cheping.filters', [])
     })
     .filter('time', function() {
         return function(time) {
+            if(!isFinite(time)) {
+                return time;
+            }
+
             return moment(time).format('LL');
         };
     })
     .filter('state', function() {
         return function(stateId) {
+            if(!isFinite(stateId)) {
+                return stateId;
+            }
+
             switch(stateId) {
                 case 10:
                     return '评估中';
