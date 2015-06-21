@@ -1,4 +1,4 @@
-angular.module('cheping.case.list', [
+angular.module('cheping.case.detail', [
     'cheping.services.user',
     'cheping.services.case'
 ])
@@ -14,12 +14,13 @@ angular.module('cheping.case.list', [
                 }
             })
     })
-    .controller('CaseDetailCtrl', function($state, $stateParams, UserService, CaseService, UtilityService) {
+    .controller('CaseDetailCtrl', function($state, $stateParams, CaseService) {
         var _case = this;
 
         _case.getCase = function() {
-            CaseService.getCases($stateParams.caseId, $stateParams.caseNo)
+            CaseService.getCase($stateParams.caseId)
                 .then(function(result) {
+                    console.log(result);
                     _case.caseNo = $stateParams.caseNo;
                     _case.brandName = result.brandName;
                     _case.cooperationMethod = result.cooperationMethod;
@@ -39,5 +40,5 @@ angular.module('cheping.case.list', [
                 })
         };
 
-        cases.getCase();
+        _case.getCase();
     });
