@@ -53,6 +53,14 @@ angular.module('cheping.services.case', [])
             });
         };
 
+        service.acceptPrice = function(caseId, price) {
+            var url = URLS.CASE.ACCEPTPRICE + '?' + 'caseId=' + caseId + '&purchasePrice=' + price;
+
+            return $http.get(url).then(function(result) {
+                return result.data;
+            });
+        };
+
         service.reviewCase = function(caseId, price) {
             var url = URLS.CASE.REVIEWCASE + '?' + 'caseId=' + caseId + '&purchasePrice=' + price;
 

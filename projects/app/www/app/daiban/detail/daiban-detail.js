@@ -17,7 +17,7 @@ angular.module('cheping.daiban.detail', [
                 }
             })
     })
-    .controller('DaibanDetailCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicHistory, UserService, CaseService) {
+    .controller('DaibanDetailCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicHistory, UserService, CaseService, UtilityService) {
         var _case = this;
         _case.rejectButtonText = '取消';
         _case.confirmButtonText = '确认';
@@ -90,7 +90,9 @@ angular.module('cheping.daiban.detail', [
 
                     } else {
                         UtilityService.showAlert('请先登录');
-                        $state.go('cheping.user-login');
+                        $timeout(function() {
+                            $state.go('cheping.user-login');
+                        }, 1000);
                     }
 
                     return result;
@@ -147,7 +149,7 @@ angular.module('cheping.daiban.detail', [
 
         _case.confirm = function() {
             if(_case.state === 20) {
-                $state.go('cheping.daiban-detail-yanche', {
+                $state.go('cheping.daiban-detail-shenhe', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
@@ -157,35 +159,36 @@ angular.module('cheping.daiban.detail', [
                     caseNo: $stateParams.caseNo
                 });
             }else if (_case.state === 50) {
-                $state.go('cheping.daiban-detail-yanche', {
+                $state.go('cheping.daiban-detail-baojia', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
             }else if (_case.state === 60) {
-                $state.go('cheping.daiban-detail-yanche', {
+                $state.go('cheping.daiban-detail-qiatan', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
             }else if (_case.state === 70) {
-                $state.go('cheping.daiban-detail-yanche', {
+                $state.go('cheping.daiban-detail-shenqingdakuan', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
             }else if (_case.state === 80) {
-                $state.go('cheping.daiban-detail-yanche', {
+                $state.go('cheping.daiban-detail-dakuanshenhe', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
             }else if(_case.state === 90) {
-                $state.go('cheping.daiban-detail-yanche', {
+                $state.go('cheping.daiban-detail-caigou', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
             }else {
-                $state.go('cheping.daiban-detail-yanche', {
-                    caseId: $stateParams.caseId,
-                    caseNo: $stateParams.caseNo
-                });
+                UtilityService.showAlert('请先登录');
+                $timeout(function() {
+                    $state.go('cheping.user-login');
+                }, 1000);
+
             }
         };
 

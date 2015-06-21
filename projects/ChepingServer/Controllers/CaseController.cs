@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  6:53 PM
+// Last Modified On : 2015-06-21  9:23 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -41,7 +41,8 @@ namespace ChepingServer.Controllers
         /// <summary>
         ///     接受报价
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="purchasePrice">The purchase price.</param>
         /// <response code="200"></response>
         /// <response code="400">
         ///     无法加载事项信息
@@ -52,10 +53,10 @@ namespace ChepingServer.Controllers
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
-        [Route("AcceptPrice"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
-        public async Task<IHttpActionResult> AcceptPrice(AcceptPriceRequest request)
+        [HttpGet, Route("AcceptPrice"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        public async Task<IHttpActionResult> AcceptPrice([FromUri] int caseId, [FromUri] int purchasePrice)
         {
-            Case @case = await this.caseService.GetAsync(request.CaseId);
+            Case @case = await this.caseService.GetAsync(caseId);
             if (@case == null)
             {
                 return this.BadRequest("无法加载事项信息");
@@ -71,7 +72,7 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("事项状态错误");
             }
 
-            @case = await this.caseService.AcceptPriceAsync(request.CaseId, request.Price);
+            @case = await this.caseService.AcceptPriceAsync(caseId, purchasePrice);
 
             return this.Ok(@case.ToDto());
         }
