@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  9:23 PM
+// Last Modified On : 2015-06-22  3:53 AM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -125,7 +125,7 @@ namespace ChepingServer.Controllers
                 InnerColor = request.InnerColor,
                 LicenseLocation = request.LicenseLocation,
                 LicenseTime = request.LicenseTime,
-                ModelId = request.ModelId,
+                ModelId = -1,
                 ModelName = request.ModelName,
                 ModifiedContent = request.ModifiedContent,
                 OuterColor = request.OuterColor,

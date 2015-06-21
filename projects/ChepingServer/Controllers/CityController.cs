@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  6:08 PM
+// Last Modified On : 2015-06-22  4:00 AM
 // ***********************************************************************
 // <copyright file="CityController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -148,6 +148,17 @@ namespace ChepingServer.Controllers
         public async Task<IHttpActionResult> Index()
         {
             return this.Ok(await this.cityService.Index());
+        }
+
+        /// <summary>
+        ///     获取所有城市信息 json
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
+        [HttpGet, Route("json")]
+        public async Task<IHttpActionResult> Json()
+        {
+            return this.Ok(await this.cityService.Json());
         }
     }
 }

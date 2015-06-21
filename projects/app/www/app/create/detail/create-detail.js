@@ -22,15 +22,6 @@ angular.module('cheping.new.detail', [
                     }
                 }
             })
-            .state('cheping.new-factory-time', {
-                url: '/new/factory-time',
-                views: {
-                    'new': {
-                        controller: 'NewFactoryTimeCtrl as ctrl',
-                        templateUrl: 'app/create/detail/create-detail-factory-time.tpl.html'
-                    }
-                }
-            })
             .state('cheping.new-series', {
                 url: '/new/series',
                 views: {
@@ -67,30 +58,33 @@ angular.module('cheping.new.detail', [
                     }
                 }
             })
-            // .state('cheping.index.createDetail-model', {
-            //    url: '/create/model',
-            //    views: {
-            //        'index.create': {
-            //            controller: 'CreateDetailModelCtrl as createDetailModelCtrl',
-            //            templateUrl: 'app/index/create/create-model.tpl.html'
-            //        }
-            //    }
-            //}).state('cheping.index.createDetail-color', {
-            //    url: '/create/color',
-            //    views: {
-            //        'index.create': {
-            //            controller: 'CreateDetailColorCtrl as createDetailColorCtrl',
-            //            templateUrl: 'app/index/create/create-color.tpl.html'
-            //        }
-            //    }
-            //}).state('cheping.index.createDetail-inner-color', {
-            //    url: '/create/inner-color',
-            //    views: {
-            //        'index.create': {
-            //            controller: 'CreateDetailInnerColorCtrl as createDetailInnerColorCtrl',
-            //            templateUrl: 'app/index/create/create-inner-color.tpl.html'
-            //        }
-            //    }
+            .state('cheping.new-license-time', {
+                url: '/new/license-time',
+                views: {
+                    'new': {
+                        controller: 'NewLicenseTimeCtrl as ctrl',
+                        templateUrl: 'app/create/detail/create-detail-license-time.tpl.html'
+                    }
+                }
+            })
+            .state('cheping.new-factory-time', {
+                url: '/new/factory-time',
+                views: {
+                    'new': {
+                        controller: 'NewFactoryTimeCtrl as ctrl',
+                        templateUrl: 'app/create/detail/create-detail-factory-time.tpl.html'
+                    }
+                }
+            })
+            .state('cheping.new-vehicle-location', {
+                url: '/new/vehicle-location',
+                views: {
+                    'new': {
+                        controller: 'NewVehicleLocationCtrl as ctrl',
+                        templateUrl: 'app/create/detail/create-detail-vehicle-location.tpl.html'
+                    }
+                }
+            })
             //}).state('cheping.index.createDetail-city', {
             //    url: '/create/city',
             //    views: {
@@ -357,6 +351,24 @@ angular.module('cheping.new.detail', [
         });
 
     })
+    .controller('NewLicenseTimeCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
+        var ctrl = this;
+        var newOrder = CaseCreateService.getNewCase();
+
+        ctrl.date = '';
+
+        ctrl.selectConfirm = function() {
+            if (ctrl.date) {
+                newOrder.licenseTime = ctrl.date;
+                $state.go('cheping.new-detail', {carType: newOrder.caseType});
+            }
+        };
+
+        ctrl.buttonEnable = function() {
+            return ctrl.date;
+        };
+
+    })
     .controller('NewFactoryTimeCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
         var ctrl = this;
         var newOrder = CaseCreateService.getNewCase();
@@ -375,23 +387,42 @@ angular.module('cheping.new.detail', [
         };
 
     })
-    .controller('CreateDetailColorCtrl', function($state, ChepingOrderService) {
-        var createDetailColorCtrl = this;
-        var newOrder = ChepingOrderService.getNewOrder();
-        createDetailColorCtrl.newOrder = newOrder;
+    .controller('NewVehicleLocationCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
+        var ctrl = this;
+        var newCase = CaseCreateService.getNewCase();
 
-        createDetailColorCtrl.items = [
-            '白色',
-            '黑色',
-            '灰色',
-            '红色',
-            '银色'
-        ];
+        ctrl.groups = [];
 
-        createDetailColorCtrl.goBack = function() {
-            $state.go('cheping.index.createDetail', {carType: newOrder.carType})
-        }
 
+        ctrl.items = [];
+        ctrl.selected = newCase.vehicleLocation;
+
+        ctrl.loadItems = function() {
+            ctrl.items = CaseCreateService.getColors();
+        };
+
+        ctrl.select = function(item) {
+            ctrl.selected = item;
+        };
+
+        ctrl.selectConfirm = function() {
+            if (ctrl.selected && ctrl.selected !== newCase.vehicleLocation) {
+                newCase.vehicleLocation = ctrl.selected;
+                $state.go('cheping.new-detail', {carType: newCase.caseType});
+            }
+        };
+
+        ctrl.buttonEnable = function() {
+            return ctrl.selected;
+        };
+
+        ctrl.loadItems();
+
+        $scope.$watch(angular.bind(ctrl, function () {
+            return this.selected;
+        }), function (newVal, oldVal) {
+            ctrl.selectConfirm();
+        });
     })
     .controller('CreateDetailCooperationCtrl', function($state, ChepingOrderService) {
         var createDetailCooperationCtrl = this;

@@ -47,4 +47,8 @@ angular.module('cheping.services.caseCreate', [])
         service.getColors = function(){
             return ConfigService.getColors();
         };
+
+        service.getCitis = function(){
+            return ConfigService.getCitis();
+        };
     });

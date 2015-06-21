@@ -148,7 +148,12 @@ angular.module('cheping.services', [
                 colorCode: '#ff9900'
             }
             ]
-        }
+        };
+
+        service.getCitis = function() {
+            return [
+            ]
+        };
 
     })
     .service('UtilityService', function($state, $ionicPopup, $timeout, $cordovaInAppBrowser) {

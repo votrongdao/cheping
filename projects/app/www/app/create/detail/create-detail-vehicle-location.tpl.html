@@ -1,0 +1,20 @@
+<ion-view view-title="车辆所在地">
+  <ion-content>
+    <ion-list>
+      <div ng-repeat="group in ctrl.groups">
+        <ion-item class="item-stable"
+                  ng-click="ctrl.toggleGroup(group)"
+                  ng-class="{ active: ctrl.isGroupShown(group) }">
+          <i class="icon" ng-class="ctrl.isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+          &nbsp;
+          Group {{group.name}}
+        </ion-item>
+        <ion-item class="item-accordion"
+                  ng-repeat="item in ctrl.group.items"
+                  ng-show="ctrl.isGroupShown(group)">
+          {{item}}
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

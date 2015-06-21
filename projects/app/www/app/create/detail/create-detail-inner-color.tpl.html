@@ -4,10 +4,11 @@
       <ion-item class="item-divider">
         <p>选择内饰颜色</p>
       </ion-item>
-      <ion-radio ng-repeat="item in ctrl.items"
-                 ng-value="item.colorId"
-                 name="innerColor" ng-change="ctrl.selectConfirm()"
-                 ng-model="ctrl.selected"> {{ item.colorName }}
-      </ion-radio>
+    </ion-list>
+    <ion-radio ng-repeat="item in ctrl.items"
+               ng-value="item.colorId"
+               name="innerColor" ng-change="ctrl.selectConfirm()"
+               ng-model="ctrl.selected"> {{ item.colorName }}
+    </ion-radio>
   </ion-content>
 </ion-view>

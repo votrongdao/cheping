@@ -137,5 +137,35 @@ namespace ChepingServer.Services
                 return await db.Cities.ToListAsync();
             }
         }
+
+        public async Task<Dictionary<string, Dictionary<int, string>>> Json()
+        {
+            var json = new Dictionary<string, Dictionary<int, string>>();
+
+            using (ChePingContext db = new ChePingContext())
+            {
+                var cities = await db.Cities.ToListAsync();
+
+                foreach (City city in cities)
+                {
+                    if (json.ContainsKey(city.ProvinceName))
+                    {
+                        var i = json[city.ProvinceName];
+
+                        if (!i.ContainsKey(city.Id))
+                        {
+                            i.Add(city.Id, city.CityName);
+                        }
+                    }
+                    else
+                    {
+                        var i = new Dictionary<int, string> { { city.Id, city.CityName } };
+                        json.Add(city.ProvinceName, i);
+                    }
+                }
+            }
+
+            return json;
+        }
     }
 }

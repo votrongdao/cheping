@@ -1,5 +1,18 @@
 .popup-container .popup-title {
-  background: url(../img/global/icon-dialog-title.png) no-repeat 0 50%;
   background-size: auto 100%
+}
+
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
 }
 
