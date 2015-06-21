@@ -7,6 +7,7 @@ angular.module('cheping.interceptors', [
 
         return {
             'request': function(config) {
+                $rootScope.$broadcast('loading:show');
                 config.headers['x-cp'] = authService.getToken();
                 return config;
             },
@@ -17,6 +18,7 @@ angular.module('cheping.interceptors', [
             },
 
             'response': function(response) {
+                $rootScope.$broadcast('loading:hide');
                 if(response.headers()['x-cp']) {
                     authService.setToken(response.headers['x-cp'])
                 }
@@ -24,6 +26,7 @@ angular.module('cheping.interceptors', [
             },
 
             'responseError': function(rejection) {
+                $rootScope.$broadcast('loading:hide');
                 var $state = $injector.get('$state');
                 var $ionicHistory = $injector.get('$ionicHistory');
                 if (rejection.status == 401 || rejection.status == 403) {

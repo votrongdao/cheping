@@ -1,30 +1,27 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-20  12:13 AM
+// Created          : 2015-06-21  10:27 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  10:29 AM
+// Last Modified On : 2015-06-21  11:22 AM
 // ***********************************************************************
 // <copyright file="PhotoController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
 
-using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using ChepingServer.DTO;
 using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
 using Moe.AspNet.Filters;
-using System.Web;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ChepingServer.Controllers
 {
@@ -66,7 +63,7 @@ namespace ChepingServer.Controllers
                 CaseId = 0
             };
 
-            return this.Ok(new { Result = (await this.photoService.Create(photo))});
+            return this.Ok(new { Result = (await this.photoService.Create(photo)) });
         }
 
         /// <summary>
@@ -87,7 +84,6 @@ namespace ChepingServer.Controllers
             return this.Ok(new BoolResponse { Result = await this.photoService.Delete(id) });
         }
 
-
         [HttpPost, Route("{id}"), ResponseType(typeof(Photo))]
         public async Task<IHttpActionResult> Get([FromUri] int id)
         {
@@ -100,6 +96,5 @@ namespace ChepingServer.Controllers
 
             return this.Ok(photo);
         }
-
     }
 }
