@@ -1,0 +1,40 @@
+<ion-view view-title="验车结果">
+  <ion-content class="case-detail">
+    <ion-list>
+      <ion-item>
+        <p>序列号：<span ng-bind="_case.caseNo"></span></p>
+      </ion-item>
+      <ion-item>
+        <p>当前状态：<span ng-bind="(_case.state | state)"></span></p>
+      </ion-item>
+    </ion-list>
+    <ion-list class="item-icon-right">
+      <ion-item type="item-text-wrap">
+        <span>车辆品牌：</span>
+        <span ng-bind="_case.brandName" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>所属车系：</span>
+        <span ng-bind="_case.seriesName" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>车辆型号：</span>
+        <span ng-bind="_case.modelName" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>表显里程：</span>
+        <span ng-bind="(_case.displayMileage)" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+    <ion-list class="item-icon-right">
+      <ion-item type="item-text-wrap">
+        <span>采购价格：</span>
+        <span ng-bind="(_case.displayMileage)" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+
+
+
+    <button ng-click="_case.confirm()" ng-disabled="!_case.buttonEnable()">确认提交</button>
+  </ion-content>
+</ion-view>

@@ -21,7 +21,8 @@ angular.module('cheping', [
             REJECT: 'http://cheping.chinacloudsites.cn:80/api/Case/Reject',
             ADDYANCHEINFO: 'http://cheping.chinacloudsites.cn:80/api/Case/AddYancheInfo',
             REVIEWCASE: 'http://cheping.chinacloudsites.cn:80/api/Case/ReviewCase',
-            ACCEPTPRICE: 'http://cheping.chinacloudsites.cn:80/api/Case/AcceptPrice'
+            ACCEPTPRICE: 'http://cheping.chinacloudsites.cn:80/api/Case/AcceptPrice',
+            APPLYPAYMENT: 'http://cheping.chinacloudsites.cn:80/api/Case/ApplyPayment'
         }
     })
     .config(function($ionicConfigProvider) {

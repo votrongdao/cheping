@@ -69,6 +69,14 @@ angular.module('cheping.services.case', [])
             });
         };
 
+        service.applyPayment = function(caseId) {
+            var url = URLS.CASE.APPLYPAYMENT + '?' + 'caseId=' + caseId;
+
+            return $http.get(url).then(function(result) {
+                return result.data;
+            });
+        };
+
         service.addYancheInfo = function(data) {
             var url = URLS.CASE.ADDYANCHEINFO;
 
