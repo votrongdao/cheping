@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChepingServer.Models;
 using Moe.Lib;
+using System;
 
 namespace ChepingServer.Services
 {
@@ -30,13 +31,14 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="photo">The photo.</param>
         /// <returns>Task&lt;Photo&gt;.</returns>
-        public async Task<Photo> Create(Photo photo)
+        public async Task<string> Create(Photo photo)
         {
             using (ChePingContext db = new ChePingContext())
             {
+                photo.UploadTime = DateTime.UtcNow.AddHours(8);
                 await db.SaveAsync(photo);
             }
-            return photo;
+            return photo.Id.ToString();
         }
 
         /// <summary>
