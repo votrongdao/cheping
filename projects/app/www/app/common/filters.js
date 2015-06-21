@@ -700,7 +700,7 @@ angular.module('cheping.filters', [])
     })
     .filter('time', function() {
         return function(time) {
-            if (time.indexOf('选择') >= 0) {
+            if (!isFinite(time)) {
                 return time;
             }
 
