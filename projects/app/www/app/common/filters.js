@@ -14,6 +14,23 @@ angular.module('cheping.filters', [])
             return '上海';
         };
     })
+    .filter('cooperationMethod', function() {
+        return function(cooperationMethodId) {
+            switch(cooperationMethodId) {
+                case 10:
+                    return '1973';
+                case 20:
+                    return '自营';
+                default:
+                    return '1973';
+            }
+        };
+    })
+    .filter('time', function() {
+        return function(time) {
+            return moment(time).format('LL');
+        };
+    })
     .filter('state', function() {
         return function(stateId) {
             switch(stateId) {

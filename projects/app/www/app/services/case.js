@@ -14,6 +14,17 @@ angular.module('cheping.services.case', [
 
         };
 
+        service.getCase = function(caseId) {
+            var url = URLS.CASE.GETVEHICLEINFO + '?' + 'caseId=' + caseId;
+
+            return $http.get(url, {
+                cache: CacheService.get('caseCache')
+            }).then(function(result) {
+                return result.data;
+            });
+
+        };
+
         service.getVehicleInfo = function(caseId) {
             var url = URLS.CASE.GETVEHICLEINFO + '?' + 'caseId' + caseId;
 
