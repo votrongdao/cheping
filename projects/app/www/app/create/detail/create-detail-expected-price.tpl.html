@@ -1,10 +1,10 @@
-<ion-view view-title="上牌时间">
+<ion-view view-title="心理价位">
   <ion-content>
     <ion-list>
-      <ion-item class="divider">请输入上牌时间：</ion-item>
+      <ion-item class="divider">请输入心理价位：</ion-item>
       <ion-item>
         <label class="item item-input">
-          <input type="date" name="licenseTime" ng-model="ctrl.date" placeholder="上牌时间" required>
+          <input type="number" name="expectedPrice" ng-model="ctrl.number" placeholder="心理价位" required min="1">
         </label>
       </ion-item>
 

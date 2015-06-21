@@ -51,4 +51,8 @@ angular.module('cheping.services.caseCreate', [])
         service.getCitis = function(){
             return ConfigService.getCitis();
         };
+
+        service.getCooperationMethod = function(){
+            return ConfigService.getCooperationMethod();
+        };
     });

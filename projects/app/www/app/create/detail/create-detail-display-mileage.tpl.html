@@ -1,10 +1,10 @@
-<ion-view view-title="上牌时间">
+<ion-view view-title="表显里程">
   <ion-content>
     <ion-list>
-      <ion-item class="divider">请输入上牌时间：</ion-item>
+      <ion-item class="divider">请输入表显里程：</ion-item>
       <ion-item>
         <label class="item item-input">
-          <input type="date" name="licenseTime" ng-model="ctrl.date" placeholder="上牌时间" required>
+          <input type="number" name="displayMileage" ng-model="ctrl.number" placeholder="表显里程" required min="1">
         </label>
       </ion-item>
 

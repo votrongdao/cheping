@@ -11,9 +11,9 @@
       </ion-item>
       <ion-item class="item item-input-inset item-icon-left">
         <label class="item-input-wrapper">
-          <input type="text" name="selectModels" ng-model="ctrl.selected" placeholder="输入车型" required minlength="1" maxlength="18">
+          <input type="text" name="selectModels" ng-model="ctrl.selected" placeholder="输入车型" required minlength="1" maxlength="100">
         </label>
-        <button class="button button-small" ng-click="ctrl.selectConfirm()">确认</button>
+        <button class="button button-small" ng-disabled="!ctrl.buttonEnable()"  ng-click="ctrl.selectConfirm()">确认</button>
       </ion-item>
     </ion-list>
 

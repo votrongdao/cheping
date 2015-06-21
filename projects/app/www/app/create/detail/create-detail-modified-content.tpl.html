@@ -1,0 +1,15 @@
+<ion-view view-title="改装内容">
+  <ion-content>
+    <ion-list>
+      <ion-item class="divider">请输入改装内容：</ion-item>
+      <ion-item>
+        <label class="item item-input">
+          <input type="text" name="modifiedContent" ng-model="ctrl.content" placeholder="改装内容" required>
+        </label>
+      </ion-item>
+
+    </ion-list>
+
+    <button ng-click="ctrl.selectConfirm()" ng-disabled="!ctrl.buttonEnable()"  class="button button-block button-cp-dark">确认</button>
+  </ion-content>
+</ion-view>
