@@ -11,13 +11,13 @@ angular.module('cheping', [
 ])
     .constant('URLS', {
         USER: {
-            GETINFO: 'http://localhost:1585/api/Users',
-            SIGNIN: 'http://localhost:1585/api/Users/Login'
+            GETINFO: 'http://cheping.chinacloudsites.cn:80/api/Users',
+            SIGNIN: 'http://cheping.chinacloudsites.cn:80/api/Users/Login'
         },
         CASE: {
-            GETCASELIST: 'http://localhost:1585/api/Case/List',
-            GETVEHICLEINFO: 'http://localhost:1585/api/Case/VehicleInfo',
-            GETTODOS: 'http://localhost:1585/api/Case/Todos'
+            GETCASELIST: 'http://cheping.chinacloudsites.cn:80/api/Case/List',
+            GETVEHICLEINFO: 'http://cheping.chinacloudsites.cn:80/api/Case/VehicleInfo',
+            GETTODOS: 'http://cheping.chinacloudsites.cn:80/api/Case/Todos'
         }
     })
     .config(function($ionicConfigProvider) {

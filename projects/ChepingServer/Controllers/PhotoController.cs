@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-21  10:27 AM
+// Created          : 2015-06-21  4:41 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  11:26 AM
+// Last Modified On : 2015-06-21  4:46 PM
 // ***********************************************************************
 // <copyright file="PhotoController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -12,6 +12,8 @@
 // ***********************************************************************
 
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
@@ -21,10 +23,6 @@ using System.Web.Http.Description;
 using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
-using Moe.AspNet.Filters;
-using System.Net.Http;
-using System.Net;
-
 
 namespace ChepingServer.Controllers
 {
@@ -49,11 +47,11 @@ namespace ChepingServer.Controllers
 
             //Stream requestStream = await Request.Content.ReadAsStreamAsync();
 
-            if (!Request.Content.IsMimeMultipartContent())
+            if (!this.Request.Content.IsMimeMultipartContent())
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
 
             var provider = new MultipartMemoryStreamProvider();
-            await Request.Content.ReadAsMultipartAsync(provider);
+            await this.Request.Content.ReadAsMultipartAsync(provider);
             foreach (var file in provider.Contents)
             {
                 var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
