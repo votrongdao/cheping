@@ -4,7 +4,7 @@
 // Created          : 2015-06-12  7:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  11:28 PM
+// Last Modified On : 2015-06-21  6:15 PM
 // ***********************************************************************
 // <copyright file="WebApiConfig.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -49,7 +49,7 @@ namespace ChepingServer
             config.Formatters.Clear();
             config.Formatters.Add(formatter);
 
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*", "*"));
+            config.EnableCors(new EnableCorsAttribute("*", "*", "GET,POST,PUT,OPTIONS", "*"));
 
             SystemDiagnosticsTraceWriter traceWriter = config.EnableSystemDiagnosticsTracing();
             traceWriter.IsVerbose = true;

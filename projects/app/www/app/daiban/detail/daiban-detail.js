@@ -1,6 +1,7 @@
-angular.module('cheping.case.detail', [
+angular.module('cheping.daiban.detail', [
     'cheping.services.user',
-    'cheping.services.case'
+    'cheping.services.case',
+    'cheping.daiban.detail-yanche'
 ])
     .config(function($stateProvider) {
         $stateProvider
@@ -14,7 +15,7 @@ angular.module('cheping.case.detail', [
                 }
             })
     })
-    .controller('DaibanDetailCtrl', function($scope, $state, $stateParams, $ionicPopup, UserService, CaseService) {
+    .controller('DaibanDetailCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicHistory, UserService, CaseService) {
         var _case = this;
         _case.rejectButtonText = '取消';
         _case.confirmButtonText = '确认';
@@ -108,7 +109,7 @@ angular.module('cheping.case.detail', [
             $scope.data = {};
 
             var popup = $ionicPopup.show({
-                template: '<input type="text" ng-model="data.eason">',
+                template: '<input type="text" ng-model="data.reason">',
                 title: '请输入原因',
                 scope: $scope,
                 buttons: [
@@ -128,28 +129,61 @@ angular.module('cheping.case.detail', [
             });
 
             popup.then(function(res) {
-                CaseService.reject($stateParams.caseId, res)
-                    .then(function(result) {
-                        $state.go('cheping.daiban')
-                    });
+                if(res) {
+                    CaseService.reject($stateParams.caseId, res)
+                        .then(function(result) {
+                            $ionicHistory.nextViewOptions({
+                                disableBack: true
+                            });
+                            $state.go('cheping.daiban');
+                        });
+                }
             });
 
 
         };
 
         _case.confirm = function() {
-            if (result.jobTitle === 40) {
-                _case.rejectButtonText = '放弃申请';
-                _case.confirmButtonText = '申请打款';
-            } else if (result.jobTitle === 10) {
-                _case.rejectButtonText = '验车失败';
-                _case.confirmButtonText = '验车成功';
-            } else if (result.jobTitle === 50) {
-                _case.rejectButtonText = '放弃收购';
-                _case.confirmButtonText = '打款';
-            } else {
-                UtilityService.showAlert('请先登录');
-                $state.go('cheping.user-login');
+            if(_case.state === 20) {
+                $state.go('cheping.daiban-detail-yanche', {
+                    caseId: $stateParams.caseId,
+                    caseNo: $stateParams.caseNo
+                });
+            }else if (_case.state === 30) {
+                $state.go('cheping.daiban-detail-yanche', {
+                    caseId: $stateParams.caseId,
+                    caseNo: $stateParams.caseNo
+                });
+            }else if (_case.state === 50) {
+                $state.go('cheping.daiban-detail-yanche', {
+                    caseId: $stateParams.caseId,
+                    caseNo: $stateParams.caseNo
+                });
+            }else if (_case.state === 60) {
+                $state.go('cheping.daiban-detail-yanche', {
+                    caseId: $stateParams.caseId,
+                    caseNo: $stateParams.caseNo
+                });
+            }else if (_case.state === 70) {
+                $state.go('cheping.daiban-detail-yanche', {
+                    caseId: $stateParams.caseId,
+                    caseNo: $stateParams.caseNo
+                });
+            }else if (_case.state === 80) {
+                $state.go('cheping.daiban-detail-yanche', {
+                    caseId: $stateParams.caseId,
+                    caseNo: $stateParams.caseNo
+                });
+            }else if(_case.state === 90) {
+                $state.go('cheping.daiban-detail-yanche', {
+                    caseId: $stateParams.caseId,
+                    caseNo: $stateParams.caseNo
+                });
+            }else {
+                $state.go('cheping.daiban-detail-yanche', {
+                    caseId: $stateParams.caseId,
+                    caseNo: $stateParams.caseNo
+                });
             }
         };
 

@@ -15,7 +15,7 @@ angular.module('cheping.case.list', [
                 }
             })
     })
-    .controller('CaseListCtrl', function($state, $stateParams, UserService, CaseService, UtilityService) {
+    .controller('CaseListCtrl', function($scope, $state, $stateParams, $timeout, UserService, CaseService, UtilityService) {
         var cases = this;
         var nextPageIndex = 0;
         var user = UserService.getUserInfo();
@@ -30,6 +30,7 @@ angular.module('cheping.case.list', [
                         cases.items.push(i);
                     });
 
+                    cases.hasNextPage = result.hasNextPage;
                     nextPageIndex = result.pageIndex + 1;
                 })
         };
@@ -41,4 +42,15 @@ angular.module('cheping.case.list', [
         };
 
         cases.getCases();
+
+        cases.doRefresh = function() {
+            nextPageIndex = 0;
+            cases.items = [];
+            cases.hasNextPage = false;
+            cases.getCases();
+
+            $timeout(function() {
+                $scope.$broadcast('scroll.refreshComplete');
+            }, 500);
+        };
     });

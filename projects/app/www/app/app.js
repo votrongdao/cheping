@@ -18,7 +18,8 @@ angular.module('cheping', [
             GETCASELIST: 'http://cheping.chinacloudsites.cn:80/api/Case/List',
             GETVEHICLEINFO: 'http://cheping.chinacloudsites.cn:80/api/Case/VehicleInfo',
             GETTODOS: 'http://cheping.chinacloudsites.cn:80/api/Case/Todos',
-            REJECT: 'http://cheping.chinacloudsites.cn:80/api/Case/Reject'
+            REJECT: 'http://cheping.chinacloudsites.cn:80/api/Case/Reject',
+            ADDYANCHEINFO: 'http://cheping.chinacloudsites.cn:80/api/Case/AddYancheInfo'
         }
     })
     .config(function($ionicConfigProvider) {

@@ -1,10 +1,85 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-</head>
-<body>
+<ion-view view-title="验车结果">
+  <ion-content class="case-detail">
+    <ion-list>
+      <ion-item>
+        <p>序列号：<span ng-bind="_case.caseNo"></span></p>
+      </ion-item>
+      <ion-item>
+        <p>当前状态：<span ng-bind="(_case.state | state)"></span></p>
+      </ion-item>
+    </ion-list>
+    <ion-list class="item-icon-right">
+      <ion-item type="item-text-wrap">
+        <span>车辆品牌：</span>
+        <span ng-bind="_case.brandName" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>所属车系：</span>
+        <span ng-bind="_case.seriesName" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>车辆型号：</span>
+        <span ng-bind="_case.modelName" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>表显里程：</span>
+        <span ng-bind="(_case.displayMileage)" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+    <form name="yanche1">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input type="text" name="VIN" ng-model="_case.VIN" placeholder="请输入车架号" required minlength="3" maxlength="30" ng-trim="true">
+        </label>
+      </div>
+      <div ng-messages="yanche1.VIN.$error" ng-if="yanche1.VIN.$dirty" role="alert" class="padding ng-input-error">
+        <div ng-message="required, minlength">
+          请输入车架号
+        </div>
+      </div>
+    </form>
+    <form name="yanche2">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input type="text" name="engineCode" ng-model="_case.engineCode" placeholder="请输入发动机号" required minlength="3" maxlength="30" ng-trim="true">
+        </label>
+      </div>
+      <div ng-messages="yanche2.engineCode.$error" ng-if="yanche2.engineCode.$dirty" role="alert" class="padding ng-input-error">
+        <div ng-message="required, minlength">
+          请输入发动机号
+        </div>
+      </div>
+    </form>
+    <form name="yanche3">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input type="text" name="insuranceCode" ng-model="_case.insuranceCode" placeholder="请输入保险号" required minlength="3" maxlength="30" ng-trim="true">
+        </label>
+      </div>
+      <div ng-messages="yanche3.insuranceCode.$error" ng-if="yanche3.insuranceCode.$dirty" role="alert" class="padding ng-input-error">
+        <div ng-message="required, minlength">
+          请输入保险号
+        </div>
+      </div>
+    </form>
+    <form name="yanche4">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input type="text" name="license" ng-model="_case.license" placeholder="请输入车牌号" required minlength="3" maxlength="30" ng-trim="true">
+        </label>
+      </div>
+      <div ng-messages="yanche4.license.$error" ng-if="yanche4.license.$dirty" role="alert" class="padding ng-input-error">
+        <div ng-message="required, minlength">
+          请输入车牌号
+        </div>
+      </div>
+    </form>
 
-</body>
-</html>
+
+    <button ng-click="_case.confirm()" ng-disabled="!_case.buttonEnable()">确认提交</button>
+  </ion-content>
+</ion-view>

@@ -1,5 +1,4 @@
-angular.module('cheping.services.case', [
-])
+angular.module('cheping.services.case', [])
     .service('CaseService', function($http, URLS, AuthService, CacheService) {
         var service = this;
 
@@ -36,7 +35,7 @@ angular.module('cheping.services.case', [
         };
 
         service.getVehicleInfo = function(caseId) {
-            var url = URLS.CASE.GETVEHICLEINFO + '?' + 'caseId' + caseId;
+            var url = URLS.CASE.GETVEHICLEINFO + '?' + 'caseId=' + caseId;
 
             return $http.get(url, {
                 cache: CacheService.get('caseCache')
@@ -47,12 +46,17 @@ angular.module('cheping.services.case', [
         };
 
         service.reject = function(caseId, reason) {
-            var url = URLS.CASE.REJECT;
+            var url = URLS.CASE.REJECT + '?' + 'caseId=' + caseId + '&message=' + reason;
 
-            return $http.post(url, {
-                caseId: caseId,
-                message: reason
-            }).then(function(result) {
+            return $http.get(url).then(function(result) {
+                return result.data;
+            });
+        };
+
+        service.addYancheInfo = function(data) {
+            var url = URLS.CASE.ADDYANCHEINFO;
+
+            return $http.post(url, data).then(function(result) {
                 return result.data;
             });
         };

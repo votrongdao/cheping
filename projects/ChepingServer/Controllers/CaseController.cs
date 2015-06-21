@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  5:53 PM
+// Last Modified On : 2015-06-21  6:53 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -650,7 +650,7 @@ namespace ChepingServer.Controllers
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
-        [Route("Reject"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        [HttpGet, Route("Reject"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> Reject([FromUri] int caseId, [FromUri] string message)
         {
             if (message.IsNullOrEmpty())

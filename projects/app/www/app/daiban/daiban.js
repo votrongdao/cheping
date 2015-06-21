@@ -1,7 +1,7 @@
 angular.module('cheping.daiban', [
     'cheping.services.user',
     'cheping.services.case',
-    'cheping.case.detail'
+    'cheping.daiban.detail'
 ])
     .config(function($stateProvider) {
         $stateProvider
@@ -15,7 +15,7 @@ angular.module('cheping.daiban', [
                 }
             })
     })
-    .controller('DaibanCtrl', function($state, UserService, CaseService, UtilityService) {
+    .controller('DaibanCtrl', function($scope, $state, $timeout, UserService, CaseService, UtilityService) {
         var cases = this;
         var user = UserService.getUserInfo();
 
@@ -24,11 +24,17 @@ angular.module('cheping.daiban', [
         cases.getTodos = function() {
             CaseService.getTodos()
                 .then(function(result) {
-                    _.forEach(result, function(i) {
-                        cases.items.push(i);
-                    });
+                    cases.items = result;
                 })
         };
 
         cases.getTodos();
+
+        cases.doRefresh = function() {
+            cases.getTodos();
+
+            $timeout(function() {
+                $scope.$broadcast('scroll.refreshComplete');
+            }, 500);
+        };
     });
