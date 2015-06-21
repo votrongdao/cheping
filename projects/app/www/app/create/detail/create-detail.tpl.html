@@ -1,54 +1,56 @@
 <ion-view view-title="新增事项">
   <ion-content>
-    <ion-list class="item-icon-right">
+    <ion-list>
       <ion-item class="item-divider">
         <p>必填信息</p>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-brand">
+      <ion-item class="item-icon-right" type="item-text-wrap" ui-sref="cheping.new-brand">
         <span class="pull-left">车辆品牌：</span>
         <span ng-bind="_case.viewModel.brandName" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-series">
+      <ion-item class="item-icon-right" type="item-text-wrap" ui-sref="cheping.new-series">
         <span class="pull-left">所属车系：</span>
         <span ng-bind="_case.viewModel.seriesName" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-model">
+      <ion-item class="item-icon-right" type="item-text-wrap" ui-sref="cheping.new-model">
         <span class="pull-left">车辆型号：</span>
         <span ng-bind="_case.viewModel.modelName" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-outer-color">
+      <ion-item class="item-icon-right" type="item-text-wrap" ui-sref="cheping.new-outer-color">
         <span class="pull-left">外部颜色：</span>
         <span ng-bind="(_case.viewModel.outerColor | colorName)" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-inner-color">
+      <ion-item class="item-icon-right" type="item-text-wrap" ui-sref="cheping.new-inner-color">
         <span class="pull-left">内饰颜色：</span>
         <span ng-bind="(_case.viewModel.innerColor | colorName)" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-license-time">
+      <ion-item class="item-icon-right" type="item-text-wrap" ui-sref="cheping.new-license-time">
         <span class="pull-left">上牌时间：</span>
         <span ng-bind="(_case.viewModel.licenseTime | time)" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-vehicle-location">
+      <ion-item class="item-icon-right" type="item-text-wrap" ui-sref="cheping.new-vehicle-location">
         <span class="pull-left">车辆所在地：</span>
         <span ng-bind="(_case.viewModel.vehicleLocation | city)" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-display-mileage">
+      <ion-item class="item-icon-right" type="item-text-wrap" ui-sref="cheping.new-display-mileage">
         <span class="pull-left">表显里程：</span>
         <span ng-bind="_case.viewModel.displayMileage" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-cooperation-method">
+      <ion-item class="item-icon-right" type="item-text-wrap" ui-sref="cheping.new-cooperation-method">
         <span class="pull-left">合作方式：</span>
         <span ng-bind="(_case.viewModel.cooperationMethod | cooperationMethod)" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
+    </ion-list>
+    <ion-list class="item-icon-right">
       <ion-item class="item-divider">
         <p>选填信息</p>
       </ion-item>
