@@ -304,6 +304,9 @@ em {
     font-size: 10px;
     color: inherit;
   }
+  /*.item-thumbnail-left.item-icon-right img {*/
+    /*max-width: 70px;*/
+  /*}*/
 }
 @media only screen and (max-width: 320px) and (min-height: 568px) {
   .cases .price {
@@ -370,9 +373,9 @@ form > div.list-inset {
 }
 
 .state {
-  font-size: 18px;
+  font-size: 16px;
   color: #660000;
-  float: right;
+  /*float: right;*/
   margin-top: 11px;
 }
 
