@@ -1,5 +1,5 @@
 <ion-view view-title="事项详情">
-  <ion-content>
+  <ion-content class="case-detail">
     <ion-list>
       <ion-item>
         <p>订单号：<span ng-bind="_case.caseNo"></span></p>
@@ -7,51 +7,64 @@
     </ion-list>
     <ion-list class="item-icon-right">
       <ion-item class="item-divider">
-        <p>必填信息</p>
+        <span>必填信息</span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>车辆品牌：<span ng-bind="_case.brandName"></span></p>
+        <span>车辆品牌：</span>
+        <span ng-bind="_case.brandName" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>所属车系：<span ng-bind="_case.seriesName"></span></p>
+        <span>所属车系：</span>
+        <span ng-bind="_case.seriesName" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>车辆型号：<span ng-bind="_case.modelName"></span></p>
+        <span>车辆型号：</span>
+        <span ng-bind="_case.modelName" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>外部颜色：<span ng-bind="_case.outerColor"></span></p>
+        <span>外部颜色：</span>
+        <span ng-bind="_case.outerColor" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>内饰颜色：<span ng-bind="_case.innerColor"></span></p>
+        <span>内饰颜色：</span>
+        <span ng-bind="_case.innerColor" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>上牌时间：<span ng-bind="(_case.licenseTime | time)"></span></p>
+        <span>上牌时间：</span>
+        <span ng-bind="(_case.licenseTime | time)" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>车辆所在地：<span ng-bind="(_case.vehicleLocation | city)"></span></p>
+        <span>车辆所在地：</span>
+        <span ng-bind="(_case.vehicleLocation | city)" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>表显里程：<span ng-bind="(_case.displayMileage)"></span></p>
+        <span>表显里程：</span>
+        <span ng-bind="(_case.displayMileage)" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>合作方式：<span ng-bind="(_case.cooperationMethod | cooperationMethod)"></span></p>
+        <span>合作方式：</span>
+        <span ng-bind="(_case.cooperationMethod | cooperationMethod)" class="pull-right"></span>
       </ion-item>
     </ion-list>
     <ion-list class="item-remove-animate item-icon-right">
       <ion-item class="item-divider">
-        <p>选填信息</p>
+        <span>选填信息</span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>出厂时间：<span ng-bind="(_case.factoryTime | time)"></span></p>
+        <span>出厂时间：</span>
+        <span ng-bind="(_case.factoryTime | time)" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>牌照所在地：<span ng-bind="(_case.licenseLocation | city)"></span></p>
+        <span>牌照所在地：</span>
+        <span ng-bind="(_case.licenseLocation | city)" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>心理价位：<span ng-bind="_case.expectedPrice"></span></p>
+        <span>心理价位：</span>
+        <span ng-bind="_case.expectedPrice" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
-        <p>改装内容：<span ng-bind="_case.modifiedContent"></span></p>
+        <span>改装内容：</span>
+        <span ng-bind="_case.modifiedContent" class="pull-right"></span>
       </ion-item>
     </ion-list>
     <div>照片们</div>
