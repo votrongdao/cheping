@@ -284,8 +284,7 @@ em {
 
 /*.cases start*/
 .cases .item p, span {
-
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 200;
 }
 .cases .price {
