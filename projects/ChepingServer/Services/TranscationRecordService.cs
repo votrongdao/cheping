@@ -51,8 +51,11 @@ namespace ChepingServer.Services
         {
             using (ChePingContext db = new ChePingContext())
             {
-                return await db.TranscationRecords.Where(t => t.ModelId == modelId && t.Mileage >=minMileage && t.Mileage <= maxMileage && t.LicenseTime >= licenseTime.Year.ToDateTime() &&
-                                t.LicenseTime <= licenseTime.Year.ToDateTime().AddYears(1).AddMilliseconds(-1)).ToListAsync();
+                DateTime start = new DateTime(licenseTime.Year,1,1);
+                DateTime end = start.AddYears(1).AddMilliseconds(-1);
+
+                return await db.TranscationRecords.Where(t => t.ModelId == modelId && t.Mileage >=minMileage && t.Mileage <= maxMileage && t.LicenseTime >= start &&
+                                t.LicenseTime <= end).ToListAsync();
             }
         }
 
@@ -99,9 +102,12 @@ namespace ChepingServer.Services
         {
             using (ChePingContext db = new ChePingContext())
             {
+                DateTime start = new DateTime(licenseTime.Year, 1, 1);
+                DateTime end = start.AddYears(1).AddMilliseconds(-1);
+
                 int count = await db.TranscationRecords.CountAsync();
-                List<TranscationRecord> transcationRecords = await db.TranscationRecords.Where(t => t.ModelId == modelId && t.Mileage >= minMileage && t.Mileage <=maxMileage && t.LicenseTime >= licenseTime.Year.ToDateTime() &&
-                                t.LicenseTime <= licenseTime.Year.ToDateTime().AddYears(1).AddMilliseconds(-1)).OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                List<TranscationRecord> transcationRecords = await db.TranscationRecords.Where(t => t.ModelId == modelId && t.Mileage >= minMileage && t.Mileage <=maxMileage && t.LicenseTime >= start &&
+                                t.LicenseTime <= end).OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
 
                 return new PaginatedList<TranscationRecord>(pageIndex, pageSize, count, transcationRecords);
             }
