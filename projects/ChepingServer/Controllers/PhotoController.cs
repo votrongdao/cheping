@@ -40,40 +40,15 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpPost, Route("Create"), ResponseType(typeof(StringResponse))]
-        public async Task<IHttpActionResult> Create()
+        public async Task<IHttpActionResult> Create([FromUri]int caseId, [FromUri]string content)
         {
-            var httpRequest = HttpContext.Current.Request;
-
-            byte[] buff = null;
-
-            //Stream requestStream = await Request.Content.ReadAsStreamAsync();
-
-            if (!this.Request.Content.IsMimeMultipartContent())
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-
-            var provider = new MultipartMemoryStreamProvider();
-            await this.Request.Content.ReadAsMultipartAsync(provider);
-            foreach (var file in from file in provider.Contents let filename = file.Headers.ContentDisposition.FileName.Trim('\"') select file)
-            {
-                var buffer = await file.ReadAsByteArrayAsync();
-            }
-
-            // Check if files are available
-            if (httpRequest.Files.Count > 0 && httpRequest.Files[0].ContentLength > 0)
-            {
-                HttpPostedFile postedFile = httpRequest.Files[0];
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    IFormatter iFormatter = new BinaryFormatter();
-                    iFormatter.Serialize(ms, postedFile);
-                    buff = ms.GetBuffer();
-                }
-            }
+            byte[] bytes = new byte[content.Length * sizeof(char)];
+            System.Buffer.BlockCopy(content.ToCharArray(), 0, bytes, 0, bytes.Length);
 
             Photo photo = new Photo
             {
-                Content = buff,
-                CaseId = 0
+                Content = bytes,
+                CaseId = caseId
             };
 
             return this.Ok(new StringResponse { Result = (await this.photoService.Create(photo)) });
