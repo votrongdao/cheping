@@ -1,4 +1,4 @@
-<ion-view view-title="验车结果">
+<ion-view view-title="报价">
   <ion-content class="case-detail">
     <ion-list>
       <ion-item>
@@ -30,12 +30,12 @@
       <div class="list list-inset padding">
         <label class="item item-input">
           <i class="icon ion-model-s placeholder-icon"></i>
-          <input type="number" name="price" ng-model="_case.price" placeholder="请输入协商的价格" required min="1" max="900000000" ng-trim="true">
+          <input type="number" name="price" ng-model="_case.price" placeholder="请输入报价" required min="1" max="900000000" ng-trim="true">
         </label>
       </div>
       <div ng-messages="qiatan.price.$error" ng-if="qiatan.price.$dirty" role="alert" class="padding ng-input-error">
         <div ng-message="required, minlength">
-          请输入协商的价格
+          请输入报价
         </div>
       </div>
     </form>

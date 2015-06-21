@@ -1,9 +1,13 @@
 angular.module('cheping.daiban.detail', [
     'cheping.services.user',
     'cheping.services.case',
-    'cheping.daiban.detail-yanche',
     'cheping.daiban.detail-baojia',
-    'cheping.daiban.detail-shenhe'
+    'cheping.daiban.detail-caigou',
+    'cheping.daiban.detail-dakuanshenhe',
+    'cheping.daiban.detail-qiatan',
+    'cheping.daiban.detail-shenhe',
+    'cheping.daiban.detail-shenqingdakuan',
+    'cheping.daiban.detail-yanche'
 ])
     .config(function($stateProvider) {
         $stateProvider

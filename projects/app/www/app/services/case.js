@@ -69,6 +69,30 @@ angular.module('cheping.services.case', [])
             });
         };
 
+        service.applyPayment = function(caseId) {
+            var url = URLS.CASE.APPLYPAYMENT + '?' + 'caseId=' + caseId;
+
+            return $http.get(url).then(function(result) {
+                return result.data;
+            });
+        };
+
+        service.approvePayment = function(caseId) {
+            var url = URLS.CASE.APPROVEPAYMENT + '?' + 'caseId=' + caseId;
+
+            return $http.get(url).then(function(result) {
+                return result.data;
+            });
+        };
+
+        service.purchase = function(caseId) {
+            var url = URLS.CASE.PURCHASE + '?' + 'caseId=' + caseId;
+
+            return $http.get(url).then(function(result) {
+                return result.data;
+            });
+        };
+
         service.addYancheInfo = function(data) {
             var url = URLS.CASE.ADDYANCHEINFO;
 
