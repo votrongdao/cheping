@@ -1,4 +1,4 @@
-<ion-view view-title="事项详情">
+<ion-view view-title="待办详情">
   <ion-content class="case-detail">
     <ion-list>
       <ion-item>
@@ -71,5 +71,8 @@
       </ion-item>
     </ion-list>
     <div>照片们</div>
+
+    <button ng-bind="_case.rejectButtonText" ng-click="_case.reject()" ng-if="_case.showRejectButton()"></button>
+    <button ng-bind="_case.confirmButtonText" ng-click="_case.confirm()" ng-if="_case.showConfirmButton()"></button>
   </ion-content>
 </ion-view>

@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  12:57 AM
+// Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:08 PM
+// Last Modified On : 2015-06-21  6:08 PM
 // ***********************************************************************
 // <copyright file="CityController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -41,7 +41,7 @@ namespace ChepingServer.Controllers
         /// <param name="dto">The dto.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 城市信息已经存在
+        ///     城市信息已经存在
         /// </response>
         /// <response code="500"></response>
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(CityDto))]
@@ -67,7 +67,7 @@ namespace ChepingServer.Controllers
         /// <param name="dto">The dto.</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
+        [HttpPost, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
         public async Task<IHttpActionResult> Exist(CityDto dto)
         {
             City city = new City
@@ -85,7 +85,7 @@ namespace ChepingServer.Controllers
         /// <param name="id">The identifier.</param>
         /// <response code="200"></response>
         /// <response code="400">
-        /// 无此城市，请确认城市id是否正确
+        ///     无此城市，请确认城市id是否正确
         /// </response>
         /// <response code="500"></response>
         [HttpGet, Route("{id}"), ResponseType(typeof(CityDto))]
@@ -140,7 +140,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///    获取所有城市信息
+        ///     获取所有城市信息
         /// </summary>
         /// <response code="200"></response>
         /// <response code="500"></response>

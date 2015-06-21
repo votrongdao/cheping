@@ -35,6 +35,7 @@ angular.module('cheping.case.detail', [
                     _case.modifiedContent = result.modifiedContent;
                     _case.outerColor = result.outerColor;
                     _case.seriesName = result.seriesName;
+                    _case.state = result.state;
                     _case.vehicleLocation = result.vehicleLocation;
                 })
         };

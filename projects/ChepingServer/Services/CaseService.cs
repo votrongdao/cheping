@@ -384,6 +384,28 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
+        ///     Gets the vehicle information.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;VehicleInfo&gt;.</returns>
+        /// <exception cref="System.ApplicationException">未能加载事项信息</exception>
+        public async Task<Tuple<Case, VehicleInfo>> GetCaseWithVehicleInfoAsync(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                VehicleInfo info = await db.VehicleInfos.FirstOrDefaultAsync(v => v.Id == @case.VehicleInfoId);
+
+                return new Tuple<Case, VehicleInfo>(@case, info);
+            }
+        }
+
+        /// <summary>
         ///     Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>

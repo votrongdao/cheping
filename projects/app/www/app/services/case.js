@@ -45,4 +45,15 @@ angular.module('cheping.services.case', [
             });
 
         };
+
+        service.reject = function(caseId, reason) {
+            var url = URLS.CASE.REJECT;
+
+            return $http.post(url, {
+                caseId: caseId,
+                message: reason
+            }).then(function(result) {
+                return result.data;
+            });
+        };
     });

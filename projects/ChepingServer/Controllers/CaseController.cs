@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  4:32 PM
+// Last Modified On : 2015-06-21  5:53 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -804,10 +804,46 @@ namespace ChepingServer.Controllers
         /// <param name="caseId">The case identifier.</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("VehicleInfo"), ResponseType(typeof(VehicleInfo))]
+        [HttpGet, Route("VehicleInfo"), ResponseType(typeof(VehicleResponse))]
         public async Task<IHttpActionResult> VehicleInfo(int caseId)
         {
-            return this.Ok(await this.caseService.GetVehicleInfoAsync(caseId));
+            var result = await this.caseService.GetCaseWithVehicleInfoAsync(caseId);
+
+            VehicleResponse response = new VehicleResponse();
+            var c = result.Item1;
+            var info = result.Item2;
+            response.State = c.State;
+            response.Abandon = c.Abandon;
+            response.AbandonReason = c.AbandonReason;
+            response.BrandName = info.BrandName;
+            response.CaseType = c.CaseType;
+            response.CooperationMethod = info.CooperationMethod;
+            response.CreateTime = c.CreateTime;
+            response.DirectorId = c.DirectorId;
+            response.DisplayMileage = info.DisplayMileage;
+            response.ExpectedPrice = info.ExpectedPrice;
+            response.FactoryTime = info.FactoryTime;
+            response.Id = c.Id;
+            response.InnerColor = info.InnerColor;
+            response.LicenseLocation = info.LicenseLocation;
+            response.ManagerId = c.ManagerId;
+            response.ModelId = info.ModelId;
+            response.ModelName = info.ModelName;
+            response.ModifiedContent = info.ModifiedContent;
+            response.OuterColor = info.OuterColor;
+            response.OutletId = c.OutletId;
+            response.PurchasePrice = c.PurchasePrice;
+            response.PurchaserId = c.PurchaserId;
+            response.QueryingId = c.QueryingId;
+            response.SerialId = c.SerialId;
+            response.SeriesName = info.SeriesName;
+            response.State = c.State;
+            response.ValuerId = c.ValuerId;
+            response.VehicleInfoId = c.VehicleInfoId;
+            response.VehicleInspecId = c.VehicleInspecId;
+            response.VehicleLocation = info.VehicleLocation;
+
+            return this.Ok(response);
         }
 
         /// <summary>

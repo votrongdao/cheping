@@ -174,10 +174,10 @@ namespace ChepingServer.Services
             {
                 if (includeUnavailable)
                 {
-                    return await db.Models.Where(m => m.Brand == brand && m.Series == series).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
+                    return await db.Models.Where(m => m.Brand == brand && m.Series == series).GroupBy(m => m.Modeling).Select(m => m.Key).ToListAsync();
                 }
 
-                return await db.Models.Where(m => m.Brand == brand && m.Series == series && m.Available).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
+                return await db.Models.Where(m => m.Brand == brand && m.Series == series && m.Available).GroupBy(m => m.Modeling).Select(m => m.Key).ToListAsync();
             }
         }
 
