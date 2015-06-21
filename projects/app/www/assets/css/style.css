@@ -297,8 +297,9 @@ em {
   color: inherit;
 }
 
-.cases .button-cp-dark {
+.button-cp-dark.button-cp-dark, .button.button-cp-green {
   width: 90%;
+  margin: 10px auto;
 }
 
 .cases label {
