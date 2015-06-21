@@ -20,7 +20,7 @@ angular.module('cheping.interceptors', [
             'response': function(response) {
                 $rootScope.$broadcast('loading:hide');
                 if(response.headers()['x-cp']) {
-                    authService.setToken(response.headers['x-cp'])
+                    authService.setToken(response.headers()['x-cp'])
                 }
                 return response;
             },

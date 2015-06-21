@@ -191,11 +191,13 @@ ion-header-bar.bar.bar-header {
 .button-cp-green {
   background-color: #99CC00;
   color: white;
+  font-weight: bolder;
 }
 
 .button-cp-dark {
   background-color: #660000;
   color: white;
+  font-weight: bolder;
 }
 
 .cp-login {
@@ -220,11 +222,11 @@ ion-header-bar.bar.bar-header {
   margin-top: 20px;
 }
 
-.cp-create ion-item h2 {
+ion-item h2 {
   text-align: center;
   color: #660000;
-  padding-top: 8px;
-  font-weight: bolder;
+  padding-top: 10px;
+  font-size: 18px;
 }
 
 .cp-create-detail .item-icon-right{
@@ -252,7 +254,8 @@ ion-header-bar.bar.bar-header .title {
 
 h2 {
   color: #660000;
-  font-weight: bolder
+  font-weight: bolder;
+  margin-top: 11px;
 }
 em {
   color: red;
@@ -270,10 +273,54 @@ em {
   position: relative;
   margin-top: 20px;
 }
-.login .button-cp-dark {
+.button-cp-dark {
   border-radius: 3px;
   width: 96%;
   margin: auto;
 }
 
 /*.login end*/
+
+
+/*.cases start*/
+.cases .item p, span {
+
+  font-size: 16px;
+  font-weight: 200;
+}
+.cases .price {
+  color: #660000;
+  font-size: 22px;
+}
+.cases label > span {
+  font-size: 12px;
+  color: inherit;
+}
+
+.cases .button-cp-dark {
+  width: 90%;
+}
+
+.cases label {
+  border: solid 1px #CECBCB;
+  border-radius: 3px;
+  background-color: #ececec;
+}
+
+/*.cases end*/
+
+/*.case-detail start*/
+.case-detail .item p {
+  font-weight: bolder;
+}
+.case-detail .item span {
+  color: #666;
+  font-size: 14px;
+  text-align: right;
+}
+/*.case-detail end*/
+
+.pull-right {
+  float: right;
+  padding-top: 2px;
+}

@@ -233,4 +233,4 @@ node_modules
 platforms/
 plugins/
 hooks/
-src/ionic.project
+ionic.project

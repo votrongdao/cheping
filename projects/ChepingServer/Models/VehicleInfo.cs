@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:51 PM
+// Last Modified On : 2015-06-21  11:32 AM
 // ***********************************************************************
 // <copyright file="VehicleInfo.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -67,7 +67,7 @@ namespace ChepingServer.Models
         ///     Gets or sets the license location.
         /// </summary>
         /// <value>The license location.</value>
-        public string LicenseLocation { get; set; }
+        public int LicenseLocation { get; set; }
 
         /// <summary>
         ///     Gets or sets the license time.
@@ -109,6 +109,6 @@ namespace ChepingServer.Models
         ///     Gets or sets the vehicle location.
         /// </summary>
         /// <value>The vehicle location.</value>
-        public string VehicleLocation { get; set; }
+        public int VehicleLocation { get; set; }
     }
 }

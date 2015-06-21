@@ -1,0 +1,23 @@
+<ion-view title="事项">
+  <ion-content class="cases">
+    <ion-list>
+      <ion-item ng-repeat="case in cases.items" class="item-thumbnail-left item-icon-right" >
+        <img src="assets/img/car.png">
+
+          <p ng-bind="case.modelName"></p>
+            <label>&nbsp;<span ng-bind="case.brandName"></span>&nbsp;</label>
+            <label>&nbsp;<span ng-bind="case.seriesName"></span>&nbsp;</label>
+            <label>&nbsp;<span ng-bind="(case.outerColor | colorName)"></span>&nbsp;</label>
+            <label>&nbsp;<span ng-bind="(case.innerColor | colorName)"></span>&nbsp;</label>
+        <div>
+          <span class="price" ng-bind="'&yen' + case.purchasePrice"></span>
+          <span ng-bind="(case.vehicleLocation | city)"></span>
+          <span ng-bind="(case.state | state)"></span>
+        </div>
+
+        <i class="icon ion-chevron-right icon-accessory" ui-sref="cheping.case-detail({caseId: case.id, caseNo: case.serialId})"></i>
+      </ion-item>
+    </ion-list>
+    <button ng-click="cases.loadMore()" class="button button-block button-cp-dark"> 加载更多 </button>
+  </ion-content>
+</ion-view>

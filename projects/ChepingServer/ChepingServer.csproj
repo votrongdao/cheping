@@ -221,6 +221,7 @@
     <Compile Include="Requests\SignInRequest.cs" />
     <Compile Include="Responses\BoolResponse.cs" />
     <Compile Include="Responses\StringResponse.cs" />
+    <Compile Include="Responses\VehicleResponse.cs" />
     <Compile Include="Services\CaseService.cs" />
     <Compile Include="Services\CityService.cs" />
     <Compile Include="Services\ModelService.cs" />

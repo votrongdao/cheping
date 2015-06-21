@@ -1,14 +1,21 @@
 angular.module('cheping', [
     'ionic',
     'ngCordova',
+    'cheping.filters',
     'cheping.interceptors',
     'cheping.services',
-    'cheping.services.user'
+    'cheping.services.user',
+    'cheping.services.case'
 ])
     .constant('URLS', {
         USER: {
             GETINFO: 'http://cheping.chinacloudsites.cn:80/api/Users',
             SIGNIN: 'http://cheping.chinacloudsites.cn:80/api/Users/Login'
+        },
+        CASE: {
+            GETCASELIST: 'http://cheping.yuyidev.com:80/api/Case/List',
+            GETVEHICLEINFO: 'http://cheping.yuyidev.com:80/api/Case/VehicleInfo',
+            GETTODOS: 'http://cheping.chinacloudsites.cn:80/api/Case/Todos'
         }
     })
     .config(function($ionicConfigProvider) {
@@ -26,8 +33,7 @@ angular.module('cheping', [
     })
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('cheping', {
-            url: "/index",
-            //abstract: true,
+            url: "",
             views: {
                 '@': {
                     controller: 'MainCtrl as ctrl',
@@ -36,7 +42,7 @@ angular.module('cheping', [
             }
         });
 
-        $urlRouterProvider.otherwise('/index');
+        $urlRouterProvider.otherwise('');
     })
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -78,7 +84,6 @@ angular.module('cheping', [
     })
     .controller('MainCtrl', function($state, UserService, UtilityService) {
         var ctrl = this;
-        console.log('this is main ctrl');
 
         ctrl.showNewTab = false;
         ctrl.showWarningTab = false;

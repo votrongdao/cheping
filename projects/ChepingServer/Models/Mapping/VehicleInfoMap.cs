@@ -2,9 +2,9 @@
 // Project          : ChepingServer
 // Author           : Siqi Lu
 // Created          : 2015-06-19  3:15 AM
-//
+// 
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  3:40 PM
+// Last Modified On : 2015-06-21  11:32 AM
 // ***********************************************************************
 // <copyright file="VehicleInfoMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -16,12 +16,12 @@ using System.Data.Entity.ModelConfiguration;
 namespace ChepingServer.Models.Mapping
 {
     /// <summary>
-    /// VehicleInfoMap.
+    ///     VehicleInfoMap.
     /// </summary>
     public class VehicleInfoMap : EntityTypeConfiguration<VehicleInfo>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="VehicleInfoMap"/> class.
+        ///     Initializes a new instance of the <see cref="VehicleInfoMap" /> class.
         /// </summary>
         public VehicleInfoMap()
         {
@@ -36,14 +36,6 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.SeriesName)
                 .IsRequired()
                 .HasMaxLength(200);
-
-            this.Property(t => t.LicenseLocation)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            this.Property(t => t.VehicleLocation)
-                .IsRequired()
-                .HasMaxLength(50);
 
             this.Property(t => t.ModifiedContent)
                 .IsRequired();

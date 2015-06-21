@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  10:27 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  11:22 AM
+// Last Modified On : 2015-06-21  11:26 AM
 // ***********************************************************************
 // <copyright file="PhotoController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -25,6 +25,7 @@ using Moe.AspNet.Filters;
 using System.Net.Http;
 using System.Net;
 
+
 namespace ChepingServer.Controllers
 {
     /// <summary>
@@ -38,7 +39,6 @@ namespace ChepingServer.Controllers
         /// <summary>
         ///     Creates the specified dto.
         /// </summary>
-        /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpPost, Route("Create"), ResponseType(typeof(StringResponse))]
         public async Task<IHttpActionResult> Create()
@@ -100,6 +100,11 @@ namespace ChepingServer.Controllers
             return this.Ok(new BoolResponse { Result = await this.photoService.Delete(id) });
         }
 
+        /// <summary>
+        ///     Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpPost, Route("{id}"), ResponseType(typeof(Photo))]
         public async Task<IHttpActionResult> Get([FromUri] int id)
         {
