@@ -8,6 +8,7 @@ angular.module('cheping.services.caseCreate', [])
             newCase = {};
             newCase.caseType = carType;
             newCase.modifiedContent = '无';
+            return newCase;
         };
 
         service.getNewCase = function() {

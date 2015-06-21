@@ -1,5 +1,6 @@
 angular.module('cheping.new.detail', [
-    'cheping.services.caseCreate'
+    'cheping.services.caseCreate',
+    'ngCordova',
 ])
     .config(function ($stateProvider) {
         $stateProvider
@@ -18,6 +19,15 @@ angular.module('cheping.new.detail', [
                     'new': {
                         controller: 'NewBrandCtrl as ctrl',
                         templateUrl: 'app/create/detail/create-detail-brand.tpl.html'
+                    }
+                }
+            })
+            .state('cheping.new-factory-time', {
+                url: '/new/factory-time',
+                views: {
+                    'new': {
+                        controller: 'NewFactoryTimeCtrl as ctrl',
+                        templateUrl: 'app/create/detail/create-detail-factory-time.tpl.html'
                     }
                 }
             })
@@ -96,13 +106,15 @@ angular.module('cheping.new.detail', [
             //});
         ;
     })
-    .controller('NewCtrl', function($stateParams, CaseCreateService) {
+    .controller('NewCtrl', function($scope, $stateParams, CaseCreateService) {
         var _case = this;
 
         _case.viewModel = {};
-        CaseCreateService.resetNewCase($stateParams.carType);
 
         var newCase = CaseCreateService.getNewCase();
+        if(newCase.caseType !== $stateParams.carType) {
+            newCase = CaseCreateService.resetNewCase($stateParams.carType);
+        }
 
         _case.resetViewModel = function() {
             var view = _case.viewModel;
@@ -123,15 +135,20 @@ angular.module('cheping.new.detail', [
             view.modifiedContent = newCase.modifiedContent || '改装内容';
         };
 
-        _case.resetViewModel();
+        $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+            if (toState.name === 'cheping.new-detail') {
+                _case.resetViewModel();
+            }
+
+        });
 
     })
     .controller('NewBrandCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
         var ctrl = this;
-        var newOrder = CaseCreateService.getNewCase();
+        var newCase = CaseCreateService.getNewCase();
 
         ctrl.brands = [];
-        ctrl.selected = '';
+        ctrl.selected = newCase.brandName;
 
         ctrl.loadBrands = function() {
             CaseCreateService.getBrands()
@@ -146,8 +163,8 @@ angular.module('cheping.new.detail', [
 
         ctrl.selectConfirm = function() {
             if(ctrl.selected) {
-                newOrder.brandName = ctrl.selected;
-                $state.go('cheping.new-detail', { carType: newOrder.caseType });
+                newCase.brandName = ctrl.selected;
+                $state.go('cheping.new-detail', { carType: newCase.caseType });
             }
         };
 
@@ -166,158 +183,22 @@ angular.module('cheping.new.detail', [
         ctrl.loadBrands();
 
     })
-    .controller('CreateDetailBrandCtrl', function($state, ChepingOrderService) {
-        var createDetailBrandCtrl = this;
-        var newOrder = ChepingOrderService.getNewOrder();
-        createDetailBrandCtrl.newOrder = newOrder;
+    .controller('NewFactoryTimeCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
+        var ctrl = this;
+        var newOrder = CaseCreateService.getNewCase();
 
-        createDetailBrandCtrl.items = [
-            'AC Schnitzer',
-            'GMC',
-            'KTM',
-            'Spirra',
-            '三菱',
-            '中欧',
-            '丰田',
-            '保时捷',
-            '光冈',
-            '克莱斯勒',
-            '兰博基尼',
-            '凯佰赫',
-            '凯迪拉克',
-            '别克',
-            '宾利',
-            '巴博斯',
-            '布加迪',
-            '捷豹',
-            '摩根',
-            '斯巴鲁',
-            '斯柯达',
-            '日产',
-            '本田',
-            '林肯',
-            '柯尼赛格',
-            '标致',
-            '欧宝',
-            '比亚迪',
-            '沃尔沃',
-            '法拉利',
-            '起亚',
-            '路特斯',
-            '路虎',
-            '迈凯轮',
-            '迈巴赫',
-            '迷你',
-            '道奇',
-            '阿斯顿马丁',
-            '雪佛兰',
-            '雪铁龙',
-            '雷克萨斯',
-            '雷诺',
-            '马自达'
-        ];
+        ctrl.date = '';
 
-        createDetailBrandCtrl.goBack = function(){
-            $state.go('cheping.index.createDetail', {carType: newOrder.carType})
-        }
+        ctrl.selectConfirm = function() {
+            if(ctrl.date) {
+                newOrder.factoryTime = ctrl.date;
+                $state.go('cheping.new-detail', { carType: newOrder.caseType });
+            }
+        };
 
-    })
-    .controller('CreateDetailSerialCtrl', function($state, ChepingOrderService) {
-        var createDetailSerialCtrl = this;
-        var newOrder = ChepingOrderService.getNewOrder();
-        createDetailSerialCtrl.newOrder = newOrder;
-
-        createDetailSerialCtrl.items = [
-            'S5',
-            'S6',
-            'S7',
-            'Savana',
-            '西拉',
-            'Terrain',
-            'X-BOW',
-            'Spirra',
-            '欧蓝德',
-            '帕杰罗',
-            '伊柯丽斯',
-            '帕杰罗劲畅',
-            '尊逸',
-            '锐志',
-            '普拉多',
-            '普锐斯',
-            '凯美瑞',
-            'FJ酷路泽',
-            '埃尔法',
-            'RAV4',
-            '塞纳',
-            '坦途',
-            '柯斯达',
-            '皇冠',
-            '海狮 ',
-            '红杉',
-            '考斯特',
-            '汉兰达',
-            '陆地巡洋舰',
-            '普瑞维亚',
-            '威飒',
-            '兰德酷路泽',
-            'Hilux',
-            '911',
-            '911 敞篷车',
-            '卡宴',
-            '卡曼',
-            'Panamera',
-            'CX-9'
-        ];
-
-        createDetailSerialCtrl.goBack = function(){
-            $state.go('cheping.index.createDetail', {carType: newOrder.carType})
-        }
-
-    })
-    .controller('CreateDetailModelCtrl', function($state, ChepingOrderService) {
-        var createDetailModelCtrl = this;
-        var newOrder = ChepingOrderService.getNewOrder();
-        createDetailModelCtrl.newOrder = newOrder;
-
-        createDetailModelCtrl.items = [
-            '2012款 3.0T 自动 猎鹰版 四驱',
-            '2010款 3.0L 自动 猎鹰版 四驱',
-            '2010款 3.0T 自动 猎鹰版 四驱',
-            '2011款 3.0T 自动 四驱',
-            '2012款 3.0T 自动 四驱',
-            '2010款 5.3L 自动 7座总统级',
-            '2007款 6.0L 自动 7座总统级',
-            '2010款 6.0L 自动 7座总统级',
-            '2011款 6.0L 自动 7座加长领袖级',
-            '2012款 6.2L 自动 Denali 四驱',
-            '2012款 3.0L 自动 基本型',
-            '2011款 5.3L 自动 7座商务之星(欧Ⅳ)',
-            '2011款 6.0L 自动 7座商务之星(欧Ⅳ)',
-            '2011款 6.0L 自动 10座商务之星(欧Ⅳ)',
-            '2012款 6.0L 自动 领袖级经典版(欧Ⅳ)',
-            '2012款 6.0L 自动 领袖级至尊版(欧Ⅳ)',
-            '2012款 6.0L 自动 总裁级无隐私屏版(欧Ⅳ)',
-            '2012款 6.0L 自动 总裁级隐私屏版(欧Ⅳ)',
-            '2012款 6.0L 自动 商务之星公爵版(欧Ⅳ)',
-            '2012款 6.0L 自动 皇家级(欧Ⅳ)',
-            '2013款 5.3L 自动 领袖至尊版(欧Ⅳ)',
-            '2013款 6.0L 自动 领袖级商务车(欧Ⅳ)',
-            '2013款 6.0L 自动 7座豪华隐私屏版(欧Ⅳ)',
-            '2013款 5.3L 自动 总裁级 四驱(欧Ⅳ)',
-            '2013款 5.3L 自动 运动版1500 四驱(欧Ⅳ)',
-            '2013款 5.3L 自动 领袖版(欧Ⅳ)',
-            '2013款 5.3L 自动 领袖版 四驱(欧Ⅳ)',
-            '2013款 6.0L 自动 长轴领袖版(欧Ⅳ)',
-            '2013款 6.0L 自动 10座七座运动版2500S(欧Ⅳ)',
-            '2013款 6.0L 自动 10座运动版2500S(欧Ⅳ)',
-            '2013款 6.0L 自动 标准版3500(欧Ⅳ)',
-            '2013款 6.0L 自动 舒适版3500(欧Ⅳ)',
-            '2014款 5.3L 自动 领袖版(欧Ⅳ)'
-        ];
-
-        createDetailModelCtrl.goBack = function(){
-            $state.go('cheping.index.createDetail', {carType: newOrder.carType})
-        }
+        ctrl.buttonEnable = function() {
+            return ctrl.date;
+        };
 
     })
     .controller('CreateDetailColorCtrl', function($state, ChepingOrderService) {
