@@ -1,9 +1,15 @@
 <ion-view view-title="出厂时间">
   <ion-content>
-    <label class="item item-input">
-      <i class="icon ion-ios-locked placeholder-icon"></i>
-      <input type="date" name="factoryTime" ng-model="ctrl.date" placeholder="出厂时间" required ng-focus="ctrl.select()">
-    </label>
-    <button ng-click="ctrl.selectConfirm()">确认</button>
+    <ion-list>
+      <ion-item class="divider">请输入出厂时间：</ion-item>
+      <ion-item>
+        <label class="item item-input">
+          <input type="date" name="factoryTime" ng-model="ctrl.date" placeholder="出厂时间" required ng-focus="ctrl.select()">
+        </label>
+      </ion-item>
+
+    </ion-list>
+
+    <button ng-click="ctrl.selectConfirm()" class="button button-block button-cp-dark">确认</button>
   </ion-content>
 </ion-view>
