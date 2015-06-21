@@ -12,7 +12,7 @@
         <div>
           <span class="price" ng-bind="'&yen' + case.purchasePrice"></span>
           <span ng-bind="(case.vehicleLocation | city)"></span>
-          <span ng-bind="(case.state | state)"></span>
+          <span ng-bind="(case.state | state)" class="state"></span>
         </div>
 
         <i class="icon ion-chevron-right icon-accessory" ui-sref="cheping.daiban-detail({caseId: case.id, caseNo: case.serialId})"></i>

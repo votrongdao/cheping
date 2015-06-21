@@ -338,3 +338,15 @@ em {
   float: right;
   padding-top: 2px;
 }
+
+.state {
+  font-size: 18px;
+  color: #660000;
+  float: right;
+  margin-top: 11px;
+}
+
+
+.popup span {
+  font-size: 14px;
+}
