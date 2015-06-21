@@ -1,6 +1,7 @@
 angular.module('cheping', [
     'ionic',
     'ngCordova',
+    'cheping.filters',
     'cheping.interceptors',
     'cheping.services',
     'cheping.services.user'
@@ -9,6 +10,10 @@ angular.module('cheping', [
         USER: {
             GETINFO: 'http://cheping.chinacloudsites.cn:80/api/Users',
             SIGNIN: 'http://cheping.chinacloudsites.cn:80/api/Users/Login'
+        },
+        CASE: {
+            GETCASELIST: 'http://cheping.yuyidev.com:80/api/Case/List',
+            GETVEHICLEINFO: 'http://cheping.yuyidev.com:80/api/Case/VehicleInfo'
         }
     })
     .config(function($ionicConfigProvider) {
@@ -26,8 +31,7 @@ angular.module('cheping', [
     })
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('cheping', {
-            url: "/index",
-            //abstract: true,
+            url: "/",
             views: {
                 '@': {
                     controller: 'MainCtrl as ctrl',
@@ -36,7 +40,7 @@ angular.module('cheping', [
             }
         });
 
-        $urlRouterProvider.otherwise('/index');
+        $urlRouterProvider.otherwise('/');
     })
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {

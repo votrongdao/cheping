@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  10:27 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  11:22 AM
+// Last Modified On : 2015-06-21  11:26 AM
 // ***********************************************************************
 // <copyright file="PhotoController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -21,7 +21,6 @@ using System.Web.Http.Description;
 using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
-using Moe.AspNet.Filters;
 
 namespace ChepingServer.Controllers
 {
@@ -36,9 +35,8 @@ namespace ChepingServer.Controllers
         /// <summary>
         ///     Creates the specified dto.
         /// </summary>
-        /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(string))]
+        [HttpPost, Route("Create"), ResponseType(typeof(string))]
         public async Task<IHttpActionResult> Create()
         {
             var httpRequest = HttpContext.Current.Request;
@@ -84,6 +82,11 @@ namespace ChepingServer.Controllers
             return this.Ok(new BoolResponse { Result = await this.photoService.Delete(id) });
         }
 
+        /// <summary>
+        ///     Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         [HttpPost, Route("{id}"), ResponseType(typeof(Photo))]
         public async Task<IHttpActionResult> Get([FromUri] int id)
         {

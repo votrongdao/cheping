@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-20  11:17 PM
+// Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  11:37 PM
+// Last Modified On : 2015-06-21  11:25 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -189,7 +189,6 @@ namespace ChepingServer.Services
 
                 int directorId = directors[index].Id;
 
-
                 @case.State = State.Shenhe;
                 @case.PurchasePrice = price;
                 @case.DirectorId = directorId;
@@ -314,7 +313,7 @@ namespace ChepingServer.Services
                     throw new ApplicationException("未能加载事项信息");
                 }
 
-                if (@case.State == State.DakuanShenhe )
+                if (@case.State == State.DakuanShenhe)
                 {
                     @case.State = State.Caigou;
                     this.RecordTime(@case, State.DakuanShenhe);
@@ -451,6 +450,27 @@ namespace ChepingServer.Services
 
                 return await db.VehicleInfos.FirstOrDefaultAsync(v => v.Id == @case.VehicleInfoId);
             }
+        }
+
+        /// <summary>
+        /// Gets the vehicle infos.
+        /// </summary>
+        /// <param name="ids">The ids.</param>
+        /// <returns>Task&lt;Dictionary&lt;System.Int32, VehicleInfo&gt;&gt;.</returns>
+        public async Task<Dictionary<int, VehicleInfo>> GetVehicleInfos(List<int> ids)
+        {
+            Dictionary<int, VehicleInfo> vehicleInfos = new Dictionary<int, VehicleInfo>();
+
+            using (ChePingContext db = new ChePingContext())
+            {
+                List<VehicleInfo> vehicles = await db.VehicleInfos.Where(v => ids.Contains(v.Id)).ToListAsync();
+                foreach (var v in vehicles.Where(v => !vehicleInfos.ContainsKey(v.Id)))
+                {
+                    vehicleInfos.Add(v.Id, v);
+                }
+            }
+
+            return vehicleInfos;
         }
 
         /// <summary>
@@ -770,13 +790,8 @@ namespace ChepingServer.Services
                 newCase.OutletId = user.OutletId;
                 newCase.VehicleInfoId = newInfo.Id;
                 newCase.VehicleInspecId = newVehicleInspection.Id;
-                try {
-                    await db.SaveAsync(newCase);
-                }
-                catch(Exception e)
-                {
 
-                }
+                await db.SaveAsync(newCase);
             }
 
             return newCase;
@@ -863,18 +878,12 @@ namespace ChepingServer.Services
 
         private void RecordTime(Case @case, State state)
         {
-           string times = @case.Times;
-            Dictionary<State, DateTime> dir;
+            string times = @case.Times;
             DateTime now = DateTime.UtcNow.AddHours(8);
 
-            if (times.IsNullOrEmpty())
-            {
-                dir = new Dictionary<State, DateTime>();
-            }
-            else
-            {
-                dir = JsonConvert.DeserializeObject<Dictionary<State, DateTime>>(times);
-            }
+            Dictionary<State, DateTime> dir = times.IsNullOrEmpty() ? new Dictionary<State, DateTime>()
+                : JsonConvert.DeserializeObject<Dictionary<State, DateTime>>(times);
+
             if (dir.ContainsKey(state))
             {
                 dir[state] = now;
@@ -883,6 +892,7 @@ namespace ChepingServer.Services
             {
                 dir.Add(state, now);
             }
+
             @case.Times = dir.ToJson();
         }
     }

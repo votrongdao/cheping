@@ -71,7 +71,7 @@ namespace ChepingServer.Requests
         ///     牌照所在地
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("licenseLocation")]
-        public string LicenseLocation { get; set; }
+        public int LicenseLocation { get; set; }
 
         /// <summary>
         ///     上牌时间
@@ -94,7 +94,7 @@ namespace ChepingServer.Requests
         /// <summary>
         ///     改装内容
         /// </summary>
-        [Required, StringLength(int.MaxValue,MinimumLength=1), JsonProperty("modifiedContent")]
+        [Required, StringLength(int.MaxValue, MinimumLength = 1), JsonProperty("modifiedContent")]
         public string ModifiedContent { get; set; }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace ChepingServer.Requests
         /// <summary>
         ///     车辆所在地
         /// </summary>
-        [Required, StringLength(200, MinimumLength = 1), JsonProperty("vehicleLocation")]
-        public string VehicleLocation { get; set; }
+        [Required, Range(0, int.MaxValue), JsonProperty("vehicleLocation")]
+        public int VehicleLocation { get; set; }
     }
 }
