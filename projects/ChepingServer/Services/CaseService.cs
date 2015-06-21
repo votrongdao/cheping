@@ -188,9 +188,6 @@ namespace ChepingServer.Services
                 inspection.WebPrice = valueInfo.WebPrice;
                 inspection.FloorPrice = valueInfo.FloorPrice;
 
-                @case.State = State.Shenhe;
-                @case.PurchasePrice = price;
-
                 this.RecordTime(@case, State.Pinggu);
 
                 //alloc directorId
@@ -207,8 +204,9 @@ namespace ChepingServer.Services
 
                 int directorId = directors[index].Id;
 
-                
-
+                @case.State = State.Shenhe;
+                @case.PurchasePrice = price;
+                @case.DirectorId = directorId;
 
                 await db.ExecuteSaveChangesAsync();
 
@@ -831,7 +829,7 @@ namespace ChepingServer.Services
 
         private void RecordTime(Case @case, State state)
         {
-           string times = @case.Times;
+            string times = @case.Times;
             DateTime now = DateTime.UtcNow.AddHours(8);
             Dictionary<State, DateTime> dir = JsonConvert.DeserializeObject<Dictionary<State, DateTime>>(times);
             if (dir.ContainsKey(state))
@@ -842,8 +840,7 @@ namespace ChepingServer.Services
             {
                 dir.Add(state, now);
             }
-           @case.Times =  dir.ToJson();
+            @case.Times = dir.ToJson();
         }
-
     }
 }

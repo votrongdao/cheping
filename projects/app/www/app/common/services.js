@@ -15,7 +15,7 @@ angular.module('cheping.services', [
 
     service.setToken = function(newToken) {
       if (newToken) {
-        tokenStorage.set('auth', newToken);
+        tokenStorage.put('auth', newToken);
       }
     };
   })
@@ -23,15 +23,15 @@ angular.module('cheping.services', [
     var service = this;
 
     CacheFactory('authTokenCache', {
-      maxAge: 365 * 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000,
       deleteOnExpire: 'aggressive',
-      storageMode: 'localStorage'
+      storageMode: 'sessionStorage'
     });
 
     CacheFactory('userCache', {
       maxAge: 10 * 1000,
       deleteOnExpire: 'aggressive',
-      storageMode: 'localStorage'
+      storageMode: 'memory'
     });
 
     service.get = function(cacheName, maxAge) {
