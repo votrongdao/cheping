@@ -1,5 +1,5 @@
 angular.module('cheping.services.caseCreate', [])
-    .service('CaseCreateService', function($http, URLS, AuthService) {
+    .service('CaseCreateService', function($http, URLS, AuthService, ConfigService) {
         var service = this;
 
         var newCase = {};
@@ -42,5 +42,9 @@ angular.module('cheping.services.caseCreate', [])
                 .then(function(result) {
                     return result.data;
                 });
+        };
+
+        service.getColors = function(){
+            return ConfigService.getColors();
         };
     });

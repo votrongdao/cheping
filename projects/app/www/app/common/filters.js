@@ -5,7 +5,106 @@ angular.module('cheping.filters', [])
                 return colorId;
             }
 
-            return '白色';
+            var colors = [{
+                colorId: 1,
+                colorName: '银灰色',
+                colorCode: '#c0c0c0'
+            }, {
+                colorId: 2,
+                colorName: '浅灰色',
+                colorCode: '#d3d3d3'
+            }, {
+                colorId: 3,
+                colorName: '白色',
+                colorCode: '#c0c0c0'
+            }, {
+                colorId: 4,
+                colorName: '象牙白色',
+                colorCode: '#fafff0'
+            }, {
+                colorId: 5,
+                colorName: '黑色',
+                colorCode: '#000000'
+            }, {
+                colorId: 6,
+                colorName: '红色',
+                colorCode: '#ff0000'
+            }, {
+                colorId: 7,
+                colorName: '深红色',
+                colorCode: '#cc0000'
+            }, {
+                colorId: 8,
+                colorName: '粉红色',
+                colorCode: '#ff33ff'
+            }, {
+                colorId: 9,
+                colorName: '赭石红色',
+                colorCode: '#660033'
+            }, {
+                colorId: 10,
+                colorName: '蓝色',
+                colorCode: '#0000ff'
+            }, {
+                colorId: 11,
+                colorName: '天蓝色',
+                colorCode: '#87ceeb'
+            }, {
+                colorId: 12,
+                colorName: '深蓝色',
+                colorCode: '#0000cc'
+            }, {
+                colorId: 13,
+                colorName: '天蓝色',
+                colorCode: '#87ceeb'
+            }, {
+                colorId: 14,
+                colorName: '深蓝色',
+                colorCode: '#0000cc'
+            }, {
+                colorId: 15,
+                colorName: '黄色',
+                colorCode: '#ffff00'
+            }, {
+                colorId: 16,
+                colorName: '金黄色',
+                colorCode: '#ffcc00'
+            }, {
+                colorId: 17,
+                colorName: '沙漠黄色',
+                colorCode: '#cccc00'
+            }, {
+                colorId: 18,
+                colorName: '绿色',
+                colorCode: '#00ff00'
+            }, {
+                colorId: 19,
+                colorName: '浅绿色',
+                colorCode: '#66ff00'
+            }, {
+                colorId: 20,
+                colorName: '嫩绿色',
+                colorCode: '#33ff00'
+            }, {
+                colorId: 21,
+                colorName: '墨绿色',
+                colorCode: '#006600'
+            }, {
+                colorId: 22,
+                colorName: '橙色',
+                colorCode: '#ff9900'
+            }
+            ];
+
+            var color = _.find(colors, function(c) {
+                return c.colorId === colorId;
+            });
+
+            if(color) {
+                return color.colorName;
+            }else{
+                return '白色';
+            }
         };
     })
     .filter('colorCode', function() {
@@ -14,7 +113,106 @@ angular.module('cheping.filters', [])
                 return colorId;
             }
 
-            return 'FFFFFF';
+            var colors = [{
+                colorId: 1,
+                colorName: '银灰色',
+                colorCode: '#c0c0c0'
+            }, {
+                colorId: 2,
+                colorName: '浅灰色',
+                colorCode: '#d3d3d3'
+            }, {
+                colorId: 3,
+                colorName: '白色',
+                colorCode: '#c0c0c0'
+            }, {
+                colorId: 4,
+                colorName: '象牙白色',
+                colorCode: '#fafff0'
+            }, {
+                colorId: 5,
+                colorName: '黑色',
+                colorCode: '#000000'
+            }, {
+                colorId: 6,
+                colorName: '红色',
+                colorCode: '#ff0000'
+            }, {
+                colorId: 7,
+                colorName: '深红色',
+                colorCode: '#cc0000'
+            }, {
+                colorId: 8,
+                colorName: '粉红色',
+                colorCode: '#ff33ff'
+            }, {
+                colorId: 9,
+                colorName: '赭石红色',
+                colorCode: '#660033'
+            }, {
+                colorId: 10,
+                colorName: '蓝色',
+                colorCode: '#0000ff'
+            }, {
+                colorId: 11,
+                colorName: '天蓝色',
+                colorCode: '#87ceeb'
+            }, {
+                colorId: 12,
+                colorName: '深蓝色',
+                colorCode: '#0000cc'
+            }, {
+                colorId: 13,
+                colorName: '天蓝色',
+                colorCode: '#87ceeb'
+            }, {
+                colorId: 14,
+                colorName: '深蓝色',
+                colorCode: '#0000cc'
+            }, {
+                colorId: 15,
+                colorName: '黄色',
+                colorCode: '#ffff00'
+            }, {
+                colorId: 16,
+                colorName: '金黄色',
+                colorCode: '#ffcc00'
+            }, {
+                colorId: 17,
+                colorName: '沙漠黄色',
+                colorCode: '#cccc00'
+            }, {
+                colorId: 18,
+                colorName: '绿色',
+                colorCode: '#00ff00'
+            }, {
+                colorId: 19,
+                colorName: '浅绿色',
+                colorCode: '#66ff00'
+            }, {
+                colorId: 20,
+                colorName: '嫩绿色',
+                colorCode: '#33ff00'
+            }, {
+                colorId: 21,
+                colorName: '墨绿色',
+                colorCode: '#006600'
+            }, {
+                colorId: 22,
+                colorName: '橙色',
+                colorCode: '#ff9900'
+            }
+            ];
+
+            var color = _.find(colors, function(c) {
+                return c.colorId === colorId;
+            });
+
+            if(color) {
+                return color.colorCode;
+            }else{
+                return '#FFFFFF';
+            }
         };
     })
     .filter('city', function() {

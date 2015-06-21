@@ -2,7 +2,7 @@ angular.module('cheping.new.detail', [
     'cheping.services.caseCreate',
     'ngCordova',
 ])
-    .config(function ($stateProvider) {
+    .config(function($stateProvider) {
         $stateProvider
             .state('cheping.new-detail', {
                 url: '/new/detail/{carType}',
@@ -31,23 +31,43 @@ angular.module('cheping.new.detail', [
                     }
                 }
             })
-            //.state('cheping.index.createDetail-brand', {
-            //    url: '/create/brand',
-            //    views: {
-            //        'index.create': {
-            //            controller: 'CreateDetailBrandCtrl as createDetailBrandCtrl',
-            //            templateUrl: 'app/index/create/create-brand.tpl.html'
-            //        }
-            //    }
-            //}).state('cheping.index.createDetail-serial', {
-            //    url: '/create/serial',
-            //    views: {
-            //        'index.create': {
-            //            controller: 'CreateDetailSerialCtrl as createDetailSerialCtrl',
-            //            templateUrl: 'app/index/create/create-serial.tpl.html'
-            //        }
-            //    }
-            //}).state('cheping.index.createDetail-model', {
+            .state('cheping.new-series', {
+                url: '/new/series',
+                views: {
+                    'new': {
+                        controller: 'NewSeriesCtrl as ctrl',
+                        templateUrl: 'app/create/detail/create-detail-series.tpl.html'
+                    }
+                }
+            })
+            .state('cheping.new-model', {
+                url: '/new/models',
+                views: {
+                    'new': {
+                        controller: 'NewModelsCtrl as ctrl',
+                        templateUrl: 'app/create/detail/create-detail-models.tpl.html'
+                    }
+                }
+            })
+            .state('cheping.new-outer-color', {
+                url: '/new/outer-color',
+                views: {
+                    'new': {
+                        controller: 'NewOuterColorCtrl as ctrl',
+                        templateUrl: 'app/create/detail/create-detail-outer-color.tpl.html'
+                    }
+                }
+            })
+            .state('cheping.new-inner-color', {
+                url: '/new/inner-color',
+                views: {
+                    'new': {
+                        controller: 'NewInnerColorCtrl as ctrl',
+                        templateUrl: 'app/create/detail/create-detail-inner-color.tpl.html'
+                    }
+                }
+            })
+            // .state('cheping.index.createDetail-model', {
             //    url: '/create/model',
             //    views: {
             //        'index.create': {
@@ -112,7 +132,7 @@ angular.module('cheping.new.detail', [
         _case.viewModel = {};
 
         var newCase = CaseCreateService.getNewCase();
-        if(newCase.caseType !== $stateParams.carType) {
+        if (newCase.caseType !== $stateParams.carType) {
             newCase = CaseCreateService.resetNewCase($stateParams.carType);
         }
 
@@ -147,13 +167,13 @@ angular.module('cheping.new.detail', [
         var ctrl = this;
         var newCase = CaseCreateService.getNewCase();
 
-        ctrl.brands = [];
+        ctrl.items = [];
         ctrl.selected = newCase.brandName;
 
-        ctrl.loadBrands = function() {
+        ctrl.loadItems = function() {
             CaseCreateService.getBrands()
                 .then(function(result) {
-                    ctrl.brands = result;
+                    ctrl.items = result;
                 });
         };
 
@@ -162,9 +182,9 @@ angular.module('cheping.new.detail', [
         };
 
         ctrl.selectConfirm = function() {
-            if(ctrl.selected) {
+            if (ctrl.selected) {
                 newCase.brandName = ctrl.selected;
-                $state.go('cheping.new-detail', { carType: newCase.caseType });
+                $state.go('cheping.new-detail', {carType: newCase.caseType});
             }
         };
 
@@ -173,14 +193,168 @@ angular.module('cheping.new.detail', [
         };
 
         ctrl.doRefresh = function() {
-            ctrl.loadBrands();
+            ctrl.loadItems();
 
             $timeout(function() {
                 $scope.$broadcast('scroll.refreshComplete');
             }, 500);
         };
 
-        ctrl.loadBrands();
+        ctrl.loadItems();
+
+    })
+    .controller('NewSeriesCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
+        var ctrl = this;
+        var newCase = CaseCreateService.getNewCase();
+
+        ctrl.items = [];
+        ctrl.selected = newCase.seriesName;
+
+        ctrl.loadItems = function() {
+            if (newCase.brandName) {
+                CaseCreateService.getSeries(newCase.brandName)
+                    .then(function(result) {
+                        ctrl.items = result;
+                    });
+            }
+        };
+
+        ctrl.select = function(item) {
+            ctrl.selected = item;
+        };
+
+        ctrl.selectConfirm = function() {
+            if (ctrl.selected) {
+                newCase.seriesName = ctrl.selected;
+                $state.go('cheping.new-detail', {carType: newCase.caseType});
+            }
+        };
+
+        ctrl.buttonEnable = function() {
+            return ctrl.selected;
+        };
+
+        ctrl.doRefresh = function() {
+            ctrl.loadItems();
+
+            $timeout(function() {
+                $scope.$broadcast('scroll.refreshComplete');
+            }, 500);
+        };
+
+        ctrl.loadItems();
+
+    })
+    .controller('NewModelsCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
+        var ctrl = this;
+        var newCase = CaseCreateService.getNewCase();
+
+        ctrl.items = [];
+        ctrl.selected = newCase.modelName;
+
+        ctrl.loadItems = function() {
+            if (newCase.brandName && newCase.seriesName) {
+                CaseCreateService.getModelings(newCase.brandName, newCase.seriesName)
+                    .then(function(result) {
+                        ctrl.items = result;
+                    });
+            }
+        };
+
+        ctrl.select = function(item) {
+            ctrl.selected = item;
+        };
+
+        ctrl.selectConfirm = function() {
+            if (ctrl.selected) {
+                newCase.modelName = ctrl.selected;
+                $state.go('cheping.new-detail', {carType: newCase.caseType});
+            }
+        };
+
+        ctrl.buttonEnable = function() {
+            return ctrl.selected;
+        };
+
+        ctrl.doRefresh = function() {
+            ctrl.loadItems();
+
+            $timeout(function() {
+                $scope.$broadcast('scroll.refreshComplete');
+            }, 500);
+        };
+
+        ctrl.loadItems();
+
+    })
+    .controller('NewOuterColorCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
+        var ctrl = this;
+        var newCase = CaseCreateService.getNewCase();
+
+        ctrl.items = [];
+        ctrl.selected = newCase.outerColor;
+
+        ctrl.loadItems = function() {
+            ctrl.items = CaseCreateService.getColors();
+        };
+
+        ctrl.select = function(item) {
+            ctrl.selected = item;
+        };
+
+        ctrl.selectConfirm = function() {
+            if (ctrl.selected && ctrl.selected !== newCase.outerColor) {
+                newCase.outerColor = ctrl.selected;
+                $state.go('cheping.new-detail', {carType: newCase.caseType});
+            }
+        };
+
+        ctrl.buttonEnable = function() {
+            return ctrl.selected;
+        };
+
+        ctrl.loadItems();
+
+        $scope.$watch(angular.bind(ctrl, function () {
+            return this.selected;
+        }), function (newVal, oldVal) {
+            ctrl.selectConfirm();
+        });
+
+    })
+    .controller('NewInnerColorCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
+        var ctrl = this;
+        var newCase = CaseCreateService.getNewCase();
+
+        ctrl.items = [];
+        ctrl.selected = newCase.innerColor;
+
+        ctrl.loadItems = function() {
+            ctrl.items = CaseCreateService.getColors();
+        };
+
+        ctrl.select = function(item) {
+            ctrl.selected = item;
+        };
+
+        ctrl.selectConfirm = function() {
+            if (ctrl.selected && ctrl.selected !== newCase.innerColor) {
+                newCase.innerColor = ctrl.selected;
+                $state.go('cheping.new-detail', {carType: newCase.caseType});
+            }
+        };
+
+        ctrl.buttonEnable = function() {
+            return ctrl.selected;
+        };
+
+        ctrl.loadItems();
+
+        $scope.$watch(angular.bind(ctrl, function () {
+            return this.selected;
+        }), function (newVal, oldVal) {
+            ctrl.selectConfirm();
+        });
 
     })
     .controller('NewFactoryTimeCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
@@ -190,9 +364,9 @@ angular.module('cheping.new.detail', [
         ctrl.date = '';
 
         ctrl.selectConfirm = function() {
-            if(ctrl.date) {
+            if (ctrl.date) {
                 newOrder.factoryTime = ctrl.date;
-                $state.go('cheping.new-detail', { carType: newOrder.caseType });
+                $state.go('cheping.new-detail', {carType: newOrder.caseType});
             }
         };
 
@@ -214,7 +388,7 @@ angular.module('cheping.new.detail', [
             '银色'
         ];
 
-        createDetailColorCtrl.goBack = function(){
+        createDetailColorCtrl.goBack = function() {
             $state.go('cheping.index.createDetail', {carType: newOrder.carType})
         }
 
@@ -229,7 +403,7 @@ angular.module('cheping.new.detail', [
             '自销'
         ];
 
-        createDetailCooperationCtrl.goBack = function(){
+        createDetailCooperationCtrl.goBack = function() {
             $state.go('cheping.index.createDetail', {carType: newOrder.carType})
         }
 
@@ -247,7 +421,7 @@ angular.module('cheping.new.detail', [
             '银色'
         ];
 
-        createDetailInnerColorCtrl.goBack = function(){
+        createDetailInnerColorCtrl.goBack = function() {
             $state.go('cheping.index.createDetail', {carType: newOrder.carType})
         }
 
@@ -265,7 +439,7 @@ angular.module('cheping.new.detail', [
             '深圳'
         ];
 
-        createDetailCityCtrl.goBack = function(){
+        createDetailCityCtrl.goBack = function() {
             $state.go('cheping.index.createDetail', {carType: newOrder.carType})
         }
 
@@ -276,7 +450,7 @@ angular.module('cheping.new.detail', [
         createDetailDrivingCtrl.newOrder = newOrder;
 
 
-        createDetailDrivingCtrl.goBack = function(){
+        createDetailDrivingCtrl.goBack = function() {
             $state.go('cheping.index.createDetail', {carType: newOrder.carType})
         }
 
@@ -287,7 +461,7 @@ angular.module('cheping.new.detail', [
         createDetailContentCtrl.newOrder = newOrder;
 
 
-        createDetailContentCtrl.goBack = function(){
+        createDetailContentCtrl.goBack = function() {
             $state.go('cheping.index.createDetail', {carType: newOrder.carType})
         }
 

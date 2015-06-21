@@ -1,4 +1,4 @@
-<ion-view view-title="品牌选择">
+<ion-view view-title="车系选择">
   <ion-content>
     <ion-refresher
       pulling-icon="ion-arrow-down-c"
@@ -7,11 +7,11 @@
     </ion-refresher>
     <ion-list>
       <ion-item class="item-divider">
-        <p>手动输入或在列表中选择车辆品牌</p>
+        <p>手动输入或在列表中选择车系</p>
       </ion-item>
       <ion-item class="item item-input-inset item-icon-left">
         <label class="item-input-wrapper">
-          <input type="text" name="selectBrand" ng-model="ctrl.selected" placeholder="输入车辆品牌" required minlength="1" maxlength="18">
+          <input type="text" name="selectSeries" ng-model="ctrl.selected" placeholder="输入车系" required minlength="1" maxlength="18">
         </label>
         <button class="button button-small" ng-click="ctrl.selectConfirm()">确认</button>
       </ion-item>
@@ -20,7 +20,7 @@
 
     <ion-radio ng-repeat="item in ctrl.items"
                ng-value="item"
-               name="brand"
+               name="series"
                ng-model="ctrl.selected"> {{ item }}
     </ion-radio>
   </ion-content>

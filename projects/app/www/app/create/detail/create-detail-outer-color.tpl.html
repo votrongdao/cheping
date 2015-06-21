@@ -1,0 +1,13 @@
+<ion-view view-title="外部颜色">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-divider">
+        <p>选择外部颜色</p>
+      </ion-item>
+      <ion-radio ng-repeat="item in ctrl.items"
+                 ng-value="item.colorId"
+                 name="outerColor"
+                 ng-model="ctrl.selected"> {{ item.colorName }}
+      </ion-radio>
+  </ion-content>
+</ion-view>
