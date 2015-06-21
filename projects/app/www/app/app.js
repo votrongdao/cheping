@@ -7,7 +7,8 @@ angular.module('cheping', [
     'cheping.services.user',
     'cheping.services.case',
     'cheping.case',
-    'cheping.daiban'
+    'cheping.daiban',
+    'cheping.new'
 ])
     .constant('URLS', {
         USER: {

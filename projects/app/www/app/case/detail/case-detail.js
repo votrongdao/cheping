@@ -5,7 +5,7 @@ angular.module('cheping.case.detail', [
     .config(function($stateProvider) {
         $stateProvider
             .state('cheping.case-detail', {
-                url: '/cases/detail/{:caseId}/{:caseNo}',
+                url: '/cases/detail/{caseId}/{caseNo}',
                 views: {
                     'cases': {
                         controller: 'CaseDetailCtrl as _case',

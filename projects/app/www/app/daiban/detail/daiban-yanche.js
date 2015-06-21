@@ -5,7 +5,7 @@ angular.module('cheping.daiban.detail-yanche', [
     .config(function($stateProvider) {
         $stateProvider
             .state('cheping.daiban-detail-yanche', {
-                url: '/daiban/detail/yanche/{:caseId}/{:caseNo}',
+                url: '/daiban/detail/yanche/{caseId}/{caseNo}',
                 views: {
                     'daiban': {
                         controller: 'DaibanYancheCtrl as _case',

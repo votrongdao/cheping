@@ -5,7 +5,7 @@ angular.module('cheping.daiban.detail-shenqingdakuan', [
     .config(function($stateProvider) {
         $stateProvider
             .state('cheping.daiban-detail-shenqingdakuan', {
-                url: '/daiban/detail/shenqingdakuan/{:caseId}/{:caseNo}',
+                url: '/daiban/detail/shenqingdakuan/{caseId}/{caseNo}',
                 views: {
                     'daiban': {
                         controller: 'DaibanShenqingdakuanCtrl as _case',

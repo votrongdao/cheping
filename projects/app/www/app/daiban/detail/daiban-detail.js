@@ -12,7 +12,7 @@ angular.module('cheping.daiban.detail', [
     .config(function($stateProvider) {
         $stateProvider
             .state('cheping.daiban-detail', {
-                url: '/daiban/detail/{:caseId}/{:caseNo}',
+                url: '/daiban/detail/{caseId}/{caseNo}',
                 views: {
                     'daiban': {
                         controller: 'DaibanDetailCtrl as _case',

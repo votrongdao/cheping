@@ -5,7 +5,7 @@ angular.module('cheping.daiban.detail-baojia', [
     .config(function($stateProvider) {
         $stateProvider
             .state('cheping.daiban-detail-baojia', {
-                url: '/daiban/detail/baojia/{:caseId}/{:caseNo}',
+                url: '/daiban/detail/baojia/{caseId}/{caseNo}',
                 views: {
                     'daiban': {
                         controller: 'DaibanBaojiaCtrl as _case',
