@@ -394,3 +394,48 @@ label.item-radio .item-content {
 .item-radio .radio-icon {
   right: 10px;
 }
+
+.popup-container {
+  opacity: 1;
+}
+
+.popup-container .popup-title {
+  background-size: auto 100%
+}
+
+.popup-container .popup-head .popup-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.popup-container .popup-body span {
+  text-align: center;
+}
+
+.popup-container .popup-body span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.popup-container .popup-buttons {
+  background-color: transparent;
+}
+
+.popup-container .popup-buttons button{
+  background-color: #660000;
+  border-color: #660000;
+}
+
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
