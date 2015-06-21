@@ -220,11 +220,11 @@ ion-header-bar.bar.bar-header {
   margin-top: 20px;
 }
 
-.cp-create ion-item h2 {
+ion-item h2 {
   text-align: center;
   color: #660000;
-  padding-top: 8px;
-  font-weight: bolder;
+  padding-top: 10px;
+  font-size: 18px;
 }
 
 .cp-create-detail .item-icon-right{
@@ -252,7 +252,8 @@ ion-header-bar.bar.bar-header .title {
 
 h2 {
   color: #660000;
-  font-weight: bolder
+  font-weight: bolder;
+  margin-top: 11px;
 }
 em {
   color: red;
@@ -277,3 +278,20 @@ em {
 }
 
 /*.login end*/
+
+.cases .item p, span {
+  color: #660000;
+  font-size: 16px;
+  font-weight: 400;
+}
+.cases label > span {
+  font-size: 12px;
+  color: inherit;
+}
+
+label {
+  border: solid 1px #CECBCB;
+  border-radius: 3px;
+  background-color: #ececec;
+
+}
