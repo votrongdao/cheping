@@ -18,13 +18,15 @@ angular.module('cheping', [
             GETCASELIST: 'http://cheping.chinacloudsites.cn:80/api/Case/List',
             GETVEHICLEINFO: 'http://cheping.chinacloudsites.cn:80/api/Case/VehicleInfo',
             GETTODOS: 'http://cheping.chinacloudsites.cn:80/api/Case/Todos',
+            GETWARNINGS: 'http://cheping.chinacloudsites.cn:80/api/Case/Warnings',
             REJECT: 'http://cheping.chinacloudsites.cn:80/api/Case/Reject',
             ADDYANCHEINFO: 'http://cheping.chinacloudsites.cn:80/api/Case/AddYancheInfo',
             REVIEWCASE: 'http://cheping.chinacloudsites.cn:80/api/Case/ReviewCase',
             ACCEPTPRICE: 'http://cheping.chinacloudsites.cn:80/api/Case/AcceptPrice',
             APPLYPAYMENT: 'http://cheping.chinacloudsites.cn:80/api/Case/ApplyPayment',
             APPROVEPAYMENT: 'http://cheping.chinacloudsites.cn:80/api/Case/ApprovePayment',
-            PURCHASE: 'http://cheping.chinacloudsites.cn:80/api/Case/Purchase'
+            PURCHASE: 'http://cheping.chinacloudsites.cn:80/api/Case/Purchase',
+            REJECTIONCONFIRM: 'http://cheping.chinacloudsites.cn:80/api/Case/RejectionConfirm'
         }
     })
     .config(function($ionicConfigProvider) {

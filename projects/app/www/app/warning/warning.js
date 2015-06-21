@@ -20,20 +20,27 @@ angular.module('cheping.warning', [
 
         cases.items = [];
 
-        cases.getTodos = function() {
-            CaseService.getTodos()
+        cases.getWarnings = function() {
+            CaseService.getWarnings()
                 .then(function(result) {
                     cases.items = result;
                 })
         };
 
-        cases.getTodos();
+        cases.getWarnings();
 
         cases.doRefresh = function() {
-            cases.getTodos();
+            cases.getWarnings();
 
             $timeout(function() {
                 $scope.$broadcast('scroll.refreshComplete');
             }, 500);
+        };
+
+        cases.comfirmWarning = function(caseId) {
+            CaseService.rejectionConfirm(caseId)
+                .then(function(result) {
+                    cases.getWarnings();
+                });
         };
     });

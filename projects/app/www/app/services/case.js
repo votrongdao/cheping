@@ -34,6 +34,16 @@ angular.module('cheping.services.case', [])
             });
         };
 
+        service.getWarnings = function() {
+            var url = URLS.CASE.GETWARNINGS;
+
+            return $http.get(url, {
+                cache: CacheService.get('caseCache')
+            }).then(function(result) {
+                return result.data;
+            });
+        };
+
         service.getVehicleInfo = function(caseId) {
             var url = URLS.CASE.GETVEHICLEINFO + '?' + 'caseId=' + caseId;
 
@@ -79,6 +89,14 @@ angular.module('cheping.services.case', [])
 
         service.approvePayment = function(caseId) {
             var url = URLS.CASE.APPROVEPAYMENT + '?' + 'caseId=' + caseId;
+
+            return $http.get(url).then(function(result) {
+                return result.data;
+            });
+        };
+
+        service.rejectionConfirm = function(caseId) {
+            var url = URLS.CASE.REJECTIONCONFIRM + '?' + 'caseId=' + caseId;
 
             return $http.get(url).then(function(result) {
                 return result.data;
