@@ -707,6 +707,15 @@ angular.module('cheping.filters', [])
             return moment(time).format('LL');
         };
     })
+    .filter('jobTitle', function() {
+        return function(jobId) {
+            if (!isFinite(jobId)) {
+                return jobId;
+            }
+
+            return jobId;
+        };
+    })
     .filter('state', function() {
         return function(stateId) {
             if (!isFinite(stateId)) {

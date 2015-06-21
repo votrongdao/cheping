@@ -8,7 +8,8 @@ angular.module('cheping', [
     'cheping.services.case',
     'cheping.case',
     'cheping.daiban',
-    'cheping.new'
+    'cheping.new',
+    'cheping.user'
 ])
     .constant('URLS', {
         USER: {
@@ -106,13 +107,16 @@ angular.module('cheping', [
 
         ctrl.showNewTab = false;
         ctrl.showWarningTab = false;
+        ctrl.showTab = false;
 
         UserService.getUserInfo()
             .then(function(result) {
                 if (result.jobTitle === 40 || result.jobTitle === 50) {
                     ctrl.showNewTab = true;
+                    ctrl.showTab = true;
                 } else if (result.jobTitle === 10) {
                     ctrl.showNewTab = true;
+                    ctrl.showTab = true;
                 } else {
                     UtilityService.showAlert('请先登录');
                     $state.go('cheping.user-login');

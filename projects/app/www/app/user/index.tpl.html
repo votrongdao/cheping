@@ -1,0 +1,29 @@
+<ion-view view-title="用户信息">
+  <ion-content>
+    <ion-list>
+      <ion-item type="item-text-wrap">
+        <span>用户名：</span>
+        <span ng-bind="user.userName" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>手机号：</span>
+        <span ng-bind="user.cellphone" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>用户代码：</span>
+        <span ng-bind="user.userCode" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>网点编号：</span>
+        <span ng-bind="user.outletId" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>职位名称：</span>
+        <span ng-bind="(user.jobTitle | jobTitle)" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+
+    <button class="button button-block button-cp-dark" ng-click="user.loginOut()">登出</button>
+
+  </ion-content>
+</ion-view>
