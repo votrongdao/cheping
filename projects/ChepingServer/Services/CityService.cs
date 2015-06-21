@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  12:41 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  12:54 PM
+// Last Modified On : 2015-06-22  5:36 AM
 // ***********************************************************************
 // <copyright file="CityService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -138,6 +138,10 @@ namespace ChepingServer.Services
             }
         }
 
+        /// <summary>
+        ///     Jsons this instance.
+        /// </summary>
+        /// <returns>Task&lt;Dictionary&lt;System.String, Dictionary&lt;System.Int32, System.String&gt;&gt;&gt;.</returns>
         public async Task<Dictionary<string, Dictionary<int, string>>> Json()
         {
             var json = new Dictionary<string, Dictionary<int, string>>();

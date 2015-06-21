@@ -130,7 +130,7 @@ angular.module('cheping.new.detail', [
                 }
             });
     })
-    .controller('NewCtrl', function($scope, $stateParams, CaseCreateService) {
+    .controller('NewCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService, UtilityService) {
         var _case = this;
 
         _case.viewModel = {};
@@ -157,6 +157,22 @@ angular.module('cheping.new.detail', [
             view.licenseLocation = newCase.licenseLocation || '选择车辆牌照所在地';
             view.expectedPrice = newCase.expectedPrice || '车主心理价位';
             view.modifiedContent = newCase.modifiedContent || '改装内容';
+        };
+
+        _case.buttonEnable = function() {
+            return newCase.caseType && newCase.brandName && newCase.seriesName && newCase.modelName &&
+                newCase.outerColor && newCase.innerColor && newCase.licenseTime && newCase.vehicleLocation
+                && newCase.displayMileage && newCase.cooperationMethod;
+        };
+
+        _case.createCase = function() {
+            CaseCreateService.createCase()
+                .then(function(result) {
+                    UtilityService.showAlert('创建成功');
+                    $timeout(function() {
+                        $state.go('cheping.case-list', {carType: newCase.caseType});
+                    }, 2000);
+                });
         };
 
         $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {

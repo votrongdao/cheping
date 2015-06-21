@@ -16,7 +16,10 @@ angular.module('cheping.services.caseCreate', [])
         };
 
         service.createCase = function() {
-            return newCase;
+            return $http.post(URLS.CASE.ADDCASE, newCase)
+                .then(function(result) {
+                    return result.data;
+                });
         };
 
         service.getBrands = function() {

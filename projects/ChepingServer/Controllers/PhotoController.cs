@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  4:41 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  4:46 PM
+// Last Modified On : 2015-06-22  5:36 AM
 // ***********************************************************************
 // <copyright file="PhotoController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -12,6 +12,7 @@
 // ***********************************************************************
 
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization;
@@ -52,11 +53,9 @@ namespace ChepingServer.Controllers
 
             var provider = new MultipartMemoryStreamProvider();
             await this.Request.Content.ReadAsMultipartAsync(provider);
-            foreach (var file in provider.Contents)
+            foreach (var file in from file in provider.Contents let filename = file.Headers.ContentDisposition.FileName.Trim('\"') select file)
             {
-                var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
                 var buffer = await file.ReadAsByteArrayAsync();
-                //Do whatever you want with filename and its binaray data.
             }
 
             // Check if files are available

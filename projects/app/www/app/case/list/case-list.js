@@ -6,7 +6,7 @@ angular.module('cheping.case.list', [
     .config(function($stateProvider) {
         $stateProvider
             .state('cheping.case-list', {
-                url: '/cases/list/{:carType}',
+                url: '/cases/list/{carType}',
                 views: {
                     'cases': {
                         controller: 'CaseListCtrl as cases',
