@@ -1,20 +1,20 @@
-angular.module('cheping.daiban.detail-shenhe', [
+angular.module('cheping.daiban.detail-baojia', [
     'cheping.services.user',
     'cheping.services.case'
 ])
     .config(function($stateProvider) {
         $stateProvider
-            .state('cheping.daiban-detail-shenhe', {
-                url: '/daiban/detail/shenhe/{:caseId}/{:caseNo}',
+            .state('cheping.daiban-detail-baojia', {
+                url: '/daiban/detail/baojia/{:caseId}/{:caseNo}',
                 views: {
                     'daiban': {
-                        controller: 'DaibanShenheCtrl as _case',
-                        templateUrl: 'app/daiban/detail/daiban-shenhe.tpl.html'
+                        controller: 'DaibanBaojiaCtrl as _case',
+                        templateUrl: 'app/daiban/detail/daiban-baojia.tpl.html'
                     }
                 }
             })
     })
-    .controller('DaibanShenheCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicHistory, UserService, CaseService) {
+    .controller('DaibanBaojiaCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicHistory, UserService, CaseService) {
         var _case = this;
 
         _case.getCase = function() {

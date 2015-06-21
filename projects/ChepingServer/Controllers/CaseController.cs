@@ -298,7 +298,7 @@ namespace ChepingServer.Controllers
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
-        [Route("ApplyPayment"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        [HttpGet, Route("ApplyPayment"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> ApplyPayment([FromUri] int caseId)
         {
             Case @case = await this.caseService.GetAsync(caseId);
@@ -336,7 +336,7 @@ namespace ChepingServer.Controllers
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
-        [Route("ApprovePayment"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        [HttpGet, Route("ApprovePayment"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> ApprovePayment([FromUri] int caseId)
         {
             Case @case = await this.caseService.GetAsync(caseId);
@@ -609,7 +609,7 @@ namespace ChepingServer.Controllers
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
-        [Route("Purchase"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        [HttpGet, Route("Purchase"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> Purchase([FromUri] int caseId)
         {
             Case @case = await this.caseService.GetAsync(caseId);
@@ -738,7 +738,7 @@ namespace ChepingServer.Controllers
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
-        [Route("RejectionConfirm"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        [HttpGet, Route("RejectionConfirm"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> RejectionConfirm([FromUri] int caseId)
         {
             Case @case = await this.caseService.GetAsync(caseId);
@@ -774,7 +774,7 @@ namespace ChepingServer.Controllers
         ///     <br />
         ///     事项状态错误
         /// </response>
-        [Route("ReviewCase"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        [HttpGet, Route("ReviewCase"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> ReviewCase([FromUri] int caseId, [FromUri] int purchasePrice)
         {
             Case @case = await this.caseService.GetAsync(caseId);

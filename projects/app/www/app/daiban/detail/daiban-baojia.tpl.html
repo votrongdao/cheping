@@ -26,16 +26,16 @@
         <span ng-bind="(_case.displayMileage)" class="pull-right"></span>
       </ion-item>
     </ion-list>
-    <form name="shenhe">
+    <form name="baojia">
       <div class="list list-inset padding">
         <label class="item item-input">
           <i class="icon ion-model-s placeholder-icon"></i>
-          <input type="number" name="price" ng-model="_case.price" placeholder="请输入核准的报价" required min="1" max="900000000" ng-trim="true">
+          <input type="number" name="price" ng-model="_case.price" placeholder="请输入报价" required min="1" max="900000000" ng-trim="true">
         </label>
       </div>
-      <div ng-messages="shenhe.price.$error" ng-if="shenhe.price.$dirty" role="alert" class="padding ng-input-error">
+      <div ng-messages="baojia.price.$error" ng-if="baojia.price.$dirty" role="alert" class="padding ng-input-error">
         <div ng-message="required, minlength">
-          请输入核准的报价
+          请输入报价
         </div>
       </div>
     </form>

@@ -19,7 +19,9 @@ angular.module('cheping', [
             GETVEHICLEINFO: 'http://cheping.chinacloudsites.cn:80/api/Case/VehicleInfo',
             GETTODOS: 'http://cheping.chinacloudsites.cn:80/api/Case/Todos',
             REJECT: 'http://cheping.chinacloudsites.cn:80/api/Case/Reject',
-            ADDYANCHEINFO: 'http://cheping.chinacloudsites.cn:80/api/Case/AddYancheInfo'
+            ADDYANCHEINFO: 'http://cheping.chinacloudsites.cn:80/api/Case/AddYancheInfo',
+            REVIEWCASE: 'http://cheping.chinacloudsites.cn:80/api/Case/ReviewCase',
+            ACCEPTPRICE: 'http://cheping.chinacloudsites.cn:80/api/Case/AcceptPrice'
         }
     })
     .config(function($ionicConfigProvider) {
