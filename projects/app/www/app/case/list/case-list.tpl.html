@@ -1,18 +1,22 @@
 <ion-view title="事项">
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="case in cases.items" class="item-icon-right" >
+    <ion-list class="cases">
+      <ion-item ng-repeat="case in cases.items" class="item-thumbnail-left item-icon-right" >
         <img src="assets/img/car.png">
-        <p ng-bind="case.modelName"></p>
+
+          <p ng-bind="case.modelName"></p>
+            <label>&nbsp;<span ng-bind="case.brandName"></span>&nbsp;</label>
+            <label>&nbsp;<span ng-bind="case.seriesName"></span>&nbsp;</label>
+            <label>&nbsp;<span ng-bind="(case.outerColor | colorName)"></span>&nbsp;</label>
+            <label>&nbsp;<span ng-bind="(case.innerColor | colorName)"></span>&nbsp;</label>
         <div>
-          <label ng-bind="case.brandName"></label>
-          <label ng-bind="case.seriesName"></label>
-          <label ng-bind="(case.outerColor | colorName)"></label>
-          <label ng-bind="(case.innerColor | colorName)"></label>
+          <span ng-bind="'&yen' + case.purchasePrice"></span>
+          <span ng-bind="(case.vehicleLocation | city)"></span>
+          <span ng-bind="(case.state | state)"></span>
         </div>
-        <p ng-bind="'&yen' + case.purchasePrice"></p>
-        <p ng-bind="(case.vehicleLocation | city)"></p>
-        <p ng-bind="(case.state | state)"></p>
+
+
+
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
