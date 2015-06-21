@@ -54,6 +54,6 @@ angular.module('cheping.user.login', [
         };
 
         user.loginButtonEnable = function() {
-            return user.userName && user.password;
+            return user.viewModel.cellphone && user.viewModel.password;
         };
     });

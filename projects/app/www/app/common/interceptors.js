@@ -8,7 +8,6 @@ angular.module('cheping.interceptors', [
         return {
             'request': function(config) {
                 config.headers['x-cp'] = authService.getToken();
-                config.headers['Access-Control-Allow-Origin'] = 'x-cp,Set-Cookie,Date';
                 return config;
             },
 
@@ -18,7 +17,7 @@ angular.module('cheping.interceptors', [
             },
 
             'response': function(response) {
-                if(response.headers['x-cp']) {
+                if(response.headers()['x-cp']) {
                     authService.setToken(response.headers['x-cp'])
                 }
                 return response;
