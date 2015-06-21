@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  12:59 PM
+// Last Modified On : 2015-06-21  3:38 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -470,7 +470,7 @@ namespace ChepingServer.Controllers
         ///     无法加载用户信息
         /// </response>
         /// <response code="500"></response>
-        [HttpGet, Route("Todos"), ResponseType(typeof(List<CaseDto>))]
+        [HttpGet, Route("Todos"), ResponseType(typeof(List<VehicleResponse>))]
         public async Task<IHttpActionResult> GetTodos()
         {
             User user = await this.userService.Get(this.CurrentUser.Id);
@@ -481,7 +481,46 @@ namespace ChepingServer.Controllers
 
             List<Case> cases = await this.caseService.GetTodosAsync(user);
 
-            return this.Ok(cases.Select(c => c.ToDto()));
+            Dictionary<int, VehicleInfo> vehicleInfos = await this.caseService.GetVehicleInfos(cases.Select(i => i.VehicleInfoId).ToList());
+
+            List<VehicleResponse> responses = cases.Select(c =>
+            {
+                VehicleResponse response = new VehicleResponse();
+                var info = vehicleInfos[c.VehicleInfoId];
+                response.State = c.State;
+                response.Abandon = c.Abandon;
+                response.AbandonReason = c.AbandonReason;
+                response.BrandName = info.BrandName;
+                response.CaseType = c.CaseType;
+                response.CooperationMethod = info.CooperationMethod;
+                response.CreateTime = c.CreateTime;
+                response.DirectorId = c.DirectorId;
+                response.DisplayMileage = info.DisplayMileage;
+                response.ExpectedPrice = info.ExpectedPrice;
+                response.FactoryTime = info.FactoryTime;
+                response.Id = c.Id;
+                response.InnerColor = info.InnerColor;
+                response.LicenseLocation = info.LicenseLocation;
+                response.ManagerId = c.ManagerId;
+                response.ModelId = info.ModelId;
+                response.ModelName = info.ModelName;
+                response.ModifiedContent = info.ModifiedContent;
+                response.OuterColor = info.OuterColor;
+                response.OutletId = c.OutletId;
+                response.PurchasePrice = c.PurchasePrice;
+                response.PurchaserId = c.PurchaserId;
+                response.QueryingId = c.QueryingId;
+                response.SerialId = c.SerialId;
+                response.SeriesName = info.SeriesName;
+                response.State = c.State;
+                response.ValuerId = c.ValuerId;
+                response.VehicleInfoId = c.VehicleInfoId;
+                response.VehicleInspecId = c.VehicleInspecId;
+                response.VehicleLocation = info.VehicleLocation;
+                return response;
+            }).ToList();
+
+            return this.Ok(responses);
         }
 
         /// <summary>
@@ -492,7 +531,7 @@ namespace ChepingServer.Controllers
         ///     无法加载用户信息
         /// </response>
         /// <response code="500"></response>
-        [HttpGet, Route("Warnings"), ResponseType(typeof(List<CaseDto>))]
+        [HttpGet, Route("Warnings"), ResponseType(typeof(List<VehicleResponse>))]
         public async Task<IHttpActionResult> GetWarnings()
         {
             User user = await this.userService.Get(this.CurrentUser.Id);
@@ -503,7 +542,46 @@ namespace ChepingServer.Controllers
 
             List<Case> cases = await this.caseService.GetWarningAsync(user);
 
-            return this.Ok(cases.Select(c => c.ToDto()));
+            Dictionary<int, VehicleInfo> vehicleInfos = await this.caseService.GetVehicleInfos(cases.Select(i => i.VehicleInfoId).ToList());
+
+            List<VehicleResponse> responses = cases.Select(c =>
+            {
+                VehicleResponse response = new VehicleResponse();
+                var info = vehicleInfos[c.VehicleInfoId];
+                response.State = c.State;
+                response.Abandon = c.Abandon;
+                response.AbandonReason = c.AbandonReason;
+                response.BrandName = info.BrandName;
+                response.CaseType = c.CaseType;
+                response.CooperationMethod = info.CooperationMethod;
+                response.CreateTime = c.CreateTime;
+                response.DirectorId = c.DirectorId;
+                response.DisplayMileage = info.DisplayMileage;
+                response.ExpectedPrice = info.ExpectedPrice;
+                response.FactoryTime = info.FactoryTime;
+                response.Id = c.Id;
+                response.InnerColor = info.InnerColor;
+                response.LicenseLocation = info.LicenseLocation;
+                response.ManagerId = c.ManagerId;
+                response.ModelId = info.ModelId;
+                response.ModelName = info.ModelName;
+                response.ModifiedContent = info.ModifiedContent;
+                response.OuterColor = info.OuterColor;
+                response.OutletId = c.OutletId;
+                response.PurchasePrice = c.PurchasePrice;
+                response.PurchaserId = c.PurchaserId;
+                response.QueryingId = c.QueryingId;
+                response.SerialId = c.SerialId;
+                response.SeriesName = info.SeriesName;
+                response.State = c.State;
+                response.ValuerId = c.ValuerId;
+                response.VehicleInfoId = c.VehicleInfoId;
+                response.VehicleInspecId = c.VehicleInspecId;
+                response.VehicleLocation = info.VehicleLocation;
+                return response;
+            }).ToList();
+
+            return this.Ok(responses);
         }
 
         /// <summary>

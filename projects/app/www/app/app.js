@@ -14,7 +14,8 @@ angular.module('cheping', [
         },
         CASE: {
             GETCASELIST: 'http://cheping.yuyidev.com:80/api/Case/List',
-            GETVEHICLEINFO: 'http://cheping.yuyidev.com:80/api/Case/VehicleInfo'
+            GETVEHICLEINFO: 'http://cheping.yuyidev.com:80/api/Case/VehicleInfo',
+            GETTODOS: 'http://cheping.chinacloudsites.cn:80/api/Case/Todos'
         }
     })
     .config(function($ionicConfigProvider) {

@@ -20,7 +20,6 @@ angular.module('cheping.case.detail', [
         _case.getCase = function() {
             CaseService.getCase($stateParams.caseId)
                 .then(function(result) {
-                    console.log(result);
                     _case.caseNo = $stateParams.caseNo;
                     _case.brandName = result.brandName;
                     _case.cooperationMethod = result.cooperationMethod;

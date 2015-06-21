@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  11:25 AM
+// Last Modified On : 2015-06-21  3:38 PM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -453,7 +453,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Gets the vehicle infos.
+        ///     Gets the vehicle infos.
         /// </summary>
         /// <param name="ids">The ids.</param>
         /// <returns>Task&lt;Dictionary&lt;System.Int32, VehicleInfo&gt;&gt;.</returns>
@@ -505,13 +505,13 @@ namespace ChepingServer.Services
                 switch (user.JobTitle)
                 {
                     case JobTitle.Purchaser:
-                        return await db.Cases.Where(c => PurchaserWarningStates.Contains(c.State) && c.PurchaserId == user.Id).ToListAsync();
+                        return await db.Cases.Where(c => PurchaserWarningStates.Contains(c.State) && c.Abandon == false && c.PurchaserId == user.Id).ToListAsync();
 
                     case JobTitle.Director:
-                        return await db.Cases.Where(c => DirectorWarningStates.Contains(c.State) && c.DirectorId == user.Id).ToListAsync();
+                        return await db.Cases.Where(c => DirectorWarningStates.Contains(c.State) && c.Abandon == false && c.DirectorId == user.Id).ToListAsync();
 
                     case JobTitle.Manager:
-                        return await db.Cases.Where(c => ManagerWarningStates.Contains(c.State) && c.ManagerId == user.Id).ToListAsync();
+                        return await db.Cases.Where(c => ManagerWarningStates.Contains(c.State) && c.Abandon == false && c.ManagerId == user.Id).ToListAsync();
 
                     default:
                         return new List<Case>();
