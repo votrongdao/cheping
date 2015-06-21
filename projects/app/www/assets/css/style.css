@@ -284,8 +284,7 @@ em {
 
 /*.cases start*/
 .cases .item p, span {
-
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 200;
 }
 .cases .price {
@@ -345,6 +344,10 @@ form > div.list-inset {
   float: right;
   padding-top: 2px;
 }
+.pull-left {
+  float: left;
+  padding-top: 2px;
+}
 
 .state {
   font-size: 18px;
@@ -353,7 +356,21 @@ form > div.list-inset {
   margin-top: 11px;
 }
 
-
 .popup span {
   font-size: 14px;
+}
+
+.button.button-small {
+  width: 80px;
+  background-color: #660000;
+  color: white;
+  font-size: 14px;
+  border-radius: 3px;
+}
+
+label.item-radio .item-content {
+  padding: 10px 25px;
+}
+.item-radio .radio-icon {
+  right: 10px;
 }

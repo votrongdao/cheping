@@ -5,11 +5,19 @@
       spinner="spiral"
       on-refresh="ctrl.doRefresh()">
     </ion-refresher>
-    <label class="item item-input">
-      <i class="icon ion-ios-locked placeholder-icon"></i>
-      <input type="text" name="selectBrand" ng-model="ctrl.selected" placeholder="车辆品牌" required minlength="1" maxlength="18">
-    </label>
-    <button ng-click="ctrl.selectConfirm()">确认</button>
+    <ion-list>
+      <ion-item class="item-divider">
+        <p>手动输入或在列表中选择车辆品牌</p>
+      </ion-item>
+      <ion-item class="item item-input-inset item-icon-left">
+        <label class="item-input-wrapper">
+          <input type="text" name="selectBrand" ng-model="ctrl.selected" placeholder="输入车辆品牌" required minlength="1" maxlength="18">
+        </label>
+        <button class="button button-small" ng-click="ctrl.selectConfirm()">确认</button>
+      </ion-item>
+    </ion-list>
+
+
     <ion-radio ng-repeat="item in ctrl.brands"
                ng-value="item"
                name="brand"
