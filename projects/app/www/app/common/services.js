@@ -23,7 +23,7 @@ angular.module('cheping.services', [
         var service = this;
 
         CacheFactory('authTokenCache', {
-            maxAge: 60 * 1000,
+            maxAge: 10 * 60 * 1000,
             deleteOnExpire: 'aggressive',
             storageMode: 'localStorage'
         });

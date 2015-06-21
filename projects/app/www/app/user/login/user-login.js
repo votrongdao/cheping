@@ -1,5 +1,6 @@
 angular.module('cheping.user.login', [
-    'cheping.services.user'
+    'cheping.services.user',
+    'cheping.case'
 ])
     .config(function ($stateProvider) {
         $stateProvider
@@ -13,7 +14,7 @@ angular.module('cheping.user.login', [
                 }
             })
     })
-    .controller('UserLoginCtrl', function($state, UserService, UtilityService) {
+    .controller('UserLoginCtrl', function($state, $ionicHistory, UserService, UtilityService) {
         var user = this;
 
         user.model = {};
@@ -27,7 +28,7 @@ angular.module('cheping.user.login', [
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
-                        $state.go('', {}, { reload: true });
+                        $state.go('cheping.case', {}, { reload: true });
                     }, function(reason) {
                         UtilityService.showAlert(reason.data.message);
                     });

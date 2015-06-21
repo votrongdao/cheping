@@ -1,5 +1,6 @@
 angular.module('cheping.case.list', [
-    'cheping.services.user'
+    'cheping.services.user',
+    'cheping.services.case'
 ])
     .config(function($stateProvider) {
         $stateProvider

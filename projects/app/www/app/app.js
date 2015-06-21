@@ -4,7 +4,8 @@ angular.module('cheping', [
     'cheping.filters',
     'cheping.interceptors',
     'cheping.services',
-    'cheping.services.user'
+    'cheping.services.user',
+    'cheping.services.case'
 ])
     .constant('URLS', {
         USER: {
@@ -31,7 +32,7 @@ angular.module('cheping', [
     })
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('cheping', {
-            url: "/",
+            url: "",
             views: {
                 '@': {
                     controller: 'MainCtrl as ctrl',
@@ -40,7 +41,7 @@ angular.module('cheping', [
             }
         });
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('');
     })
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -82,7 +83,6 @@ angular.module('cheping', [
     })
     .controller('MainCtrl', function($state, UserService, UtilityService) {
         var ctrl = this;
-        console.log('this is main ctrl');
 
         ctrl.showNewTab = false;
         ctrl.showWarningTab = false;
