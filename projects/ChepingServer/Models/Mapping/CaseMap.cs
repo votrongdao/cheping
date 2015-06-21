@@ -39,9 +39,6 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.CreateTime)
                 .IsRequired();
 
-            this.Property(t => t.Times)
-                .IsRequired();
-
             // Table & Column Mappings
             this.ToTable("Cases");
             this.Property(t => t.Id).HasColumnName("Id");

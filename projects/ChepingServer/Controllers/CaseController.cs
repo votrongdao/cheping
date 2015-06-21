@@ -260,7 +260,7 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("无法加载事项信息");
             }
 
-            if (@case.ValuerId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+            if (@case.PurchaserId != this.CurrentUser.Id)
             {
                 return this.BadRequest("操作未授权");
             }
@@ -279,6 +279,44 @@ namespace ChepingServer.Controllers
             };
 
             @case = await this.caseService.AddYancheInfoAsync(@case.Id, inspection);
+
+            return this.Ok(@case.ToDto());
+        }
+
+        /// <summary>
+        ///     申请打款
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <response code="200"></response>
+        /// <response code="400">
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
+        [Route("ApplyPayment"), CookieAuthorize, ResponseType(typeof(CaseDto))]
+        public async Task<IHttpActionResult> ApplyPayment([FromUri] int caseId)
+        {
+            Case @case = await this.caseService.GetAsync(caseId);
+            if (@case == null)
+            {
+                return this.BadRequest("无法加载事项信息");
+            }
+
+            if (@case.DirectorId.GetValueOrDefault(-100) != this.CurrentUser.Id)
+            {
+                return this.BadRequest("操作未授权");
+            }
+
+            if (@case.State != State.ShenqingDakuan)
+            {
+                return this.BadRequest("事项状态错误");
+            }
+
+            @case = await this.caseService.ApplyPaymentAsync(caseId);
 
             return this.Ok(@case.ToDto());
         }
@@ -311,7 +349,7 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("操作未授权");
             }
 
-            if (@case.State != State.ShenqingDakuan)
+            if (@case.State != State.DakuanShenhe)
             {
                 return this.BadRequest("事项状态错误");
             }
@@ -632,7 +670,7 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("操作未授权");
             }
 
-            if (@case.State != State.Shenhe || @case.State != State.Baojia)
+            if (@case.State != State.Shenhe && @case.State != State.Baojia)
             {
                 return this.BadRequest("事项状态错误");
             }

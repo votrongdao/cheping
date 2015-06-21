@@ -60,21 +60,6 @@ namespace ChepingServer.Services
                     @case.PurchasePrice = price;
                     this.RecordTime(@case, State.Qiatan);
 
-                    //alloc managerId
-                    User user = await db.Users.FirstOrDefaultAsync(u => u.Id == @case.PurchaserId && u.JobTitle == JobTitle.Purchaser && u.Available);
-                    if (user == null)
-                    {
-                        throw new ApplicationException("无法加载用户信息");
-                    }
-
-                    List<User> managers = await db.Users.Where(u => u.Available && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Manager).ToListAsync();
-
-                    int caseCount = await db.Cases.CountAsync(c => c.OutletId == user.OutletId && ManagerTodoStates.Contains(c.State) && c.ManagerId != null);
-                    int index = caseCount % managers.Count;
-                    int managerId = managers[index].Id;
-
-                    @case.ManagerId = managerId;
-
                     await db.ExecuteSaveChangesAsync();
                 }
 
@@ -120,7 +105,7 @@ namespace ChepingServer.Services
                     throw new ApplicationException("事项的状态不合法");
                 }
 
-                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.Id);
+                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.VehicleInspecId);
                 if (inspection == null)
                 {
                     throw new ApplicationException("未能加载验车信息");
@@ -207,8 +192,7 @@ namespace ChepingServer.Services
 
                 int directorId = directors[index].Id;
 
-                
-
+                @case.DirectorId = directorId;
 
                 await db.ExecuteSaveChangesAsync();
 
@@ -238,7 +222,7 @@ namespace ChepingServer.Services
                     throw new ApplicationException("事项的状态不合法");
                 }
 
-                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.Id);
+                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.VehicleInspecId);
                 if (inspection == null)
                 {
                     throw new ApplicationException("未能加载验车信息");
@@ -274,6 +258,48 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
+        ///     Apply the payment.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        public async Task<Case> ApplyPaymentAsync(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+                if (@case == null)
+                {
+                    throw new ApplicationException("未能加载事项信息");
+                }
+
+                if (@case.State == State.ShenqingDakuan)
+                {
+                    @case.State = State.DakuanShenhe;
+                    this.RecordTime(@case, State.ShenqingDakuan);
+
+                    //alloc managerId
+                    User user = await db.Users.FirstOrDefaultAsync(u => u.Id == @case.PurchaserId && u.JobTitle == JobTitle.Purchaser && u.Available);
+                    if (user == null)
+                    {
+                        throw new ApplicationException("无法加载用户信息");
+                    }
+
+                    List<User> managers = await db.Users.Where(u => u.Available && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Manager).ToListAsync();
+
+                    int caseCount = await db.Cases.CountAsync(c => c.OutletId == user.OutletId && ManagerTodoStates.Contains(c.State) && c.ManagerId != null);
+                    int index = caseCount % managers.Count;
+                    int managerId = managers[index].Id;
+
+                    @case.ManagerId = managerId;
+
+                    await db.ExecuteSaveChangesAsync();
+                }
+
+                return @case;
+            }
+        }
+
+        /// <summary>
         ///     Approves the payment.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
@@ -288,10 +314,10 @@ namespace ChepingServer.Services
                     throw new ApplicationException("未能加载事项信息");
                 }
 
-                if (@case.State == State.ShenqingDakuan)
+                if (@case.State == State.DakuanShenhe )
                 {
                     @case.State = State.Caigou;
-                    this.RecordTime(@case, State.ShenqingDakuan);
+                    this.RecordTime(@case, State.DakuanShenhe);
                     await db.ExecuteSaveChangesAsync();
                 }
 
@@ -340,17 +366,17 @@ namespace ChepingServer.Services
 
                     case JobTitle.Querying:
                         totalCount = await db.Cases.Where(c => c.QueryingId == user.Id && c.CaseType == carType).CountAsync();
-                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id && c.CaseType == carType).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        cases = await db.Cases.Where(c => c.QueryingId == user.Id && c.CaseType == carType).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                         break;
 
                     case JobTitle.Director:
                         totalCount = await db.Cases.Where(c => c.DirectorId == user.Id && c.CaseType == carType).CountAsync();
-                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id && c.CaseType == carType).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        cases = await db.Cases.Where(c => c.DirectorId == user.Id && c.CaseType == carType).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                         break;
 
                     case JobTitle.Manager:
                         totalCount = await db.Cases.Where(c => c.ManagerId == user.Id).CountAsync();
-                        cases = await db.Cases.Where(c => c.PurchaserId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
+                        cases = await db.Cases.Where(c => c.ManagerId == user.Id).OrderByDescending(c => c.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
                         break;
                 }
 
@@ -664,7 +690,8 @@ namespace ChepingServer.Services
                 ValuerId = null, // need update
                 VehicleInfoId = 0, // need update
                 VehicleInspecId = 0, // need update
-                CreateTime = DateTime.UtcNow.AddHours(8)
+                CreateTime = DateTime.UtcNow.AddHours(8),
+                Times = null
             };
 
             VehicleInfo newInfo = new VehicleInfo
@@ -743,8 +770,13 @@ namespace ChepingServer.Services
                 newCase.OutletId = user.OutletId;
                 newCase.VehicleInfoId = newInfo.Id;
                 newCase.VehicleInspecId = newVehicleInspection.Id;
+                try {
+                    await db.SaveAsync(newCase);
+                }
+                catch(Exception e)
+                {
 
-                await db.SaveAsync(newCase);
+                }
             }
 
             return newCase;
@@ -832,8 +864,16 @@ namespace ChepingServer.Services
         private void RecordTime(Case @case, State state)
         {
            string times = @case.Times;
+            Dictionary<State, DateTime> dir;
             DateTime now = DateTime.UtcNow.AddHours(8);
-            Dictionary<State, DateTime> dir = JsonConvert.DeserializeObject<Dictionary<State, DateTime>>(times);
+            if (times.IsNullOrEmpty())
+            {
+                dir = new Dictionary<State, DateTime>();
+            }
+            else
+            {
+                dir = JsonConvert.DeserializeObject<Dictionary<State, DateTime>>(times);
+            }
             if (dir.ContainsKey(state))
             {
                 dir[state] = now;

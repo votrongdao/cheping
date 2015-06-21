@@ -47,7 +47,9 @@ namespace ChepingServer.DTO
                 State = @case.State,
                 ValuerId = @case.ValuerId,
                 VehicleInfoId = @case.VehicleInfoId,
-                VehicleInspecId = @case.VehicleInspecId
+                VehicleInspecId = @case.VehicleInspecId,
+                CreateTime = @case.CreateTime,
+                Times = @case.Times
             };
         }
     }
@@ -156,7 +158,7 @@ namespace ChepingServer.DTO
         /// <summary>
         ///     状态转换时间记录
         /// </summary>
-        [StringLength(int.MaxValue,MinimumLength =1), JsonProperty("times")]
+        [StringLength(int.MaxValue), JsonProperty("times")]
         public string Times { get; set; }
 
     }

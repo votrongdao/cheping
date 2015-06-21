@@ -72,7 +72,7 @@ namespace ChepingServer.Requests
         public int WebAveragePrice { get; set; }
 
         /// <summary>
-        ///     网上价格
+        ///     网络报价
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("webPrice")]
         public int WebPrice { get; set; }
