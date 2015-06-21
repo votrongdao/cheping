@@ -61,6 +61,7 @@ angular.module('cheping', [
         });
 
         $rootScope.$on('http:requestError', function() {
+            $ionicLoading.hide();
             $ionicLoading.show({
                 template: '请求失败',
                 duration: 3000
@@ -68,6 +69,7 @@ angular.module('cheping', [
         });
 
         $rootScope.$on('http:responseError-500', function() {
+            $ionicLoading.hide();
             $ionicLoading.show({
                 template: '请稍后再试',
                 duration: 3000

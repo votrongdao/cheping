@@ -3,21 +3,23 @@ angular.module('cheping.user.login', [
 ])
     .config(function ($stateProvider) {
         $stateProvider
-            .state('cheping.user-login', {
-                url: '/user/login',
+            .state('cheping.case', {
+                url: '/case',
                 views: {
-                    '@':{
-                        controller: 'UserLoginCtrl as user',
-                        templateUrl: 'app/user/login/user-login.tpl.html'
+                    'cases':{
+                        controller: 'CaseCtrl as ctrl',
+                        templateUrl: 'app/case/index.tpl.html'
                     }
                 }
             })
     })
-    .controller('UserLoginCtrl', function($state, UserService, UtilityService) {
-        var user = this;
+    .controller('CaseCtrl', function($state, UserService, UtilityService) {
+        var ctrl = this;
 
-        user.model = {};
-        user.viewModel = {};
+        ctrl.model = {};
+        ctrl.viewModel = {};
+
+        var user = UserService.getUserInfo();
 
         user.login = function() {
             if(/^(13|14|15|17|18)\d{9}$/.test(user.viewModel.cellphone) &&
