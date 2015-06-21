@@ -7,7 +7,7 @@
     </ion-list>
     <ion-radio ng-repeat="item in ctrl.items"
                ng-value="item.colorId"
-               name="innerColor" ng-change="ctrl.selectConfirm()"
+               name="innerColor"
                ng-model="ctrl.selected"> {{ item.colorName }}
     </ion-radio>
   </ion-content>

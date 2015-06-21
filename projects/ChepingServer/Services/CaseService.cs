@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  12:32 AM
+// Last Modified On : 2015-06-22  5:36 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -75,6 +75,24 @@ namespace ChepingServer.Services
         /// <returns>Task&lt;CaseDto&gt;.</returns>
         public async Task<Case> AddCaseAsync(Case @case, VehicleInfo info)
         {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Model model = await db.Models.FirstOrDefaultAsync(m => m.Brand == info.BrandName &&
+                                                                       m.Series == info.SeriesName && m.Modeling == info.ModelName);
+
+                if (model == null)
+                {
+                    info.ModelId = -1;
+                }
+                else
+                {
+                    info.ModelId = model.Id;
+                    info.BrandName = model.Brand;
+                    info.SeriesName = model.Series;
+                    info.ModelName = model.Modeling;
+                }
+            }
+
             if (info.ModelId == -1)
             {
                 return await this.AddSpecialCaseAsync(@case, info);
@@ -759,21 +777,6 @@ namespace ChepingServer.Services
             int purchaserId = @case.PurchaserId;
             using (ChePingContext db = new ChePingContext())
             {
-                Model model = await db.Models.FirstOrDefaultAsync(m => m.Brand == newInfo.BrandName &&
-                                                                       m.Series == newInfo.SeriesName && m.Modeling == newInfo.ModelName);
-
-                if (model == null)
-                {
-                    newInfo.ModelId = -1;
-                }
-                else
-                {
-                    newInfo.ModelId = model.Id;
-                    newInfo.BrandName = model.Brand;
-                    newInfo.SeriesName = model.Series;
-                    newInfo.ModelName = model.Modeling;
-                }
-
                 await db.SaveAsync(newInfo);
 
                 await db.SaveAsync(newVehicleInspection);
@@ -860,7 +863,7 @@ namespace ChepingServer.Services
                 InnerColor = info.InnerColor,
                 LicenseLocation = info.LicenseLocation,
                 LicenseTime = info.LicenseTime,
-                ModelId = -1,
+                ModelId = info.ModelId,
                 ModelName = info.ModelName,
                 ModifiedContent = info.ModifiedContent,
                 OuterColor = info.OuterColor,
@@ -873,21 +876,6 @@ namespace ChepingServer.Services
             int purchaserId = @case.PurchaserId;
             using (ChePingContext db = new ChePingContext())
             {
-                Model model = await db.Models.FirstOrDefaultAsync(m => m.Brand == newInfo.BrandName &&
-                                                                       m.Series == newInfo.SeriesName && m.Modeling == newInfo.ModelName);
-
-                if (model == null)
-                {
-                    newInfo.ModelId = -1;
-                }
-                else
-                {
-                    newInfo.ModelId = model.Id;
-                    newInfo.BrandName = model.Brand;
-                    newInfo.SeriesName = model.Series;
-                    newInfo.ModelName = model.Modeling;
-                }
-
                 await db.SaveAsync(newInfo);
 
                 await db.SaveAsync(newVehicleInspection);

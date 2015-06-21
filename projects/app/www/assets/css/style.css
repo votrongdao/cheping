@@ -289,14 +289,34 @@ em {
 }
 .cases .price {
   color: #660000;
-  font-size: 22px;
+  font-size: 20px;
 }
 .cases label > span {
   font-size: 12px;
   color: inherit;
 }
+@media only screen and (max-width: 320px) and (max-height: 480px) {
+  .cases .price {
+    color: #660000;
+    font-size: 16px;
+  }
+  .cases label > span {
+    font-size: 10px;
+    color: inherit;
+  }
+}
+@media only screen and (max-width: 320px) and (min-height: 568px) {
+  .cases .price {
+    color: #660000;
+    font-size: 16px;
+  }
+  .cases label > span {
+    font-size: 10px;
+    color: inherit;
+  }
+}
 
-.button-cp-dark.button-cp-dark, .button.button-cp-green {
+  .button-cp-dark.button-cp-dark, .button.button-cp-green {
   width: 90%;
   margin: 10px auto;
 }
@@ -331,7 +351,7 @@ form > div.list-inset {
     margin-top: 2px;
   }
 }
-  @media only screen and (max-width: 320px) and (min-height: 568px) {
+@media only screen and (max-width: 320px) and (min-height: 568px) {
   .case-detail .item span {
     font-size: 12px;
     margin-top: 2px;
