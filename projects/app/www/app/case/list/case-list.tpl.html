@@ -6,7 +6,7 @@
       on-refresh="cases.doRefresh()">
     </ion-refresher>
     <ion-list>
-      <ion-item ng-repeat="case in cases.items" class="item-thumbnail-left item-icon-right" >
+      <ion-item ng-repeat="case in cases.items" class="item-thumbnail-left item-icon-right" ui-sref="cheping.case-detail({caseId: case.id, caseNo: case.serialId})">
         <img src="assets/img/car.png">
 
           <p ng-bind="case.modelName"></p>
@@ -20,7 +20,7 @@
           <span ng-bind="(case.state | state)" class="state"></span>
         </div>
 
-        <i class="icon ion-chevron-right icon-accessory" ui-sref="cheping.case-detail({caseId: case.id, caseNo: case.serialId})"></i>
+        <i class="icon ion-chevron-right icon-accessory" ></i>
       </ion-item>
     </ion-list>
     <button ng-click="cases.loadMore()" ng-if="cases.hasNextPage" class="button button-block button-cp-dark"> 加载更多 </button>
