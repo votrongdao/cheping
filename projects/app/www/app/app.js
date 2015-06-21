@@ -5,17 +5,19 @@ angular.module('cheping', [
     'cheping.interceptors',
     'cheping.services',
     'cheping.services.user',
-    'cheping.services.case'
+    'cheping.services.case',
+    'cheping.case',
+    'cheping.daiban'
 ])
     .constant('URLS', {
         USER: {
-            GETINFO: 'http://cheping.chinacloudsites.cn:80/api/Users',
-            SIGNIN: 'http://cheping.chinacloudsites.cn:80/api/Users/Login'
+            GETINFO: 'http://localhost:1585/api/Users',
+            SIGNIN: 'http://localhost:1585/api/Users/Login'
         },
         CASE: {
-            GETCASELIST: 'http://cheping.yuyidev.com:80/api/Case/List',
-            GETVEHICLEINFO: 'http://cheping.yuyidev.com:80/api/Case/VehicleInfo',
-            GETTODOS: 'http://cheping.chinacloudsites.cn:80/api/Case/Todos'
+            GETCASELIST: 'http://localhost:1585/api/Case/List',
+            GETVEHICLEINFO: 'http://localhost:1585/api/Case/VehicleInfo',
+            GETTODOS: 'http://localhost:1585/api/Case/Todos'
         }
     })
     .config(function($ionicConfigProvider) {
@@ -42,7 +44,7 @@ angular.module('cheping', [
             }
         });
 
-        $urlRouterProvider.otherwise('');
+        $urlRouterProvider.otherwise('/daiban');
     })
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {

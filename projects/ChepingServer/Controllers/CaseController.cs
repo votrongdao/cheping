@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  3:38 PM
+// Last Modified On : 2015-06-21  4:32 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -470,7 +470,7 @@ namespace ChepingServer.Controllers
         ///     无法加载用户信息
         /// </response>
         /// <response code="500"></response>
-        [HttpGet, Route("Todos"), ResponseType(typeof(List<VehicleResponse>))]
+        [HttpGet, Route("Todos"), CookieAuthorize, ResponseType(typeof(List<VehicleResponse>))]
         public async Task<IHttpActionResult> GetTodos()
         {
             User user = await this.userService.Get(this.CurrentUser.Id);
