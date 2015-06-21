@@ -271,7 +271,6 @@ em {
 }
 .login .padding {
   position: relative;
-  margin-top: 20px;
 }
 .button-cp-dark {
   border-radius: 3px;
@@ -396,4 +395,8 @@ label.item-radio .item-content {
 }
 .item-radio .radio-icon {
   right: 10px;
+}
+
+.ng-input-error div {
+  margin-left: 15px;
 }
