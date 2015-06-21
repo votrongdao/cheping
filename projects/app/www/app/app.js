@@ -28,6 +28,12 @@ angular.module('cheping', [
             APPROVEPAYMENT: 'http://cheping.chinacloudsites.cn:80/api/Case/ApprovePayment',
             PURCHASE: 'http://cheping.chinacloudsites.cn:80/api/Case/Purchase',
             REJECTIONCONFIRM: 'http://cheping.chinacloudsites.cn:80/api/Case/RejectionConfirm'
+        },
+        CONFIG: {
+            BRANDS: 'http://cheping.yuyidev.com:80/api/Models/Brands',
+            SERIES: 'http://cheping.yuyidev.com:80/api/Models/Series',
+            MODELINGS: 'http://cheping.yuyidev.com:80/api/Models/Modelings'
+
         }
     })
     .config(function($ionicConfigProvider) {

@@ -4,7 +4,7 @@
       <ion-item class="item-divider">
         <p>必填信息</p>
       </ion-item>
-      <ion-item type="item-text-wrap" ui-sref="cheping.index.createDetail-brand">
+      <ion-item type="item-text-wrap" ui-sref="cheping.new-brand">
         <span>车辆品牌：</span>
         <span ng-bind="_case.viewModel.brandName" class="pull-right"></span>
         <i class="icon ion-chevron-right icon-accessory"></i>
@@ -74,15 +74,8 @@
       </ion-item>
     </ion-list>
 
-    <ion-list class="item-no-border">
-      <ion-item>
-        <button class="button button-block button-cp-dark" ng-click="createDetailCtrl.create()">确认</button>
-        <button class="button button-block button-cp-green" ng-click="createDetailCtrl.reset()">放弃</button>
-      </ion-item>
-    </ion-list>
-    
     <div>照片们</div>
 
-    <button>确认创建</button>
+    <button class="button button-block button-cp-dark" >确认创建</button>
   </ion-content>
 </ion-view>

@@ -12,15 +12,16 @@ angular.module('cheping.new.detail', [
                     }
                 }
             })
-            //.state('cheping.index.createDetail', {
-            //    url: '/create/{carType}',
-            //    views: {
-            //        'index.create': {
-            //            controller: 'CreateDetailCtrl as createDetailCtrl',
-            //            templateUrl: 'app/index/create/create-detail.tpl.html'
-            //        }
-            //    }
-            //}).state('cheping.index.createDetail-brand', {
+            .state('cheping.new-brand', {
+                url: '/new/brand',
+                views: {
+                    'new': {
+                        controller: 'NewBrandCtrl as ctrl',
+                        templateUrl: 'app/create/detail/create-detail-brand.tpl.html'
+                    }
+                }
+            })
+            //.state('cheping.index.createDetail-brand', {
             //    url: '/create/brand',
             //    views: {
             //        'index.create': {
@@ -125,27 +126,44 @@ angular.module('cheping.new.detail', [
         _case.resetViewModel();
 
     })
-    .controller('CreateDetailCtrl', function($state, $stateParams, ChepingOrderService) {
-        var createDetailCtrl = this;
-        var newOrder = ChepingOrderService.getNewOrder();
+    .controller('NewBrandCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
+        var ctrl = this;
+        var newOrder = CaseCreateService.getNewCase();
 
-        newOrder.carType = $stateParams.carType;
+        ctrl.brands = [];
+        ctrl.selected = '';
 
-        createDetailCtrl.newOrder = newOrder;
-
-        createDetailCtrl.goBack = function(){
-            $state.go('cheping.index.create');
+        ctrl.loadBrands = function() {
+            CaseCreateService.getBrands()
+                .then(function(result) {
+                    ctrl.brands = result;
+                });
         };
 
-        createDetailCtrl.create = function(){
-            ChepingOrderService.createOrder();
-            $state.go('cheping.index.orders');
+        ctrl.select = function(item) {
+            ctrl.selected = item;
         };
 
-        createDetailCtrl.reset = function(){
-            ChepingOrderService.resetNewOrder();
-            $state.go('cheping.index.orders');
+        ctrl.selectConfirm = function() {
+            if(ctrl.selected) {
+                newOrder.brandName = ctrl.selected;
+                $state.go('cheping.new-detail', { carType: newOrder.caseType });
+            }
         };
+
+        ctrl.buttonEnable = function() {
+            return ctrl.selected;
+        };
+
+        ctrl.doRefresh = function() {
+            ctrl.loadBrands();
+
+            $timeout(function() {
+                $scope.$broadcast('scroll.refreshComplete');
+            }, 500);
+        };
+
+        ctrl.loadBrands();
 
     })
     .controller('CreateDetailBrandCtrl', function($state, ChepingOrderService) {

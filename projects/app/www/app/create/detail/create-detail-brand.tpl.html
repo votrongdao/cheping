@@ -1,0 +1,19 @@
+<ion-view view-title="品牌选择">
+  <ion-content>
+    <ion-refresher
+      pulling-icon="ion-arrow-down-c"
+      spinner="spiral"
+      on-refresh="ctrl.doRefresh()">
+    </ion-refresher>
+    <label class="item item-input">
+      <i class="icon ion-ios-locked placeholder-icon"></i>
+      <input type="text" name="selectBrand" ng-model="ctrl.selected" placeholder="车辆品牌" required minlength="1" maxlength="18">
+    </label>
+    <button ng-click="ctrl.selectConfirm()">确认</button>
+    <ion-radio ng-repeat="item in ctrl.brands"
+               ng-value="item"
+               name="brand"
+               ng-model="ctrl.selected"> {{ item }}
+    </ion-radio>
+  </ion-content>
+</ion-view>

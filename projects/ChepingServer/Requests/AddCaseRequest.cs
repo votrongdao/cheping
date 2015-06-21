@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  2:31 PM
+// Created          : 2015-06-20  12:13 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  6:21 PM
+// Last Modified On : 2015-06-22  12:33 AM
 // ***********************************************************************
 // <copyright file="AddCaseRequest.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.

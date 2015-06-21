@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  3:38 PM
+// Last Modified On : 2015-06-22  12:32 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -759,17 +759,20 @@ namespace ChepingServer.Services
             int purchaserId = @case.PurchaserId;
             using (ChePingContext db = new ChePingContext())
             {
-                Model model = await db.Models.FirstOrDefaultAsync(m => m.Id == info.ModelId);
+                Model model = await db.Models.FirstOrDefaultAsync(m => m.Brand == newInfo.BrandName &&
+                                                                       m.Series == newInfo.SeriesName && m.Modeling == newInfo.ModelName);
 
                 if (model == null)
                 {
-                    throw new ApplicationException("无法加载车型信息");
+                    newInfo.ModelId = -1;
                 }
-
-                newInfo.ModelId = model.Id;
-                newInfo.BrandName = model.Brand;
-                newInfo.SeriesName = model.Series;
-                newInfo.ModelName = model.Modeling;
+                else
+                {
+                    newInfo.ModelId = model.Id;
+                    newInfo.BrandName = model.Brand;
+                    newInfo.SeriesName = model.Series;
+                    newInfo.ModelName = model.Modeling;
+                }
 
                 await db.SaveAsync(newInfo);
 
@@ -870,6 +873,21 @@ namespace ChepingServer.Services
             int purchaserId = @case.PurchaserId;
             using (ChePingContext db = new ChePingContext())
             {
+                Model model = await db.Models.FirstOrDefaultAsync(m => m.Brand == newInfo.BrandName &&
+                                                                       m.Series == newInfo.SeriesName && m.Modeling == newInfo.ModelName);
+
+                if (model == null)
+                {
+                    newInfo.ModelId = -1;
+                }
+                else
+                {
+                    newInfo.ModelId = model.Id;
+                    newInfo.BrandName = model.Brand;
+                    newInfo.SeriesName = model.Series;
+                    newInfo.ModelName = model.Modeling;
+                }
+
                 await db.SaveAsync(newInfo);
 
                 await db.SaveAsync(newVehicleInspection);
