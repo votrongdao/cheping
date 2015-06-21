@@ -22,6 +22,8 @@ using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
 using Moe.AspNet.Filters;
+using System.Net.Http;
+using System.Net;
 
 namespace ChepingServer.Controllers
 {
@@ -38,12 +40,26 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(string))]
+        [HttpPost, Route("Create"), ResponseType(typeof(StringResponse))]
         public async Task<IHttpActionResult> Create()
         {
             var httpRequest = HttpContext.Current.Request;
 
             byte[] buff = null;
+
+            //Stream requestStream = await Request.Content.ReadAsStreamAsync();
+
+            if (!Request.Content.IsMimeMultipartContent())
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+
+            var provider = new MultipartMemoryStreamProvider();
+            await Request.Content.ReadAsMultipartAsync(provider);
+            foreach (var file in provider.Contents)
+            {
+                var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
+                var buffer = await file.ReadAsByteArrayAsync();
+                //Do whatever you want with filename and its binaray data.
+            }
 
             // Check if files are available
             if (httpRequest.Files.Count > 0 && httpRequest.Files[0].ContentLength > 0)
@@ -59,11 +75,11 @@ namespace ChepingServer.Controllers
 
             Photo photo = new Photo
             {
-                Content = buff, //decode byte stream before
+                Content = buff,
                 CaseId = 0
             };
 
-            return this.Ok(new { Result = (await this.photoService.Create(photo)) });
+            return this.Ok(new StringResponse { Result = (await this.photoService.Create(photo)) });
         }
 
         /// <summary>
