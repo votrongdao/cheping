@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ChepingServer.DTO;
+using ChepingServer.Filters;
 using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
@@ -49,7 +50,7 @@ namespace ChepingServer.Controllers
         ///     网点信息已经存在
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
+        [HttpPost, Route("Create"), CookieAuthorize, ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Create(OutletDto dto)
         {
             Outlet outlet = new Outlet
@@ -84,7 +85,7 @@ namespace ChepingServer.Controllers
         ///     无此网点，请确认网点id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("{id}/Disable"), ResponseType(typeof(OutletDto))]
+        [HttpPost, Route("{id}/Disable"), CookieAuthorize, ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Disable([FromUri] int id)
         {
             Outlet outlet = await this.outletService.Get(id, true);
@@ -109,7 +110,7 @@ namespace ChepingServer.Controllers
         ///     无此网点，请确认网点id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
+        [HttpPost, Route("{id}/Edit"), CookieAuthorize, ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Edit([FromUri] int id, OutletDto dto)
         {
             Outlet outlet = await this.outletService.Get(id);
@@ -135,7 +136,7 @@ namespace ChepingServer.Controllers
         ///     无此网点，请确认网点id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("{id}/Enable"), ResponseType(typeof(OutletDto))]
+        [HttpPost, Route("{id}/Enable"), CookieAuthorize, ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Enable([FromUri] int id)
         {
             Outlet outlet = await this.outletService.Get(id, true);
@@ -156,7 +157,7 @@ namespace ChepingServer.Controllers
         /// <param name="dto">The dto.</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpPost, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
+        [HttpPost, Route("Exist"), CookieAuthorize, ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
         public async Task<IHttpActionResult> Exist(OutletDto dto)
         {
             Outlet outlet = new Outlet
@@ -178,7 +179,7 @@ namespace ChepingServer.Controllers
         ///     无此网点，请确认网点id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpGet, Route("{id}"), ResponseType(typeof(OutletDto))]
+        [HttpGet, Route("{id}"), CookieAuthorize, ResponseType(typeof(OutletDto))]
         public async Task<IHttpActionResult> Get(int id, [FromUri] bool includeUnavailable = false)
         {
             Outlet outlet = await this.outletService.Get(id, includeUnavailable);
@@ -198,7 +199,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Outlets"), ResponseType(typeof(List<Outlet>))]
+        [HttpGet, Route("Outlets"), CookieAuthorize, ResponseType(typeof(List<Outlet>))]
         public async Task<IHttpActionResult> GetOutlets([FromUri] int cityId, [FromUri] bool includeUnavailable = false)
         {
             return this.Ok(await this.outletService.GetOutlets(cityId, includeUnavailable));
@@ -212,7 +213,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<OutletDto>))]
+        [HttpGet, Route("Paginated"), CookieAuthorize, ResponseType(typeof(PaginatedList<OutletDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] bool includeUnavailable = false)
         {
             PaginatedList<Outlet> outlets = await this.outletService.GetPaginated(pageIndex, pageSize, includeUnavailable);
@@ -225,7 +226,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Index"), ResponseType(typeof(List<OutletDto>))]
+        [HttpGet, Route("Index"), CookieAuthorize, ResponseType(typeof(List<OutletDto>))]
         public async Task<IHttpActionResult> Index([FromUri] bool includeUnavailable = false)
         {
             return this.Ok(await this.outletService.Index(includeUnavailable));

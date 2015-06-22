@@ -4,26 +4,23 @@
 // Created          : 2015-06-21  4:41 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  5:36 AM
+// Last Modified On : 2015-06-22  2:24 PM
 // ***********************************************************************
 // <copyright file="PhotoController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
 
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using System;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using ChepingServer.Filters;
 using ChepingServer.Models;
+using ChepingServer.Requests;
 using ChepingServer.Responses;
 using ChepingServer.Services;
+using Moe.AspNet.Filters;
 
 namespace ChepingServer.Controllers
 {
@@ -39,62 +36,19 @@ namespace ChepingServer.Controllers
         ///     Creates the specified dto.
         /// </summary>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("Create"), ResponseType(typeof(StringResponse))]
-        public async Task<IHttpActionResult> Create()
+        [HttpPost, Route("Create"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(IntResponse))]
+        public async Task<IHttpActionResult> Create(AddPhotoRequest request)
         {
-            var httpRequest = HttpContext.Current.Request;
-
-            byte[] buff = null;
-
-            //Stream requestStream = await Request.Content.ReadAsStreamAsync();
-
-            if (!this.Request.Content.IsMimeMultipartContent())
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-
-            var provider = new MultipartMemoryStreamProvider();
-            await this.Request.Content.ReadAsMultipartAsync(provider);
-            foreach (var file in from file in provider.Contents let filename = file.Headers.ContentDisposition.FileName.Trim('\"') select file)
-            {
-                var buffer = await file.ReadAsByteArrayAsync();
-            }
-
-            // Check if files are available
-            if (httpRequest.Files.Count > 0 && httpRequest.Files[0].ContentLength > 0)
-            {
-                HttpPostedFile postedFile = httpRequest.Files[0];
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    IFormatter iFormatter = new BinaryFormatter();
-                    iFormatter.Serialize(ms, postedFile);
-                    buff = ms.GetBuffer();
-                }
-            }
-
             Photo photo = new Photo
             {
-                Content = buff,
-                CaseId = 0
+                CaseId = request.CaseId,
+                Content = request.Content,
+                UploadTime = DateTime.UtcNow.AddHours(8)
             };
 
-            return this.Ok(new StringResponse { Result = (await this.photoService.Create(photo)) });
-        }
+            int id = await this.photoService.Create(photo);
 
-        /// <summary>
-        ///     Disables the specified identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("{id}/Delete"), ResponseType(typeof(BoolResponse))]
-        public async Task<IHttpActionResult> Delete([FromUri] int id)
-        {
-            Photo photo = await this.photoService.Get(id);
-
-            if (photo == null)
-            {
-                return this.BadRequest("无此图片，请确认图片id是否正确");
-            }
-
-            return this.Ok(new BoolResponse { Result = await this.photoService.Delete(id) });
+            return this.Ok(id);
         }
 
         /// <summary>
@@ -102,7 +56,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        [HttpPost, Route("{id}"), ResponseType(typeof(Photo))]
+        [HttpPost, Route("{id}"), CookieAuthorize, ResponseType(typeof(Photo))]
         public async Task<IHttpActionResult> Get([FromUri] int id)
         {
             Photo photo = await this.photoService.Get(id);

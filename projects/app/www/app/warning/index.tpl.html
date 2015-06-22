@@ -5,22 +5,21 @@
       spinner="spiral"
       on-refresh="cases.doRefresh()">
     </ion-refresher>
-    <ion-list show-delete="true">
+    <ion-list show-delete="false" can-swipe="true">
       <ion-item ng-repeat="case in cases.items" class="item-thumbnail-left item-icon-right" >
-        <img src="assets/img/car.png">
+        <img src="{{ case.photo }}">
 
         <p ng-bind="case.modelName"></p>
         <label>&nbsp;<span ng-bind="case.brandName"></span>&nbsp;</label>
         <label>&nbsp;<span ng-bind="case.seriesName"></span>&nbsp;</label>
-        <label>&nbsp;<span ng-bind="(case.outerColor | colorName)"></span>&nbsp;</label>
-        <label>&nbsp;<span ng-bind="(case.innerColor | colorName)"></span>&nbsp;</label>
+        <label>&nbsp;<span ng-bind="(case.outerColor | colorName) + '/' + (case.innerColor | colorName)"></span>&nbsp;</label>
         <div>
           <span class="price" ng-bind="'&yen' + case.purchasePrice"></span>
           <span ng-bind="(case.vehicleLocation | city)"></span>
           <span ng-bind="(case.state | state)" class="state"></span>
         </div>
 
-        <ion-delete-button class="ion-minus-circled"
+        <ion-delete-button class="button-assertive icon ion-trash-a"
                            ng-click="cases.comfirmWarning(case.id)">
         </ion-delete-button>
       </ion-item>

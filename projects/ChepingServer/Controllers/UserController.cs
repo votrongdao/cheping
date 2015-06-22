@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  12:47 AM
+// Last Modified On : 2015-06-22  2:28 PM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -94,7 +94,7 @@ namespace ChepingServer.Controllers
         ///     无此用户，请确认用户id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("{id}/Disable"), ResponseType(typeof(UserDto))]
+        [HttpPost, Route("{id}/Disable"), CookieAuthorize, ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Disable([FromUri] int id)
         {
             User user = await this.userService.Get(id, true);
@@ -154,7 +154,7 @@ namespace ChepingServer.Controllers
         ///     无此用户，请确认用户id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("{id}/Enable"), ResponseType(typeof(UserDto))]
+        [HttpPost, Route("{id}/Enable"), CookieAuthorize, ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Enable([FromUri] int id)
         {
             User user = await this.userService.Get(id, true);
@@ -179,7 +179,7 @@ namespace ChepingServer.Controllers
         ///     无此用户，请确认用户id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpGet, Route("{id}"), ResponseType(typeof(UserDto))]
+        [HttpGet, Route("{id}"), CookieAuthorize, ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Get(int id, [FromUri] bool includeUnavailable = false)
         {
             User user = await this.userService.Get(id, includeUnavailable);
@@ -219,7 +219,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">是否包含已经禁用的用户</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("{cellphone}/Cellphone"), ResponseType(typeof(List<UserDto>))]
+        [HttpGet, Route("{cellphone}/Cellphone"), CookieAuthorize, ResponseType(typeof(List<UserDto>))]
         public async Task<IHttpActionResult> GetByCellphone(string cellphone, [FromUri] bool includeUnavailable = false)
         {
             List<User> users = await this.userService.GetByCellphone(cellphone, includeUnavailable);
@@ -235,7 +235,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<UserDto>))]
+        [HttpGet, Route("Paginated"), CookieAuthorize, ResponseType(typeof(PaginatedList<UserDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] bool includeUnavailable = false)
         {
             PaginatedList<User> users = await this.userService.GetPaginated(pageIndex, pageSize, includeUnavailable);
@@ -249,7 +249,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Index"), ResponseType(typeof(List<UserDto>))]
+        [HttpGet, Route("Index"), CookieAuthorize, ResponseType(typeof(List<UserDto>))]
         public async Task<IHttpActionResult> Index([FromUri] bool includeUnavailable = false)
         {
             return this.Ok(await this.userService.Index(includeUnavailable));
@@ -289,7 +289,7 @@ namespace ChepingServer.Controllers
         ///     无此用户，请确认用户id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpGet, Route("{id}/ResetPassword"), ResponseType(typeof(UserDto))]
+        [HttpGet, Route("{id}/ResetPassword"), CookieAuthorize, ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> ResetPassword(int id, [FromUri] bool includeUnavailable = false)
         {
             User user = await this.userService.Get(id, includeUnavailable);

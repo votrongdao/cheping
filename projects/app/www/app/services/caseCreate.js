@@ -6,9 +6,24 @@ angular.module('cheping.services.caseCreate', [])
 
         service.resetNewCase = function(carType) {
             newCase = {};
+            newCase.photos = [];
             newCase.caseType = carType;
             newCase.modifiedContent = '无';
             return newCase;
+        };
+
+        service.addPhoto = function(content) {
+            if(newCase.photos.length <= 10) {
+                return $http.post(URLS.CASE.ADDPHOTO, {
+                    caseId: 0,
+                    content: content
+                }).then(function(result) {
+                    newCase.photos.push({
+                        id: result.data.result,
+                        content : content
+                    });
+                });
+            }
         };
 
         service.getNewCase = function() {
@@ -16,6 +31,14 @@ angular.module('cheping.services.caseCreate', [])
         };
 
         service.createCase = function() {
+            newCase.photoIds = [];
+
+            _.forEach(newCase.photos, function(p) {
+                newCase.photoIds.push(p.id);
+            });
+
+            newCase.photoIds = [];
+
             return $http.post(URLS.CASE.ADDCASE, newCase)
                 .then(function(result) {
                     return result.data;

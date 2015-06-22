@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  5:36 AM
+// Last Modified On : 2015-06-22  3:41 PM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -72,8 +72,9 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="case">The case.</param>
         /// <param name="info">The information.</param>
+        /// <param name="photos">The photos.</param>
         /// <returns>Task&lt;CaseDto&gt;.</returns>
-        public async Task<Case> AddCaseAsync(Case @case, VehicleInfo info)
+        public async Task<Case> AddCaseAsync(Case @case, VehicleInfo info, IEnumerable<int> photos)
         {
             using (ChePingContext db = new ChePingContext())
             {
@@ -95,10 +96,10 @@ namespace ChepingServer.Services
 
             if (info.ModelId == -1)
             {
-                return await this.AddSpecialCaseAsync(@case, info);
+                return await this.AddSpecialCaseAsync(@case, info, photos);
             }
 
-            return await this.AddGeneralCaseAsync(@case, info);
+            return await this.AddGeneralCaseAsync(@case, info, photos);
         }
 
         /// <summary>
@@ -441,6 +442,91 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
+        ///     Gets the photos.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;Dictionary&lt;System.Int32, VehicleInfo&gt;&gt;.</returns>
+        public async Task<int> GetPhoto(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                var ids = await db.Photos.Where(p => p.CaseId == caseId).OrderBy(p => p.Id).Select(p => p.Id).ToListAsync();
+                return ids.Count == 0 ? 0 : ids.OrderBy(i => i).First();
+            }
+        }
+
+        /// <summary>
+        ///     Gets the content of the photo.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>List&lt;System.Int32&gt;.</returns>
+        public string GetPhotoContent(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                var photo = db.Photos.FirstOrDefault(p => p.CaseId == caseId);
+
+                return photo == null ? "assets/img/car.png" : photo.Content;
+            }
+        }
+
+        /// <summary>
+        /// Gets the photo contents.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>System.String.</returns>
+        public List<string> GetPhotoContents(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                return db.Photos.Where(p => p.CaseId == caseId).Select(p => p.Content).ToList();
+            }
+        }
+
+        /// <summary>
+        ///     Gets the photos.
+        /// </summary>
+        /// <param name="ids">The ids.</param>
+        /// <returns>Task&lt;Dictionary&lt;System.Int32, VehicleInfo&gt;&gt;.</returns>
+        public async Task<Dictionary<int, List<int>>> GetPhotos(List<int> ids)
+        {
+            Dictionary<int, List<int>> photos = new Dictionary<int, List<int>>();
+
+            using (ChePingContext db = new ChePingContext())
+            {
+                List<Photo> photoIds = await db.Photos.Where(p => ids.Contains(p.CaseId)).ToListAsync();
+
+                foreach (Photo photo in photoIds)
+                {
+                    if (photos.ContainsKey(photo.CaseId))
+                    {
+                        photos[photo.CaseId].Add(photo.Id);
+                    }
+                    else
+                    {
+                        List<int> i = new List<int> { photo.Id };
+                        photos.Add(photo.CaseId, i);
+                    }
+                }
+            }
+
+            return photos;
+        }
+
+        /// <summary>
+        ///     Gets the photos.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;Dictionary&lt;System.Int32, VehicleInfo&gt;&gt;.</returns>
+        public List<int> GetPhotos(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                return db.Photos.Where(p => p.CaseId == caseId).Select(p => p.Id).ToList();
+            }
+        }
+
+        /// <summary>
         ///     get todos as an asynchronous operation.
         /// </summary>
         /// <param name="user">The user.</param>
@@ -722,7 +808,15 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="case">The case.</param>
         /// <param name="info">The information.</param>
+        /// <param name="photos">The photos.</param>
         /// <returns>System.Threading.Tasks.Task&lt;ChepingServer.Models.Case&gt;.</returns>
+        /// <exception cref="ApplicationException">
+        ///     无法加载用户信息
+        ///     or
+        ///     无在岗评估师，事项添加失败
+        ///     or
+        ///     评估师分配错误，事项添加失败
+        /// </exception>
         /// <exception cref="System.ApplicationException">
         ///     无法加载车型信息
         ///     or
@@ -732,7 +826,7 @@ namespace ChepingServer.Services
         ///     or
         ///     评估师分配错误，事项添加失败
         /// </exception>
-        private async Task<Case> AddGeneralCaseAsync(Case @case, VehicleInfo info)
+        private async Task<Case> AddGeneralCaseAsync(Case @case, VehicleInfo info, IEnumerable<int> photos)
         {
             Case newCase = new Case
             {
@@ -820,6 +914,14 @@ namespace ChepingServer.Services
                 newCase.VehicleInspecId = newVehicleInspection.Id;
 
                 await db.SaveAsync(newCase);
+
+                foreach (int photo in photos)
+                {
+                    Photo photoModel = await db.Photos.FirstOrDefaultAsync(p => p.Id == photo);
+                    photoModel.CaseId = newCase.Id;
+                }
+
+                await db.ExecuteSaveChangesAsync();
             }
 
             return newCase;
@@ -830,9 +932,11 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="case">The case.</param>
         /// <param name="info">The information.</param>
+        /// <param name="photos">The photos.</param>
         /// <returns>Task&lt;CaseDto&gt;.</returns>
+        /// <exception cref="ApplicationException">无法加载用户信息</exception>
         /// <exception cref="System.ApplicationException">无法加载用户信息</exception>
-        private async Task<Case> AddSpecialCaseAsync(Case @case, VehicleInfo info)
+        private async Task<Case> AddSpecialCaseAsync(Case @case, VehicleInfo info, IEnumerable<int> photos)
         {
             Case newCase = new Case
             {
@@ -898,7 +1002,15 @@ namespace ChepingServer.Services
                 newCase.VehicleInfoId = newInfo.Id;
                 newCase.VehicleInspecId = newVehicleInspection.Id;
 
-                await db.SaveAsync(@case);
+                await db.SaveAsync(newCase);
+
+                foreach (int photo in photos)
+                {
+                    Photo photoModel = await db.Photos.FirstOrDefaultAsync(p => p.Id == photo);
+                    photoModel.CaseId = newCase.Id;
+                }
+
+                await db.ExecuteSaveChangesAsync();
             }
 
             return newCase;

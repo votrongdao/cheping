@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  6:08 PM
+// Last Modified On : 2015-06-22  2:28 PM
 // ***********************************************************************
 // <copyright file="ModelController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ChepingServer.DTO;
+using ChepingServer.Filters;
 using ChepingServer.Models;
 using ChepingServer.Responses;
 using ChepingServer.Services;
@@ -41,7 +42,7 @@ namespace ChepingServer.Controllers
         ///     车型信息已经存在
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(ModelDto))]
+        [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), CookieAuthorize, ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Create(ModelDto dto)
         {
             Model model = new Model
@@ -71,7 +72,7 @@ namespace ChepingServer.Controllers
         ///     无此车型，请确认车型id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("{id}/Disable"), ResponseType(typeof(ModelDto))]
+        [HttpPost, Route("{id}/Disable"), CookieAuthorize, ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Disable([FromUri] int id)
         {
             Model model = await this.modelService.Get(id, true);
@@ -98,7 +99,7 @@ namespace ChepingServer.Controllers
         ///     车型信息已经存在
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("{id}/Edit"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(ModelDto))]
+        [HttpPost, Route("{id}/Edit"), CookieAuthorize, ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Edit([FromUri] int id, ModelDto dto)
         {
             Model model = await this.modelService.Get(id, true);
@@ -130,7 +131,7 @@ namespace ChepingServer.Controllers
         ///     无此车型，请确认车型id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpPost, Route("{id}/Enable"), ResponseType(typeof(ModelDto))]
+        [HttpPost, Route("{id}/Enable"), CookieAuthorize, ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Enable([FromUri] int id)
         {
             Model model = await this.modelService.Get(id, true);
@@ -151,7 +152,7 @@ namespace ChepingServer.Controllers
         /// <param name="dto">The dto.</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpPost, Route("Exist"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
+        [HttpPost, Route("Exist"), CookieAuthorize, ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(BoolResponse))]
         public async Task<IHttpActionResult> Exist(ModelDto dto)
         {
             Model model = new Model
@@ -175,7 +176,7 @@ namespace ChepingServer.Controllers
         ///     无此车型，请确认车型id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpGet, Route("{id}"), ResponseType(typeof(ModelDto))]
+        [HttpGet, Route("{id}"), CookieAuthorize, ResponseType(typeof(ModelDto))]
         public async Task<IHttpActionResult> Get([FromUri] int id, [FromUri] bool includeUnavailable = false)
         {
             Model model = await this.modelService.Get(id, includeUnavailable);
@@ -194,7 +195,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Brands"), ResponseType(typeof(List<string>))]
+        [HttpGet, Route("Brands"), CookieAuthorize, ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetBrands([FromUri] bool includeUnavailable = false)
         {
             return this.Ok(await this.modelService.GetBrands(includeUnavailable));
@@ -208,7 +209,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Modelings"), ResponseType(typeof(List<string>))]
+        [HttpGet, Route("Modelings"), CookieAuthorize, ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetModelings([FromUri] string brand, [FromUri] string series, [FromUri] bool includeUnavailable = false)
         {
             return this.Ok(await this.modelService.GetModelings(brand, series, includeUnavailable));
@@ -222,7 +223,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<ModelDto>))]
+        [HttpGet, Route("Paginated"), CookieAuthorize, ResponseType(typeof(PaginatedList<ModelDto>))]
         public async Task<IHttpActionResult> GetPaginated(int pageIndex, int pageSize, [FromUri] bool includeUnavailable = false)
         {
             PaginatedList<Model> models = await this.modelService.GetPaginated(pageIndex, pageSize, includeUnavailable);
@@ -237,7 +238,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Series"), ResponseType(typeof(List<string>))]
+        [HttpGet, Route("Series"), CookieAuthorize, ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetSeries([FromUri] string brand, [FromUri] bool includeUnavailable = false)
         {
             return this.Ok(await this.modelService.GetSeries(brand, includeUnavailable));
@@ -249,7 +250,7 @@ namespace ChepingServer.Controllers
         /// <param name="includeUnavailable">if set to <c>true</c> [include unavailable].</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Index"), ResponseType(typeof(List<ModelDto>))]
+        [HttpGet, Route("Index"), CookieAuthorize, ResponseType(typeof(List<ModelDto>))]
         public async Task<IHttpActionResult> Index([FromUri] bool includeUnavailable = false)
         {
             return this.Ok(await this.modelService.Index(includeUnavailable));

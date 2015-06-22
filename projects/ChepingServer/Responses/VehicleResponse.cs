@@ -12,6 +12,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ChepingServer.Enum;
 using Moe.AspNet.Validations;
@@ -143,6 +144,24 @@ namespace ChepingServer.Responses
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("outletId")]
         public int OutletId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the photo.
+        /// </summary>
+        [Required, JsonProperty("photo")]
+        public string Photo { get; set; }
+
+        /// <summary>
+        /// 车辆照片
+        /// </summary>
+        [Required, JsonProperty("photoContents")]
+        public List<string> PhotoContents { get; set; }
+
+        /// <summary>
+        /// 车辆照片
+        /// </summary>
+        [Required, JsonProperty("photos")]
+        public List<int> Photos { get; set; }
 
         /// <summary>
         ///     采购价格

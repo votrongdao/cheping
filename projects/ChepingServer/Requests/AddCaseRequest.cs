@@ -12,6 +12,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ChepingServer.Enum;
 using Moe.AspNet.Validations;
@@ -96,6 +97,12 @@ namespace ChepingServer.Requests
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("outerColor")]
         public int OuterColor { get; set; }
+
+        /// <summary>
+        ///     照片id
+        /// </summary>
+        [Required, JsonProperty("photoIds")]
+        public List<int> PhotoIds { get; set; }
 
         /// <summary>
         ///     车系名称
