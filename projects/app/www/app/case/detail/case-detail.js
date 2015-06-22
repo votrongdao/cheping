@@ -42,5 +42,18 @@ angular.module('cheping.case.detail', [
                 })
         };
 
+        _case.enableTranscations = function() {
+            return _case.state >= 50 && _case.modelId > 0;
+        };
+
+        _case.goTranscations = function() {
+            $state.go('cheping.daiban-transcation-record', {
+                caseId: _case.id,
+                brand: _case.brandName,
+                series: _case.seriesName,
+                model: _case.modelName
+            });
+        };
+
         _case.getCase();
     });

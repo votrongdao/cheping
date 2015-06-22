@@ -70,6 +70,14 @@
         <span ng-bind="_case.modifiedContent" class="pull-right"></span>
       </ion-item>
     </ion-list>
+
+    <ion-list>
+      <ion-item type="item-text-wrap" ng-if="_case.enableTranscations()" ng-click="_case.goTranscations()">
+        <span class="pull-left">外源数据：</span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+
     <ion-list>
       <ion-item class="item-divider">
         <span>车辆图片：</span>

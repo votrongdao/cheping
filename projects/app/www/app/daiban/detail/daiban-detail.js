@@ -55,40 +55,40 @@ angular.module('cheping.daiban.detail', [
             return UserService.getUserInfo()
                 .then(function(result) {
                     if (result.jobTitle === 40) {
-                        if(_case.state === 20) {
+                        if (_case.state === 20) {
                             _case.rejectButtonText = '审核不通过';
                             _case.confirmButtonText = '同意验车';
-                        }else if (_case.state === 50) {
+                        } else if (_case.state === 50) {
                             _case.rejectButtonText = '放弃报价';
                             _case.confirmButtonText = '报价';
-                        }else if(_case.state === 70) {
+                        } else if (_case.state === 70) {
                             _case.rejectButtonText = '放弃申请';
                             _case.confirmButtonText = '申请打款';
-                        }else {
+                        } else {
                             _case.rejectButtonText = '失败';
                             _case.confirmButtonText = '成功';
                         }
 
                     } else if (result.jobTitle === 10) {
-                        if(_case.state === 30) {
+                        if (_case.state === 30) {
                             _case.rejectButtonText = '验车失败';
                             _case.confirmButtonText = '验车成功';
-                        }else if (_case.state === 60) {
+                        } else if (_case.state === 60) {
                             _case.rejectButtonText = '洽谈失败';
                             _case.confirmButtonText = '洽谈成功';
-                        }else if(_case.state === 90) {
+                        } else if (_case.state === 90) {
                             _case.rejectButtonText = '入库失败';
                             _case.confirmButtonText = '入库';
-                        }else {
+                        } else {
                             _case.rejectButtonText = '失败';
                             _case.confirmButtonText = '成功';
                         }
 
                     } else if (result.jobTitle === 50) {
-                        if(_case.state === 80) {
+                        if (_case.state === 80) {
                             _case.rejectButtonText = '放弃收购';
                             _case.confirmButtonText = '打款';
-                        }else {
+                        } else {
                             _case.rejectButtonText = '失败';
                             _case.confirmButtonText = '成功';
                         }
@@ -104,12 +104,25 @@ angular.module('cheping.daiban.detail', [
                 });
         };
 
-        _case.showRejectButton = function(){
+        _case.enableTranscations = function() {
+            return _case.state >= 50 && _case.modelId > 0;
+        };
+
+        _case.goTranscations = function() {
+            $state.go('cheping.daiban-transcation-record', {
+                caseId: _case.id,
+                brand: _case.brandName,
+                series: _case.seriesName,
+                model: _case.modelName
+            });
+        };
+
+        _case.showRejectButton = function() {
             var state = [20, 30, 50, 60, 70, 80, 90];
             return state.indexOf(_case.state) !== -1;
         };
 
-        _case.showConfirmButton = function(){
+        _case.showConfirmButton = function() {
             var state = [20, 30, 50, 60, 70, 80];
             return state.indexOf(_case.state) !== -1;
         };
@@ -138,7 +151,7 @@ angular.module('cheping.daiban.detail', [
             });
 
             popup.then(function(res) {
-                if(res) {
+                if (res) {
                     CaseService.reject($stateParams.caseId, res)
                         .then(function(result) {
                             $ionicHistory.nextViewOptions({
@@ -153,42 +166,42 @@ angular.module('cheping.daiban.detail', [
         };
 
         _case.confirm = function() {
-            if(_case.state === 20) {
+            if (_case.state === 20) {
                 $state.go('cheping.daiban-detail-shenhe', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
-            }else if (_case.state === 30) {
+            } else if (_case.state === 30) {
                 $state.go('cheping.daiban-detail-yanche', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
-            }else if (_case.state === 50) {
+            } else if (_case.state === 50) {
                 $state.go('cheping.daiban-detail-baojia', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
-            }else if (_case.state === 60) {
+            } else if (_case.state === 60) {
                 $state.go('cheping.daiban-detail-qiatan', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
-            }else if (_case.state === 70) {
+            } else if (_case.state === 70) {
                 $state.go('cheping.daiban-detail-shenqingdakuan', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
-            }else if (_case.state === 80) {
+            } else if (_case.state === 80) {
                 $state.go('cheping.daiban-detail-dakuanshenhe', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
-            }else if(_case.state === 90) {
+            } else if (_case.state === 90) {
                 $state.go('cheping.daiban-detail-caigou', {
                     caseId: $stateParams.caseId,
                     caseNo: $stateParams.caseNo
                 });
-            }else {
+            } else {
                 UtilityService.showAlert('请先登录');
                 $timeout(function() {
                     $state.go('cheping.user-login');

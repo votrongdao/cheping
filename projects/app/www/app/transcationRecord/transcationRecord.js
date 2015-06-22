@@ -14,6 +14,18 @@ angular.module('cheping.transcations', [
                 }
             })
     })
+    .config(function($stateProvider) {
+        $stateProvider
+            .state('cheping.case-transcation-record', {
+                url: '/case/transcation-record/{caseId}/{brand}/{series}/{model}',
+                views: {
+                    'case': {
+                        controller: 'TranscationRecordsCtrl as _case',
+                        templateUrl: 'app/transcationRecord/index.tpl.html'
+                    }
+                }
+            })
+    })
     .controller('TranscationRecordsCtrl', function($scope, $state, $stateParams, $timeout, UserService, CaseService, UtilityService) {
         var _case = this;
         UserService.getUserInfo();

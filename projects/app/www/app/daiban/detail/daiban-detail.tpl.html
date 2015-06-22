@@ -72,7 +72,7 @@
     </ion-list>
 
     <ion-list>
-      <ion-item type="item-text-wrap" ui-sref="cheping.new-license-location">
+      <ion-item type="item-text-wrap" ng-if="_case.enableTranscations()" ng-click="_case.goTranscations()">
         <span class="pull-left">外源数据：</span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
