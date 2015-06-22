@@ -69,7 +69,7 @@ angular.module('cheping.services', [
             }, {
                 colorId: 3,
                 colorName: '白色',
-                colorCode: '#c0c0c0'
+                colorCode: '#ffffff'
             }, {
                 colorId: 4,
                 colorName: '象牙白色',

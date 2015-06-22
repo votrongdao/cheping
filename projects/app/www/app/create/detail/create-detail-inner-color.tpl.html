@@ -8,7 +8,7 @@
     <ion-radio ng-repeat="item in ctrl.items"
                ng-value="item.colorId"
                name="innerColor"
-               ng-model="ctrl.selected"><span style="width: 30px; height: 30px; background-color: silver;border-color: #e6e6e6; display: inline-block; margin-right: 25px; vertical-align: middle;"></span> {{ item.colorName }}
+               ng-model="ctrl.selected"><span style="width: 30px; height: 30px; background-color: silver;border: 1px solid #6E6E6E;display: inline-block; margin-right: 25px; vertical-align: middle;" ng-style="{ 'background-color': item.colorCode }"></span> {{ item.colorName }}
     </ion-radio>
   </ion-content>
 </ion-view>
