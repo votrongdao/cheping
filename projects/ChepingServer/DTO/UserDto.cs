@@ -41,7 +41,31 @@ namespace ChepingServer.DTO
                 UserName = user.UserName,
                 ValuerGroup = user.ValuerGroup,
                 Available = user.Available,
-                HangOn = user.HangOn
+                HangOn = user.HangOn,
+                OutletName = ""
+            };
+        }
+
+        /// <summary>
+        /// To the dto.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="outletName">Name of the outlet.</param>
+        /// <returns>UserDto.</returns>
+        public static UserDto ToDto(this User user, string outletName)
+        {
+            return new UserDto
+            {
+                Cellphone = user.Cellphone,
+                Id = user.Id,
+                JobTitle = user.JobTitle,
+                OutletId = user.OutletId,
+                UserCode = user.UserCode,
+                UserName = user.UserName,
+                ValuerGroup = user.ValuerGroup,
+                Available = user.Available,
+                HangOn = user.HangOn,
+                OutletName = outletName
             };
         }
     }
@@ -86,6 +110,12 @@ namespace ChepingServer.DTO
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("outletId")]
         public int OutletId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the outlet.
+        /// </summary>
+        /// <value>The name of the outlet.</value>
+        public string OutletName { get; set; }
 
         /// <summary>
         ///     用户代码

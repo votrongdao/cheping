@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  2:28 PM
+// Last Modified On : 2015-06-22  9:27 PM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -13,6 +13,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -209,7 +210,14 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("无此用户，请确认用户id是否正确");
             }
 
-            return this.Ok(user.ToDto());
+            string outletName;
+            using (ChePingContext db = new ChePingContext())
+            {
+                Outlet outlet = await db.Outlets.FirstOrDefaultAsync(o => o.Id == user.OutletId);
+                outletName = outlet.OutletName;
+            }
+
+            return this.Ok(user.ToDto(outletName));
         }
 
         /// <summary>
