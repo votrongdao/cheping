@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-21  4:41 PM
+// Created          : 2015-06-22  3:51 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  2:24 PM
+// Last Modified On : 2015-06-22  3:52 PM
 // ***********************************************************************
 // <copyright file="PhotoController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
