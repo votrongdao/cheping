@@ -7,7 +7,7 @@
     </ion-refresher>
     <ion-list show-delete="false" can-swipe="true">
       <ion-item ng-repeat="case in cases.items" class="item-thumbnail-left item-icon-right" >
-        <img src="{{ case.photo }}">
+        <img ng-src="{{ case.photo }}">
 
         <p ng-bind="case.modelName"></p>
         <label>&nbsp;<span ng-bind="case.brandName"></span>&nbsp;</label>
