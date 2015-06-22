@@ -26,11 +26,11 @@
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>外部颜色：</span>
-        <span ng-bind="_case.outerColor" class="pull-right"></span>
+        <span ng-bind="(_case.outerColor | colorName)" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>内饰颜色：</span>
-        <span ng-bind="_case.innerColor" class="pull-right"></span>
+        <span ng-bind="(_case.innerColor | colorName)" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>上牌时间：</span>
