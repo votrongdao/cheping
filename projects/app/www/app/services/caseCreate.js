@@ -37,7 +37,7 @@ angular.module('cheping.services.caseCreate', [])
                 newCase.photoIds.push(p.id);
             });
 
-            newCase.photoIds = [];
+            newCase.photos = [];
 
             return $http.post(URLS.CASE.ADDCASE, newCase)
                 .then(function(result) {

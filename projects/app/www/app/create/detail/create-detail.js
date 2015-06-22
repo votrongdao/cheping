@@ -190,8 +190,8 @@ angular.module('cheping.new.detail', [
                 sourceType: Camera.PictureSourceType.CAMERA,
                 allowEdit: false,
                 encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 200,
-                targetHeight: 200,
+                targetWidth: 400,
+                targetHeight: 600,
                 saveToPhotoAlbum: false
             };
 
@@ -201,7 +201,7 @@ angular.module('cheping.new.detail', [
                         _case.photos = newCase.photos;
                     });
             }, function(err) {
-                UtilityService.showAlert('照片添加失败，请重试添加')
+                UtilityService.showAlert('照片添加失败，失败原因' + err)
             });
 
         };
