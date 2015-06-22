@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  3:53 AM
+// Last Modified On : 2015-06-22  3:52 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -133,7 +133,7 @@ namespace ChepingServer.Controllers
                 VehicleLocation = request.VehicleLocation
             };
 
-            @case = await this.caseService.AddCaseAsync(@case, info);
+            @case = await this.caseService.AddCaseAsync(@case, info, request.PhotoIds);
 
             return this.Ok(@case.ToDto());
         }
@@ -370,7 +370,7 @@ namespace ChepingServer.Controllers
         ///     无此订单，请确认订单id是否正确
         /// </response>
         /// <response code="500"></response>
-        [HttpGet, Route("{id}"), ResponseType(typeof(CaseDto))]
+        [HttpGet, Route("{id}"), CookieAuthorize, ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> Get([FromUri] int id)
         {
             Case @case = await this.caseService.GetAsync(id);
@@ -412,6 +412,9 @@ namespace ChepingServer.Controllers
             {
                 VehicleResponse response = new VehicleResponse();
                 var info = vehicleInfos[c.VehicleInfoId];
+                List<int> photoIds = this.caseService.GetPhotos(c.Id);
+                string cp = this.caseService.GetPhotoContent(c.Id);
+                response.Photo = cp;
                 response.State = c.State;
                 response.Abandon = c.Abandon;
                 response.AbandonReason = c.AbandonReason;
@@ -442,6 +445,7 @@ namespace ChepingServer.Controllers
                 response.VehicleInfoId = c.VehicleInfoId;
                 response.VehicleInspecId = c.VehicleInspecId;
                 response.VehicleLocation = info.VehicleLocation;
+                response.Photos = photoIds;
                 return response;
             });
 
@@ -455,7 +459,7 @@ namespace ChepingServer.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Paginated"), ResponseType(typeof(PaginatedList<CaseDto>))]
+        [HttpGet, Route("Paginated"), CookieAuthorize, ResponseType(typeof(PaginatedList<CaseDto>))]
         public async Task<IHttpActionResult> GetPaginated([FromUri] int pageIndex, [FromUri] int pageSize)
         {
             PaginatedList<Case> cases = await this.caseService.GetPaginatedAsync(pageIndex, pageSize);
@@ -488,6 +492,9 @@ namespace ChepingServer.Controllers
             {
                 VehicleResponse response = new VehicleResponse();
                 var info = vehicleInfos[c.VehicleInfoId];
+                List<int> photoIds = this.caseService.GetPhotos(c.Id);
+                string cp = this.caseService.GetPhotoContent(c.Id);
+                response.Photo = cp;
                 response.State = c.State;
                 response.Abandon = c.Abandon;
                 response.AbandonReason = c.AbandonReason;
@@ -518,6 +525,7 @@ namespace ChepingServer.Controllers
                 response.VehicleInfoId = c.VehicleInfoId;
                 response.VehicleInspecId = c.VehicleInspecId;
                 response.VehicleLocation = info.VehicleLocation;
+                response.Photos = photoIds;
                 return response;
             }).ToList();
 
@@ -532,7 +540,7 @@ namespace ChepingServer.Controllers
         ///     无法加载用户信息
         /// </response>
         /// <response code="500"></response>
-        [HttpGet, Route("Warnings"), ResponseType(typeof(List<VehicleResponse>))]
+        [HttpGet, Route("Warnings"), CookieAuthorize, ResponseType(typeof(List<VehicleResponse>))]
         public async Task<IHttpActionResult> GetWarnings()
         {
             User user = await this.userService.Get(this.CurrentUser.Id);
@@ -549,6 +557,9 @@ namespace ChepingServer.Controllers
             {
                 VehicleResponse response = new VehicleResponse();
                 var info = vehicleInfos[c.VehicleInfoId];
+                List<int> photoIds = this.caseService.GetPhotos(c.Id);
+                string cp = this.caseService.GetPhotoContent(c.Id);
+                response.Photo = cp;
                 response.State = c.State;
                 response.Abandon = c.Abandon;
                 response.AbandonReason = c.AbandonReason;
@@ -579,6 +590,7 @@ namespace ChepingServer.Controllers
                 response.VehicleInfoId = c.VehicleInfoId;
                 response.VehicleInspecId = c.VehicleInspecId;
                 response.VehicleLocation = info.VehicleLocation;
+                response.Photos = photoIds;
                 return response;
             }).ToList();
 
@@ -590,7 +602,7 @@ namespace ChepingServer.Controllers
         /// </summary>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("Index"), ResponseType(typeof(List<CaseDto>))]
+        [HttpGet, Route("Index"), CookieAuthorize, ResponseType(typeof(List<CaseDto>))]
         public async Task<IHttpActionResult> Index()
         {
             return this.Ok(await this.caseService.IndexAsync());
@@ -805,10 +817,13 @@ namespace ChepingServer.Controllers
         /// <param name="caseId">The case identifier.</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("VehicleInfo"), ResponseType(typeof(VehicleResponse))]
+        [HttpGet, Route("VehicleInfo"), CookieAuthorize, ResponseType(typeof(VehicleResponse))]
         public async Task<IHttpActionResult> VehicleInfo(int caseId)
         {
             var result = await this.caseService.GetCaseWithVehicleInfoAsync(caseId);
+
+            var photoId = this.caseService.GetPhotos(caseId);
+            var pc = this.caseService.GetPhotoContent(caseId);
 
             VehicleResponse response = new VehicleResponse();
             var c = result.Item1;
@@ -843,7 +858,9 @@ namespace ChepingServer.Controllers
             response.VehicleInfoId = c.VehicleInfoId;
             response.VehicleInspecId = c.VehicleInspecId;
             response.VehicleLocation = info.VehicleLocation;
-
+            response.Photos = photoId;
+            response.Photo = pc;
+            response.PhotoContents = this.caseService.GetPhotoContents(caseId);
             return this.Ok(response);
         }
 
@@ -853,7 +870,7 @@ namespace ChepingServer.Controllers
         /// <param name="caseId">The case identifier.</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("VehicleInspection"), ResponseType(typeof(VehicleInspection))]
+        [HttpGet, Route("VehicleInspection"), CookieAuthorize, ResponseType(typeof(VehicleInspection))]
         public async Task<IHttpActionResult> VehicleInspection(int caseId)
         {
             return this.Ok(await this.caseService.GetVehicleInspectionAsync(caseId));

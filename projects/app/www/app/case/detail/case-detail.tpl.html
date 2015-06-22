@@ -70,6 +70,10 @@
         <span ng-bind="_case.modifiedContent" class="pull-right"></span>
       </ion-item>
     </ion-list>
-    <div>照片们</div>
+    <ion-list>
+      <ion-item ng-repeat="p in _case.photoContents" class="item-thumbnail-left">
+        <img src="{{ p }}">
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

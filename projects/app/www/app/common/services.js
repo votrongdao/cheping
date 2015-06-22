@@ -771,9 +771,9 @@ angular.module('cheping.services', [
                 template: text
             });
 
-            $timeout(function() {
-                alertPopup.close();
-            }, 2000);
+            //$timeout(function() {
+            //    alertPopup.close();
+            //}, 2000);
         }
 
         service.isUrl = isUrl;

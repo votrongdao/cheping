@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-20  1:32 PM
+// Created          : 2015-06-22  2:23 PM
 //
 // Last Modified By : Siqi Lu
 // Last Modified On : 2015-06-22  2:23 PM
 // ***********************************************************************
-// <copyright file="StringResponse.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
+// <copyright file="IntResponse.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
@@ -17,14 +17,14 @@ using Newtonsoft.Json;
 namespace ChepingServer.Responses
 {
     /// <summary>
-    ///     StringResponse.
+    ///     IntResponse.
     /// </summary>
-    public class StringResponse
+    public class IntResponse
     {
         /// <summary>
-        ///     string 值
+        ///     int 值
         /// </summary>
         [Required, JsonProperty("result")]
-        public string Result { get; set; }
+        public bool Result { get; set; }
     }
 }

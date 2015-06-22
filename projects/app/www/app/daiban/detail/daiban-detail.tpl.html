@@ -70,7 +70,12 @@
         <span ng-bind="_case.modifiedContent" class="pull-right"></span>
       </ion-item>
     </ion-list>
-    <div>照片们</div>
+
+    <ion-list>
+      <ion-item ng-repeat="p in _case.photoContents" class="item-thumbnail-left">
+        <img src="{{ p }}">
+      </ion-item>
+    </ion-list>
 
     <button ng-bind="_case.rejectButtonText" ng-click="_case.reject()" ng-if="_case.showRejectButton()" class="button button-block button-cp-green"></button>
     <button ng-bind="_case.confirmButtonText" ng-click="_case.confirm()" ng-if="_case.showConfirmButton()" class="button button-block button-cp-dark"></button>

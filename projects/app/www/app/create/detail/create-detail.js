@@ -1,5 +1,6 @@
 angular.module('cheping.new.detail', [
-    'cheping.services.caseCreate'
+    'cheping.services.caseCreate',
+    'ngCordova'
 ])
     .config(function($stateProvider) {
         $stateProvider
@@ -130,7 +131,7 @@ angular.module('cheping.new.detail', [
                 }
             });
     })
-    .controller('NewCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService, UtilityService) {
+    .controller('NewCtrl', function($scope, $state, $stateParams, $timeout, $cordovaCamera, CaseCreateService, UtilityService) {
         var _case = this;
 
         _case.viewModel = {};
@@ -139,6 +140,8 @@ angular.module('cheping.new.detail', [
         if (newCase.caseType !== $stateParams.carType) {
             newCase = CaseCreateService.resetNewCase($stateParams.carType);
         }
+
+        _case.photos = newCase.photos;
 
         _case.resetViewModel = function() {
             var view = _case.viewModel;
@@ -169,10 +172,46 @@ angular.module('cheping.new.detail', [
             CaseCreateService.createCase()
                 .then(function(result) {
                     UtilityService.showAlert('创建成功');
+                    CaseCreateService.resetNewCase(10);
                     $timeout(function() {
                         $state.go('cheping.case-list', {carType: newCase.caseType});
                     }, 2000);
                 });
+        };
+
+        _case.canAddPhoto = function() {
+            return newCase.photos.length <= 10;
+        };
+
+        _case.takePicture = function() {
+            var options = {
+                quality: 50,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: false,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 200,
+                targetHeight: 200,
+                saveToPhotoAlbum: false
+            };
+
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                CaseCreateService.addPhoto('data:image/jpeg;base64,' + imageData)
+                    .then(function(result) {
+                        _case.photos = newCase.photos;
+                    });
+            }, function(err) {
+                UtilityService.showAlert('照片添加失败，请重试添加')
+            });
+
+        };
+
+        _case.removePhoto = function(photoId) {
+            _.remove(newCase.photos, function(p) {
+                return p.id === photoId;
+            });
+
+            _case.photos = newCase.photos;
         };
 
         $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {

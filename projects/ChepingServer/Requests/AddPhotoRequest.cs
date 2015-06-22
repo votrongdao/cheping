@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-20  1:32 PM
+// Created          : 2015-06-22  7:11 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  2:23 PM
+// Last Modified On : 2015-06-22  7:13 AM
 // ***********************************************************************
-// <copyright file="StringResponse.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
+// <copyright file="AddPhotoRequest.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
@@ -14,17 +14,23 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace ChepingServer.Responses
+namespace ChepingServer.Requests
 {
     /// <summary>
-    ///     StringResponse.
+    ///     AddPhotoRequest.
     /// </summary>
-    public class StringResponse
+    public class AddPhotoRequest
     {
         /// <summary>
-        ///     string 值
+        ///     事项Id
         /// </summary>
-        [Required, JsonProperty("result")]
-        public string Result { get; set; }
+        [Required, Range(0, int.MaxValue), JsonProperty("caseId")]
+        public int CaseId { get; set; }
+
+        /// <summary>
+        ///     图片内容
+        /// </summary>
+        [Required, MinLength(1), JsonProperty("content")]
+        public string Content { get; set; }
     }
 }

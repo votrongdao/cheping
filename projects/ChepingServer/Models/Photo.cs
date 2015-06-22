@@ -2,9 +2,9 @@
 // Project          : ChepingServer
 // Author           : Siqi Lu
 // Created          : 2015-06-19  3:15 AM
-// 
+//
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:50 PM
+// Last Modified On : 2015-06-22  2:19 PM
 // ***********************************************************************
 // <copyright file="Photo.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -30,7 +30,7 @@ namespace ChepingServer.Models
         ///     Gets or sets the content.
         /// </summary>
         /// <value>The content.</value>
-        public byte[] Content { get; set; }
+        public string Content { get; set; }
 
         /// <summary>
         ///     Gets or sets the identifier.

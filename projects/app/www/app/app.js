@@ -29,7 +29,8 @@ angular.module('cheping', [
             APPROVEPAYMENT: 'http://cheping.chinacloudsites.cn:80/api/Case/ApprovePayment',
             PURCHASE: 'http://cheping.chinacloudsites.cn:80/api/Case/Purchase',
             REJECTIONCONFIRM: 'http://cheping.chinacloudsites.cn:80/api/Case/RejectionConfirm',
-            ADDCASE: 'http://cheping.chinacloudsites.cn:80/api/Case/AddCase'
+            ADDCASE: 'http://cheping.chinacloudsites.cn:80/api/Case/AddCase',
+            ADDPHOTO: 'http://cheping.chinacloudsites.cn:80/api/Photos/Create'
         },
         CONFIG: {
             BRANDS: 'http://cheping.yuyidev.com:80/api/Models/Brands',
