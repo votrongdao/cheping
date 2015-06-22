@@ -48,7 +48,7 @@ namespace ChepingServer.Controllers
 
             int id = await this.photoService.Create(photo);
 
-            return this.Ok(id);
+            return this.Ok(new IntResponse { Result = id });
         }
 
         /// <summary>

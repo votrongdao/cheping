@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:15 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  11:32 AM
+// Last Modified On : 2015-06-22  6:54 PM
 // ***********************************************************************
 // <copyright file="VehicleInfo.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -43,13 +43,13 @@ namespace ChepingServer.Models
         ///     Gets or sets the expected price.
         /// </summary>
         /// <value>The expected price.</value>
-        public int ExpectedPrice { get; set; }
+        public int? ExpectedPrice { get; set; }
 
         /// <summary>
         ///     Gets or sets the factory time.
         /// </summary>
         /// <value>The factory time.</value>
-        public DateTime FactoryTime { get; set; }
+        public DateTime? FactoryTime { get; set; }
 
         /// <summary>
         ///     Gets or sets the identifier.
@@ -67,7 +67,7 @@ namespace ChepingServer.Models
         ///     Gets or sets the license location.
         /// </summary>
         /// <value>The license location.</value>
-        public int LicenseLocation { get; set; }
+        public int? LicenseLocation { get; set; }
 
         /// <summary>
         ///     Gets or sets the license time.

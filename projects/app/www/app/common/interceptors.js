@@ -29,12 +29,24 @@ angular.module('cheping.interceptors', [
                 $rootScope.$broadcast('loading:hide');
                 var $state = $injector.get('$state');
                 var $ionicHistory = $injector.get('$ionicHistory');
-                if (rejection.status == 401 || rejection.status == 403) {
+                var $ionicPopup = $injector.get('$ionicPopup');
+                if (rejection.status === 401 || rejection.status === 403) {
                     authService.clearToken();
                     $ionicHistory.nextViewOptions({
                         disableBack: true
                     });
                     $state.go('cheping.user-login');
+                }
+
+                if(rejection.status === 400) {
+                    var alertPopup = $ionicPopup.alert({
+                        title: '提示信息',
+                        template: rejection.data.message
+                    });
+
+                    $timeout(function() {
+                        alertPopup.close();
+                    }, 2000);
                 }
 
                 if(rejection.status >= 500){

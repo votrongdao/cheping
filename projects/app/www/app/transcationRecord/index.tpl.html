@@ -1,0 +1,22 @@
+<ion-view title="外源交易记录">
+  <ion-content class="cases">
+    <ion-refresher
+      pulling-icon="ion-arrow-down-c"
+      spinner="spiral"
+      on-refresh="cases.doRefresh()">
+    </ion-refresher>
+    <ion-list>
+      <ion-item ng-repeat="case in _case.items" class="item-thumbnail-left" >
+        <img src="assets/img/car.png">
+
+        <p ng-bind="_case.model"></p>
+        <label>&nbsp;<span ng-bind="_case.brand"></span>&nbsp;</label>
+        <label>&nbsp;<span ng-bind="_case.series"></span>&nbsp;</label>
+        <label>&nbsp;<span ng-bind="(case.outerColor | colorName) + '/' + (case.innerColor | colorName)"></span>&nbsp;</label>
+        <div>
+          <span class="price" ng-bind="'&yen' + case.price"></span>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

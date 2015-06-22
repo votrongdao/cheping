@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  3:52 PM
+// Last Modified On : 2015-06-22  6:14 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -429,6 +429,7 @@ namespace ChepingServer.Controllers
                 response.Id = c.Id;
                 response.InnerColor = info.InnerColor;
                 response.LicenseLocation = info.LicenseLocation;
+                response.LicenseTime = info.LicenseTime;
                 response.ManagerId = c.ManagerId;
                 response.ModelId = info.ModelId;
                 response.ModelName = info.ModelName;
@@ -574,6 +575,7 @@ namespace ChepingServer.Controllers
                 response.Id = c.Id;
                 response.InnerColor = info.InnerColor;
                 response.LicenseLocation = info.LicenseLocation;
+                response.LicenseTime = info.LicenseTime;
                 response.ManagerId = c.ManagerId;
                 response.ModelId = info.ModelId;
                 response.ModelName = info.ModelName;
@@ -842,6 +844,7 @@ namespace ChepingServer.Controllers
             response.Id = c.Id;
             response.InnerColor = info.InnerColor;
             response.LicenseLocation = info.LicenseLocation;
+            response.LicenseTime = info.LicenseTime;
             response.ManagerId = c.ManagerId;
             response.ModelId = info.ModelId;
             response.ModelName = info.ModelName;

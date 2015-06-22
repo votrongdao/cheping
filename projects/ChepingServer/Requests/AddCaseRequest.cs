@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  12:13 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  5:36 AM
+// Last Modified On : 2015-06-22  7:17 PM
 // ***********************************************************************
 // <copyright file="AddCaseRequest.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -53,14 +53,14 @@ namespace ChepingServer.Requests
         /// <summary>
         ///     心理价格
         /// </summary>
-        [Required, Range(0, int.MaxValue), JsonProperty("expectedPrice")]
-        public int ExpectedPrice { get; set; }
+        [JsonProperty("expectedPrice")]
+        public int? ExpectedPrice { get; set; }
 
         /// <summary>
         ///     出厂时间
         /// </summary>
-        [Required, JsonProperty("factoryTime")]
-        public DateTime FactoryTime { get; set; }
+        [JsonProperty("factoryTime")]
+        public DateTime? FactoryTime { get; set; }
 
         /// <summary>
         ///     内部颜色
@@ -71,8 +71,8 @@ namespace ChepingServer.Requests
         /// <summary>
         ///     牌照所在地
         /// </summary>
-        [Required, Range(0, int.MaxValue), JsonProperty("licenseLocation")]
-        public int LicenseLocation { get; set; }
+        [JsonProperty("licenseLocation")]
+        public int? LicenseLocation { get; set; }
 
         /// <summary>
         ///     上牌时间
@@ -89,7 +89,7 @@ namespace ChepingServer.Requests
         /// <summary>
         ///     改装内容
         /// </summary>
-        [Required, StringLength(int.MaxValue, MinimumLength = 1), JsonProperty("modifiedContent")]
+        [JsonProperty("modifiedContent")]
         public string ModifiedContent { get; set; }
 
         /// <summary>
@@ -102,6 +102,7 @@ namespace ChepingServer.Requests
         ///     照片id
         /// </summary>
         [Required, JsonProperty("photoIds")]
+        // ReSharper disable once CollectionNeverUpdated.Global
         public List<int> PhotoIds { get; set; }
 
         /// <summary>

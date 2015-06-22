@@ -4,7 +4,7 @@
 // Created          : 2015-06-20  1:13 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  2:28 PM
+// Last Modified On : 2015-06-22  8:19 PM
 // ***********************************************************************
 // <copyright file="TranscationRecordController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -87,10 +87,22 @@ namespace ChepingServer.Controllers
         /// </response>
         /// <response code="500">
         /// </response>
-        [HttpGet, Route("TranscationRecords"), CookieAuthorize, ResponseType(typeof(List<TranscationRecord>))]
+        [HttpGet, Route(""), CookieAuthorize, ResponseType(typeof(List<TranscationRecord>))]
         public async Task<IHttpActionResult> GetTranscationRecords([FromUri] int modelId, [FromUri] int minMileage, [FromUri] int maxMileage, [FromUri] DateTime licenseTime)
         {
             return this.Ok(await this.transcationRecordService.GetTranscationRecords(modelId, minMileage, maxMileage, licenseTime));
+        }
+
+        /// <summary>
+        ///     根据查询条件获取交易数据信息
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <response code="200"></response>
+        /// <response code="500"></response>
+        [HttpGet, Route("Case/{caseId}"), CookieAuthorize, ResponseType(typeof(List<TranscationRecord>))]
+        public async Task<IHttpActionResult> GetTranscationRecords([FromUri] int caseId)
+        {
+            return this.Ok(await this.transcationRecordService.GetTranscationRecords(caseId));
         }
 
         /// <summary>

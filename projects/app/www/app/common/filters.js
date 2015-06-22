@@ -708,6 +708,10 @@ angular.module('cheping.filters', [])
                 return time;
             }
 
+            if(time.toString().indexOf('未填写') >= 0) {
+                return time;
+            }
+
             return moment(time).format('LL');
         };
     })

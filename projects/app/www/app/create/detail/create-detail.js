@@ -173,6 +173,7 @@ angular.module('cheping.new.detail', [
                 .then(function(result) {
                     UtilityService.showAlert('创建成功');
                     CaseCreateService.resetNewCase(10);
+                    _case.resetViewModel();
                     $timeout(function() {
                         $state.go('cheping.case-list', {carType: newCase.caseType});
                     }, 2000);
@@ -190,8 +191,8 @@ angular.module('cheping.new.detail', [
                 sourceType: Camera.PictureSourceType.CAMERA,
                 allowEdit: false,
                 encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 400,
-                targetHeight: 600,
+                targetWidth: 300,
+                targetHeight: 400,
                 saveToPhotoAlbum: false
             };
 
@@ -201,7 +202,7 @@ angular.module('cheping.new.detail', [
                         _case.photos = newCase.photos;
                     });
             }, function(err) {
-                UtilityService.showAlert('照片添加失败，失败原因' + err)
+                UtilityService.showAlert('未能添加图片，请重试')
             });
 
         };

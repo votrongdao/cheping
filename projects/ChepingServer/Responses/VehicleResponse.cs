@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  12:21 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-21  1:00 PM
+// Last Modified On : 2015-06-22  6:55 PM
 // ***********************************************************************
 // <copyright file="VehicleResponse.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -77,13 +77,13 @@ namespace ChepingServer.Responses
         ///     心理价格
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("expectedPrice")]
-        public int ExpectedPrice { get; set; }
+        public int? ExpectedPrice { get; set; }
 
         /// <summary>
         ///     出厂时间
         /// </summary>
         [Required, JsonProperty("factoryTime")]
-        public DateTime FactoryTime { get; set; }
+        public DateTime? FactoryTime { get; set; }
 
         /// <summary>
         ///     Id
@@ -101,7 +101,7 @@ namespace ChepingServer.Responses
         ///     牌照所在地
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("licenseLocation")]
-        public int LicenseLocation { get; set; }
+        public int? LicenseLocation { get; set; }
 
         /// <summary>
         ///     上牌时间
@@ -146,19 +146,19 @@ namespace ChepingServer.Responses
         public int OutletId { get; set; }
 
         /// <summary>
-        /// Gets or sets the photo.
+        ///     Gets or sets the photo.
         /// </summary>
         [Required, JsonProperty("photo")]
         public string Photo { get; set; }
 
         /// <summary>
-        /// 车辆照片
+        ///     车辆照片
         /// </summary>
         [Required, JsonProperty("photoContents")]
         public List<string> PhotoContents { get; set; }
 
         /// <summary>
-        /// 车辆照片
+        ///     车辆照片
         /// </summary>
         [Required, JsonProperty("photos")]
         public List<int> Photos { get; set; }

@@ -40,38 +40,6 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Gets this instance.
-        /// </summary>
-        /// <param name="modelId">The model identifier.</param>
-        /// <param name="minMileage">The minimum mileage.</param>
-        /// <param name="maxMileage">The maximum mileage.</param>
-        /// <param name="licenseTime">The license time.</param>
-        /// <returns>Task&lt;TranscationRecord&gt;.</returns>
-        public async Task<List<TranscationRecord>> GetTranscationRecords(int modelId, int minMileage, int maxMileage, DateTime licenseTime)
-        {
-            using (ChePingContext db = new ChePingContext())
-            {
-                DateTime start = new DateTime(licenseTime.Year,1,1);
-                DateTime end = start.AddYears(1).AddMilliseconds(-1);
-
-                return await db.TranscationRecords.Where(t => t.ModelId == modelId && t.Mileage >=minMileage && t.Mileage <= maxMileage && t.LicenseTime >= start &&
-                                t.LicenseTime <= end).ToListAsync();
-            }
-        }
-
-        /// <summary>
-        /// Indexes this instance.
-        /// </summary>
-        /// <returns>Task&lt;List&lt;TranscationRecord&gt;&gt;.</returns>
-        public async Task<List<TranscationRecord>> Index()
-        {
-            using (ChePingContext db = new ChePingContext())
-            {
-                return await db.TranscationRecords.ToListAsync();
-            }
-        }
-
-        /// <summary>
         /// Gets the paginated.
         /// </summary>
         /// <param name="pageIndex">Index of the page.</param>
@@ -98,7 +66,7 @@ namespace ChepingServer.Services
         /// <param name="maxMileage">The maximum mileage.</param>
         /// <param name="licenseTime">The license time.</param>
         /// <returns>Task&lt;PaginatedList&lt;TranscationRecord&gt;&gt;.</returns>
-        public async Task<PaginatedList<TranscationRecord>> GetPaginated(int pageIndex, int pageSize, int modelId,  int minMileage, int maxMileage, DateTime licenseTime)
+        public async Task<PaginatedList<TranscationRecord>> GetPaginated(int pageIndex, int pageSize, int modelId, int minMileage, int maxMileage, DateTime licenseTime)
         {
             using (ChePingContext db = new ChePingContext())
             {
@@ -106,13 +74,82 @@ namespace ChepingServer.Services
                 DateTime end = start.AddYears(1).AddMilliseconds(-1);
 
                 int count = await db.TranscationRecords.CountAsync();
-                List<TranscationRecord> transcationRecords = await db.TranscationRecords.Where(t => t.ModelId == modelId && t.Mileage >= minMileage && t.Mileage <=maxMileage && t.LicenseTime >= start &&
+                List<TranscationRecord> transcationRecords = await db.TranscationRecords.Where(t => t.ModelId == modelId && t.Mileage >= minMileage && t.Mileage <= maxMileage && t.LicenseTime >= start &&
                                 t.LicenseTime <= end).OrderBy(u => u.Id).Skip(pageSize * pageIndex).Take(pageSize).ToListAsync();
 
                 return new PaginatedList<TranscationRecord>(pageIndex, pageSize, count, transcationRecords);
             }
         }
 
+        /// <summary>
+        /// Gets this instance.
+        /// </summary>
+        /// <param name="modelId">The model identifier.</param>
+        /// <param name="minMileage">The minimum mileage.</param>
+        /// <param name="maxMileage">The maximum mileage.</param>
+        /// <param name="licenseTime">The license time.</param>
+        /// <returns>Task&lt;TranscationRecord&gt;.</returns>
+        public async Task<List<TranscationRecord>> GetTranscationRecords(int modelId, int minMileage, int maxMileage, DateTime licenseTime)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                DateTime start = new DateTime(licenseTime.Year, 1, 1);
+                DateTime end = start.AddYears(1).AddMilliseconds(-1);
 
+                return await db.TranscationRecords.Where(t => t.ModelId == modelId && t.Mileage >= minMileage && t.Mileage <= maxMileage && t.LicenseTime >= start &&
+                                t.LicenseTime <= end).ToListAsync();
+            }
+        }
+
+        /// <summary>
+        /// Gets the transcation records.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <returns>Task&lt;List&lt;TranscationRecord&gt;&gt;.</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<List<TranscationRecord>> GetTranscationRecords(int caseId)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+
+                if (@case == null)
+                {
+                    return new List<TranscationRecord>();
+                }
+
+                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(v => v.Id == @case.VehicleInspecId);
+
+                if (!inspection.MaxMileage.HasValue || !inspection.MinMileage.HasValue)
+                {
+                    return new List<TranscationRecord>();
+                }
+
+                VehicleInfo info = await db.VehicleInfos.FirstOrDefaultAsync(v => v.Id == @case.VehicleInfoId);
+
+                if (info.ModelId <= 0)
+                {
+                    return new List<TranscationRecord>();
+                }
+
+                DateTime minTime = new DateTime(info.LicenseTime.Year, 1, 1);
+                DateTime maxTime = minTime.AddYears(1).AddMilliseconds(-1);
+
+                return await db.TranscationRecords.Where(r => r.ModelId == info.ModelId && r.Mileage >= inspection.MinMileage && r.Mileage <= inspection.MaxMileage
+                                                 && r.LicenseTime >= minTime && r.LicenseTime <= maxTime).ToListAsync();
+            }
+        }
+
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns>Task&lt;List&lt;TranscationRecord&gt;&gt;.</returns>
+        public async Task<List<TranscationRecord>> Index()
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                return await db.TranscationRecords.ToListAsync();
+            }
+        }
     }
 }

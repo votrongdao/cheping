@@ -24,20 +24,21 @@ angular.module('cheping.case.detail', [
                     _case.brandName = result.brandName;
                     _case.cooperationMethod = result.cooperationMethod;
                     _case.displayMileage = result.displayMileage;
-                    _case.expectedPrice = result.expectedPrice;
-                    _case.factoryTime = result.factoryTime;
+                    _case.expectedPrice = result.expectedPrice || '未填写';
+                    _case.factoryTime = result.factoryTime || '未填写';
                     _case.id = result.id;
                     _case.innerColor = result.innerColor;
-                    _case.licenseLocation = result.licenseLocation;
+                    _case.licenseLocation = result.licenseLocation || '未填写';
                     _case.licenseTime = result.licenseTime;
                     _case.modelId = result.modelId;
                     _case.modelName = result.modelName;
-                    _case.modifiedContent = result.modifiedContent;
+                    _case.modifiedContent = result.modifiedContent || '未填写';
                     _case.outerColor = result.outerColor;
                     _case.seriesName = result.seriesName;
                     _case.state = result.state;
                     _case.vehicleLocation = result.vehicleLocation;
                     _case.photoContents = result.photoContents;
+                    return result;
                 })
         };
 
