@@ -721,7 +721,20 @@ angular.module('cheping.filters', [])
                 return jobId;
             }
 
-            return jobId;
+            switch (jobId) {
+                case 10:
+                    return '采购员';
+                case 20:
+                    return '评估师';
+                case 30:
+                    return '查询师';
+                case 40:
+                    return '地区总监';
+                case 50:
+                    return '总经理';
+                default:
+                    return jobId;
+            }
         };
     })
     .filter('state', function() {

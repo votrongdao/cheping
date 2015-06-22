@@ -22,6 +22,7 @@ angular.module('cheping.user', [
                 user.userName = currentUser.userName;
                 user.userCode = currentUser.userCode;
                 user.jobTitle = currentUser.jobTitle;
+                user.outletName = currentUser.outletName;
             });
 
         user.loginOut = function() {
