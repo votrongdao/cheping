@@ -105,7 +105,7 @@ angular.module('cheping', [
             });
         });
     })
-    .controller('MainCtrl', function($state, UserService, UtilityService) {
+    .controller('MainCtrl', function($state, UserService, AuthService, UtilityService) {
         var ctrl = this;
 
         ctrl.showNewTab = false;
@@ -121,7 +121,8 @@ angular.module('cheping', [
                     ctrl.showNewTab = true;
                     ctrl.showTab = true;
                 } else {
-                    UtilityService.showAlert('请先登录');
+                    AuthService.clearToken();
+                    UtilityService.showAlert('用户权限错误');
                     $state.go('cheping.user-login');
                 }
             });
