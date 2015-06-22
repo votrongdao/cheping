@@ -76,16 +76,16 @@
       </ion-item>
     </ion-list>
 
-    <ion-list show-delete="true" can-swipe="true">
+    <ion-list>
       <ion-item class="item-divider">
         <span>车辆图片：</span>
       </ion-item>
       <ion-item ng-repeat="photo in _case.photos">
         <img ng-src="{{ photo.content }}">
 
-        <ion-delete-button class="button-assertive icon ion-trash-a"
-                           ng-click="_case.removePhoto(photo.id)">
-        </ion-delete-button>
+        <!--<ion-delete-button class="button-assertive icon ion-trash-a"-->
+                           <!--ng-click="_case.removePhoto(photo.id)">-->
+        <!--</ion-delete-button>-->
       </ion-item>
     </ion-list>
 
