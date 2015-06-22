@@ -444,3 +444,8 @@ label.item-radio .item-content {
 .ng-input-error div {
   margin-left: 15px;
 }
+ion-item img {
+  width: 100%;
+  max-width: 660px;
+
+}
