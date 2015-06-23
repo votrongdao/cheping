@@ -30,21 +30,18 @@
     <ion-list class="item-icon-right">
       <ion-item class="item-divider"></ion-item>
       <ion-item type="item-text-wrap">
-        <span>评估价格：</span>
+        <span>估价：</span>
         <span ng-bind="_case.purchasePrice" class="pull-right"></span>
       </ion-item>
     </ion-list>
 
-    <ion-list>
-      <ion-item class="item-divider">
-        <span>车辆图片：</span>
-      </ion-item>
-      <ion-item ng-repeat="photo in _case.photoContents">
-        <img ng-src="{{ photo }}">
+    <ion-list class="item-icon-right">
+      <ion-item class="item-divider"></ion-item>
+      <ion-item type="item-text-wrap">
+        <span>请输入以下信息：</span>
       </ion-item>
     </ion-list>
 
-    <h4>请输入以下信息：</h4>
     <form name="shenhe">
       <div class="list list-inset padding">
         <label class="item item-input">

@@ -125,7 +125,7 @@ angular.module('cheping.daiban.detail', [
                     } else if (result.jobTitle === 50) {
                         if (_case.state === 80) {
                             _case.rejectButtonText = '放弃收购';
-                            _case.confirmButtonText = '打款';
+                            _case.confirmButtonText = '同意打款';
                         } else {
                             _case.rejectButtonText = '失败';
                             _case.confirmButtonText = '成功';
@@ -167,12 +167,12 @@ angular.module('cheping.daiban.detail', [
         };
 
         _case.showRejectButton = function() {
-            var state = [20, 30, 50, 60, 70, 80, 90];
+            var state = [20, 30, 50, 60, 70, 80];
             _case.showRejectButtonInView = state.indexOf(_case.state) !== -1;
         };
 
         _case.showConfirmButton = function() {
-            var state = [20, 30, 50, 60, 70, 80];
+            var state = [20, 30, 50, 60, 70, 80, 90];
             _case.showConfirmButtonInView = state.indexOf(_case.state) !== -1;
         };
 
@@ -204,10 +204,13 @@ angular.module('cheping.daiban.detail', [
                 title: '请输入原因',
                 scope: $scope,
                 buttons: [
-                    {text: '取消'},
+                    {
+                        text: '取消',
+                        type: 'button-cp-green'
+                    },
                     {
                         text: '<b>确认</b>',
-                        type: 'button-positive',
+                        type: 'button-cp-dark',
                         onTap: function(e) {
                             if (!$scope.data.reason) {
                                 e.preventDefault();

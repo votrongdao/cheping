@@ -700,15 +700,15 @@ angular.module('cheping.filters', [])
     })
     .filter('time', function() {
         return function(time) {
-            if(time === undefined) {
+            if (time === undefined) {
                 return undefined;
             }
 
-            if(time.toString().indexOf('选择') >= 0) {
+            if (time.toString().indexOf('选择') >= 0) {
                 return time;
             }
 
-            if(time.toString().indexOf('未填写') >= 0) {
+            if (time.toString().indexOf('未填写') >= 0) {
                 return time;
             }
 
@@ -739,14 +739,10 @@ angular.module('cheping.filters', [])
     })
     .filter('boolState', function() {
         return function(state) {
-            if (!isFinite(state)) {
-                return state;
-            }
-
             switch (state) {
-                case 0:
+                case true:
                     return '正常';
-                case 1:
+                case false:
                     return '异常';
                 default:
                     return state;
@@ -807,7 +803,7 @@ angular.module('cheping.filters', [])
                 case 80:
                     return '打款审核';
                 case 85:
-                    return '打款审核未通过';
+                    return '打款失败';
                 case 90:
                     return '采购';
                 case 95:

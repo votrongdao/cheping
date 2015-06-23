@@ -48,7 +48,7 @@ angular.module('cheping.daiban.detail-shenqingdakuan', [
         };
 
         _case.confirm = function() {
-            CaseService.applyPayment($stateParams.caseId).then(function(result) {
+            CaseService.applyPayment($stateParams.caseId, _case.price).then(function(result) {
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });

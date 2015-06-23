@@ -14,7 +14,7 @@ angular.module('cheping.daiban.detail-qiatan', [
                 }
             })
     })
-    .controller('DaibanQiatanCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicHistory, UserService, CaseService) {
+    .controller('DaibanQiatanCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicHistory, UserService, CaseService, UtilityService) {
         var _case = this;
 
         _case.getCase = function() {
@@ -48,7 +48,9 @@ angular.module('cheping.daiban.detail-qiatan', [
         };
 
         _case.confirm = function() {
-            CaseService.acceptPrice($stateParams.caseId, _case.price).then(function(result) {
+            CaseService.acceptPrice($stateParams.caseId).then(function(result) {
+                UtilityService.showAlert('价格如有变化，请及时通知总监');
+
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });

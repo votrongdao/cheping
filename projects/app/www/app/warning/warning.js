@@ -1,6 +1,7 @@
 angular.module('cheping.warning', [
     'cheping.services.user',
-    'cheping.services.case'
+    'cheping.services.case',
+    'cheping.warning.detail'
 ])
     .config(function($stateProvider) {
         $stateProvider

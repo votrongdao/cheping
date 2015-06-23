@@ -28,24 +28,15 @@
       </ion-item>
     </ion-list>
 
-    <ion-list>
-      <ion-item class="item-divider">
-        <span>车辆图片：</span>
-      </ion-item>
-      <ion-item ng-repeat="photo in _case.photoContents">
-        <img ng-src="{{ photo }}">
-      </ion-item>
-    </ion-list>
-
     <ion-list class="item-icon-right">
       <ion-item class="item-divider"></ion-item>
       <ion-item type="item-text-wrap">
-        <span>采购价格：</span>
+        <span>估价：</span>
         <span ng-bind="_case.purchasePrice" class="pull-right"></span>
       </ion-item>
     </ion-list>
 
 
-    <button class="button button-block button-cp-dark" ng-click="_case.confirm()" ng-disabled="!_case.buttonEnable()">确认审核通过</button>
+    <button class="button button-block button-cp-dark" ng-click="_case.confirm()" ng-disabled="!_case.buttonEnable()">同意打款</button>
   </ion-content>
 </ion-view>

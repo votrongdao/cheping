@@ -4,7 +4,7 @@
 // Created          : 2015-06-22  9:55 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-23  11:47 PM
+// Last Modified On : 2015-06-24  2:01 AM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -43,7 +43,6 @@ namespace ChepingServer.Controllers
         ///     接受报价
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
-        /// <param name="purchasePrice">The purchase price.</param>
         /// <response code="200"></response>
         /// <response code="400">
         ///     无法加载事项信息
@@ -55,7 +54,7 @@ namespace ChepingServer.Controllers
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
         [HttpGet, Route("AcceptPrice"), CookieAuthorize, ResponseType(typeof(CaseDto))]
-        public async Task<IHttpActionResult> AcceptPrice([FromUri] int caseId, [FromUri] int purchasePrice)
+        public async Task<IHttpActionResult> AcceptPrice([FromUri] int caseId)
         {
             Case @case = await this.caseService.GetAsync(caseId);
             if (@case == null)
@@ -73,7 +72,7 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("事项状态错误");
             }
 
-            @case = await this.caseService.AcceptPriceAsync(caseId, purchasePrice);
+            @case = await this.caseService.AcceptPriceAsync(caseId);
 
             return this.Ok(@case.ToDto());
         }
@@ -281,7 +280,7 @@ namespace ChepingServer.Controllers
                 LicenseCode = request.LicenseCode
             };
 
-            @case = await this.caseService.AddYancheInfoAsync(@case.Id, inspection);
+            @case = await this.caseService.AddYancheInfoAsync(@case.Id, inspection, request.PhotoIds);
 
             return this.Ok(@case.ToDto());
         }
@@ -290,6 +289,8 @@ namespace ChepingServer.Controllers
         ///     申请打款
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
+        /// <param name="price">The price.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <response code="200"></response>
         /// <response code="400">
         ///     无法加载事项信息
@@ -301,7 +302,7 @@ namespace ChepingServer.Controllers
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
         [HttpGet, Route("ApplyPayment"), CookieAuthorize, ResponseType(typeof(CaseDto))]
-        public async Task<IHttpActionResult> ApplyPayment([FromUri] int caseId)
+        public async Task<IHttpActionResult> ApplyPayment([FromUri] int caseId, int price)
         {
             Case @case = await this.caseService.GetAsync(caseId);
             if (@case == null)
@@ -319,7 +320,7 @@ namespace ChepingServer.Controllers
                 return this.BadRequest("事项状态错误");
             }
 
-            @case = await this.caseService.ApplyPaymentAsync(caseId);
+            @case = await this.caseService.ApplyPaymentAsync(caseId, price);
 
             return this.Ok(@case.ToDto());
         }

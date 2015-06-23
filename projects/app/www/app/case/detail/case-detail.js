@@ -174,18 +174,18 @@ angular.module('cheping.case.detail', [
         };
 
         _case.showValueInfo = function() {
-            var state = [20, 50, 70, 80];
+            var state = [20, 25, 35, 50, 55, 65, 70, 75, 80, 85, 95];
             _case.showValueInfoInView = state.indexOf(_case.state) !== -1
                 && _case.modelId > 0;
         };
 
         _case.showYancheInfo = function() {
-            var state = [40, 50, 60, 70, 80, 90, 100];
+            var state = [40, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
             _case.showYancheInfoInView = state.indexOf(_case.state) !== -1;
         };
 
         _case.showChaxunInfo = function() {
-            var state = [50, 60, 70, 80, 90, 100];
+            var state = [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
             _case.showChaxunInfoInView = state.indexOf(_case.state) !== -1;
         };
 

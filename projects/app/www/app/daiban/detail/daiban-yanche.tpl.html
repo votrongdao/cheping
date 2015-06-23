@@ -28,16 +28,12 @@
       </ion-item>
     </ion-list>
 
-    <ion-list>
-      <ion-item class="item-divider">
-        <span>车辆图片：</span>
-      </ion-item>
-      <ion-item ng-repeat="photo in _case.photoContents">
-        <img ng-src="{{ photo }}">
+    <ion-list class="item-icon-right">
+      <ion-item class="item-divider"></ion-item>
+      <ion-item type="item-text-wrap">
+        <span>请输入以下信息：</span>
       </ion-item>
     </ion-list>
-
-    <h4>请输入以下信息：</h4>
 
     <form name="yanche1">
       <div class="list list-inset padding">
@@ -91,6 +87,21 @@
         </div>
       </div>
     </form>
+
+    <ion-list>
+      <ion-item class="item-divider">
+        <span>验车图片：</span>
+      </ion-item>
+      <ion-item ng-repeat="photo in _case.yanchePhotos" class="item-remove-animate">
+        <img ng-src="{{ photo.content }}">
+        <ion-option-button class="button-assertive"
+                           ng-click="_case.removePhoto(photo.id)">
+          删除
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+
+    <button class="button button-block button-cp-dark" ng-click="_case.takePicture()" ng-disabled="!_case.canAddPhoto()">添加照片</button>
 
     <button class="button button-block button-cp-dark" ng-click="_case.confirm()" ng-disabled="!_case.buttonEnable()">确认提交</button>
   </ion-content>

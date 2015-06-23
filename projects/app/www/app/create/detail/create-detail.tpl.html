@@ -77,16 +77,19 @@
     </ion-list>
 
     <ion-list>
-      <ion-item class="item-divider">
-        <span>车辆图片：</span>
-      </ion-item>
-      <ion-item ng-repeat="photo in _case.photos">
-        <img ng-src="{{ photo.content }}">
-      </ion-item>
-    </ion-list>
+    <ion-item class="item-divider">
+      <span>车辆图片：</span>
+    </ion-item>
+    <ion-item ng-repeat="photo in _case.photos" class="item-remove-animate">
+      <img ng-src="{{ photo.content }}">
+      <ion-option-button class="button-assertive"
+                         ng-click="_case.removePhoto(photo.id)">
+        删除
+      </ion-option-button>
+    </ion-item>
+  </ion-list>
 
     <button class="button button-block button-cp-dark" ng-click="_case.takePicture()" ng-disabled="!_case.canAddPhoto()">添加照片</button>
-    <img ng-src="{{ _case.src }}">
 
     <button class="button button-block button-cp-dark" ng-disabled="!_case.buttonEnable()" ng-click="_case.createCase()">确认创建</button>
   </ion-content>

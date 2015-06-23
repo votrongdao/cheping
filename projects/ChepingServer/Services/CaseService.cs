@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-23  8:36 PM
+// Last Modified On : 2015-06-24  2:00 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -41,10 +41,9 @@ namespace ChepingServer.Services
         ///     accept price as an asynchronous operation.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
-        /// <param name="price">The price.</param>
         /// <returns>Task&lt;Case&gt;.</returns>
         /// <exception cref="System.ApplicationException">未能加载事项信息</exception>
-        public async Task<Case> AcceptPriceAsync(int caseId, int price)
+        public async Task<Case> AcceptPriceAsync(int caseId)
         {
             using (ChePingContext db = new ChePingContext())
             {
@@ -57,7 +56,6 @@ namespace ChepingServer.Services
                 if (@case.State == State.Qiatan)
                 {
                     @case.State = State.ShenqingDakuan;
-                    @case.PurchasePrice = price;
                     this.RecordTime(@case, State.Qiatan);
 
                     await db.ExecuteSaveChangesAsync();
@@ -228,13 +226,25 @@ namespace ChepingServer.Services
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <param name="yancheInfo">The yanche information.</param>
+        /// <param name="photos">The photos.</param>
         /// <returns>Task&lt;Case&gt;.</returns>
+        /// <exception cref="ApplicationException">
+        ///     事项的状态不合法
+        ///     or
+        ///     未能加载验车信息
+        ///     or
+        ///     无法加载用户信息
+        ///     or
+        ///     无在岗查询师
+        ///     or
+        ///     查询师分配错误
+        /// </exception>
         /// <exception cref="System.ApplicationException">
         ///     事项的状态不合法
         ///     or
         ///     未能加载验车信息
         /// </exception>
-        public async Task<Case> AddYancheInfoAsync(int caseId, VehicleInspection yancheInfo)
+        public async Task<Case> AddYancheInfoAsync(int caseId, VehicleInspection yancheInfo, IEnumerable<int> photos)
         {
             using (ChePingContext db = new ChePingContext())
             {
@@ -295,6 +305,18 @@ namespace ChepingServer.Services
 
                 @case.QueryingId = queryingId;
 
+                foreach (int photo in photos)
+                {
+                    Photo photoModel = await db.Photos.FirstOrDefaultAsync(p => p.Id == photo);
+
+                    if (photoModel != null)
+                    {
+                        photoModel.CaseId = caseId;
+                    }
+                }
+
+                await db.ExecuteSaveChangesAsync();
+
                 await db.ExecuteSaveChangesAsync();
 
                 return @case;
@@ -305,8 +327,16 @@ namespace ChepingServer.Services
         ///     Apply the payment.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
+        /// <param name="price">The price.</param>
         /// <returns>Task&lt;Case&gt;.</returns>
-        public async Task<Case> ApplyPaymentAsync(int caseId)
+        /// <exception cref="ApplicationException">
+        ///     未能加载事项信息
+        ///     or
+        ///     无法加载用户信息
+        ///     or
+        ///     无在岗总经理
+        /// </exception>
+        public async Task<Case> ApplyPaymentAsync(int caseId, int price)
         {
             using (ChePingContext db = new ChePingContext())
             {
@@ -318,7 +348,6 @@ namespace ChepingServer.Services
 
                 if (@case.State == State.ShenqingDakuan)
                 {
-                    @case.State = State.DakuanShenhe;
                     this.RecordTime(@case, State.ShenqingDakuan);
 
                     //alloc managerId
@@ -339,6 +368,8 @@ namespace ChepingServer.Services
                     int index = caseCount % managers.Count;
                     int managerId = managers[index].Id;
 
+                    @case.State = State.DakuanShenhe;
+                    @case.PurchasePrice = price;
                     @case.ManagerId = managerId;
 
                     await db.ExecuteSaveChangesAsync();
@@ -949,7 +980,11 @@ namespace ChepingServer.Services
                 foreach (int photo in photos)
                 {
                     Photo photoModel = await db.Photos.FirstOrDefaultAsync(p => p.Id == photo);
-                    photoModel.CaseId = newCase.Id;
+
+                    if (photoModel != null)
+                    {
+                        photoModel.CaseId = newCase.Id;
+                    }
                 }
 
                 await db.ExecuteSaveChangesAsync();
@@ -1038,7 +1073,11 @@ namespace ChepingServer.Services
                 foreach (int photo in photos)
                 {
                     Photo photoModel = await db.Photos.FirstOrDefaultAsync(p => p.Id == photo);
-                    photoModel.CaseId = newCase.Id;
+
+                    if (photoModel != null)
+                    {
+                        photoModel.CaseId = newCase.Id;
+                    }
                 }
 
                 await db.ExecuteSaveChangesAsync();

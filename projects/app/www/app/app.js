@@ -10,6 +10,7 @@ angular.module('cheping', [
     'cheping.daiban',
     'cheping.new',
     'cheping.user',
+    'cheping.warning',
     'cheping.transcations'
 ])
     .constant('URLS', {
