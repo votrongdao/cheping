@@ -29,7 +29,8 @@ angular.module('cheping.interceptors', [
                 $rootScope.$broadcast('loading:hide');
                 var $state = $injector.get('$state');
                 var $ionicHistory = $injector.get('$ionicHistory');
-                var $ionicPopup = $injector.get('$ionicPopup');
+                var $ionicLoading = $injector.get('$ionicLoading');
+
                 if (rejection.status === 401 || rejection.status === 403) {
                     authService.clearToken();
                     $ionicHistory.nextViewOptions({
@@ -39,14 +40,10 @@ angular.module('cheping.interceptors', [
                 }
 
                 if(rejection.status === 400) {
-                    var alertPopup = $ionicPopup.alert({
-                        title: '提示信息',
-                        template: rejection.data.message
+                    $ionicLoading.show({
+                        template: rejection.data.message,
+                        duration: 3000
                     });
-
-                    $timeout(function() {
-                        alertPopup.close();
-                    }, 2000);
                 }
 
                 if(rejection.status >= 500){

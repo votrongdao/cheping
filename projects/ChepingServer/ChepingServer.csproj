@@ -189,6 +189,7 @@
     <Compile Include="Enum\SaleGrade.cs" />
     <Compile Include="Enum\State.cs" />
     <Compile Include="Filters\CookieAuthorizeAttribute.cs" />
+    <Compile Include="Filters\GlobalExceptionFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

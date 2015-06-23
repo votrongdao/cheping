@@ -27,10 +27,12 @@
         <span ng-bind="(_case.displayMileage)" class="pull-right"></span>
       </ion-item>
     </ion-list>
+
     <ion-list class="item-icon-right">
+      <ion-item class="item-divider"></ion-item>
       <ion-item type="item-text-wrap">
         <span>采购价格：</span>
-        <span ng-bind="(_case.purchasePrice)" class="pull-right"></span>
+        <span ng-bind="_case.purchasePrice" class="pull-right"></span>
       </ion-item>
     </ion-list>
 

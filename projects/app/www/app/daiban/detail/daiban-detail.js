@@ -43,6 +43,7 @@ angular.module('cheping.daiban.detail', [
                     _case.modelName = result.modelName;
                     _case.modifiedContent = result.modifiedContent || '未填写';
                     _case.outerColor = result.outerColor;
+                    _case.purchasePrice = result.purchasePrice;
                     _case.seriesName = result.seriesName;
                     _case.state = result.state;
                     _case.vehicleLocation = result.vehicleLocation;

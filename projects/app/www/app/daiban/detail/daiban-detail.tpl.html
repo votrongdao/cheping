@@ -71,6 +71,14 @@
       </ion-item>
     </ion-list>
 
+    <ion-list class="item-icon-right">
+      <ion-item class="item-divider"></ion-item>
+      <ion-item type="item-text-wrap">
+        <span>评估（采购）价格：</span>
+        <span ng-bind="_case.purchasePrice" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+
     <ion-list ng-if="_case.enableTranscations()" >
       <ion-item type="item-text-wrap" class="item-icon-right" ng-click="_case.goTranscations()">
         <span class="pull-left">外源数据：</span>

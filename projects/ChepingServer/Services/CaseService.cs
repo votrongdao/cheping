@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  3:41 PM
+// Last Modified On : 2015-06-23  12:40 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -203,6 +203,11 @@ namespace ChepingServer.Services
 
                 List<User> directors = await db.Users.Where(u => u.Available && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Director).ToListAsync();
 
+                if (directors.Count == 0)
+                {
+                    throw new ApplicationException("无在岗地区总监");
+                }
+
                 int caseCount = await db.Cases.CountAsync(c => c.OutletId == user.OutletId && DirectorTodoStates.Contains(c.State) && c.DirectorId != null);
                 int index = caseCount % directors.Count;
 
@@ -254,18 +259,39 @@ namespace ChepingServer.Services
                 @case.State = State.Chaxun;
                 this.RecordTime(@case, State.Yanche);
 
-                //alloc queryingId
                 User user = await db.Users.FirstOrDefaultAsync(u => u.Id == @case.PurchaserId && u.JobTitle == JobTitle.Purchaser && u.Available);
                 if (user == null)
                 {
                     throw new ApplicationException("无法加载用户信息");
                 }
 
-                List<User> queryings = await db.Users.Where(u => u.Available && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Querying).ToListAsync();
+                int queryingId;
 
-                int caseCount = await db.Cases.CountAsync(c => c.OutletId == user.OutletId && QueryingTodoStates.Contains(c.State) && c.QueryingId != null);
-                int index = caseCount % queryings.Count;
-                int queryingId = queryings[index].Id;
+                List<User> queryings = await db.Users.Where(u => u.Available && u.JobTitle == JobTitle.Querying).ToListAsync();
+
+                var workingQueryings = await db.Cases.Where(c => QueryingTodoStates.Contains(c.State) && c.QueryingId != null)
+                    .GroupBy(c => c.QueryingId).Select(g => new { g.Key, Count = g.Count() }).ToListAsync();
+
+                queryings.RemoveAll(v => workingQueryings.Select(i => i.Key).Contains(v.Id));
+
+                if (queryings.Count > 0)
+                {
+                    queryingId = queryings[0].Id;
+                }
+                else
+                {
+                    if (workingQueryings.Count == 0)
+                    {
+                        throw new ApplicationException("无在岗查询师");
+                    }
+
+                    queryingId = workingQueryings.OrderBy(v => v.Count).Select(v => v.Key).First().GetValueOrDefault();
+
+                    if (queryingId == 0)
+                    {
+                        throw new ApplicationException("查询师分配错误");
+                    }
+                }
 
                 @case.QueryingId = queryingId;
 
@@ -302,9 +328,14 @@ namespace ChepingServer.Services
                         throw new ApplicationException("无法加载用户信息");
                     }
 
-                    List<User> managers = await db.Users.Where(u => u.Available && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Manager).ToListAsync();
+                    List<User> managers = await db.Users.Where(u => u.Available && u.JobTitle == JobTitle.Manager).ToListAsync();
 
-                    int caseCount = await db.Cases.CountAsync(c => c.OutletId == user.OutletId && ManagerTodoStates.Contains(c.State) && c.ManagerId != null);
+                    if (managers.Count == 0)
+                    {
+                        throw new ApplicationException("无在岗总经理");
+                    }
+
+                    int caseCount = await db.Cases.CountAsync(c => ManagerTodoStates.Contains(c.State) && c.ManagerId != null);
                     int index = caseCount % managers.Count;
                     int managerId = managers[index].Id;
 
@@ -471,7 +502,7 @@ namespace ChepingServer.Services
         }
 
         /// <summary>
-        /// Gets the photo contents.
+        ///     Gets the photo contents.
         /// </summary>
         /// <param name="caseId">The case identifier.</param>
         /// <returns>System.String.</returns>
@@ -882,9 +913,9 @@ namespace ChepingServer.Services
                 }
 
                 int valuerId;
-                List<User> valuers = await db.Users.Where(u => u.Available && !u.HangOn && u.OutletId == user.OutletId && u.JobTitle == JobTitle.Valuer && u.ValuerGroup == newCase.CaseType).ToListAsync();
+                List<User> valuers = await db.Users.Where(u => u.Available && !u.HangOn && u.JobTitle == JobTitle.Valuer && u.ValuerGroup == newCase.CaseType).ToListAsync();
 
-                var workingValuers = await db.Cases.Where(c => c.OutletId == user.OutletId && ValuerTodoStates.Contains(c.State) && c.ValuerId != null)
+                var workingValuers = await db.Cases.Where(c => ValuerTodoStates.Contains(c.State) && c.ValuerId != null)
                     .GroupBy(c => c.ValuerId).Select(g => new { g.Key, Count = g.Count() }).ToListAsync();
 
                 valuers.RemoveAll(v => workingValuers.Select(i => i.Key).Contains(v.Id));
