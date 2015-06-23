@@ -38,6 +38,7 @@ angular.module('cheping.daiban.detail-caigou', [
                     _case.seriesName = result.seriesName;
                     _case.state = result.state;
                     _case.vehicleLocation = result.vehicleLocation;
+                    _case.photoContents = result.photoContents;
                     return result;
                 });
         };

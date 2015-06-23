@@ -28,6 +28,16 @@
       </ion-item>
     </ion-list>
 
+    <ion-list>
+      <ion-item class="item-divider">
+        <span>车辆图片：</span>
+      </ion-item>
+      <ion-item ng-repeat="photo in _case.photoContents">
+        <img ng-src="{{ photo }}">
+      </ion-item>
+    </ion-list>
+
+
     <ion-list class="item-icon-right">
       <ion-item class="item-divider"></ion-item>
       <ion-item type="item-text-wrap">

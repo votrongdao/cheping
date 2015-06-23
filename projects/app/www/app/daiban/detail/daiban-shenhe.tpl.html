@@ -35,6 +35,15 @@
       </ion-item>
     </ion-list>
 
+    <ion-list>
+      <ion-item class="item-divider">
+        <span>车辆图片：</span>
+      </ion-item>
+      <ion-item ng-repeat="photo in _case.photoContents">
+        <img ng-src="{{ photo }}">
+      </ion-item>
+    </ion-list>
+
     <h4>请输入以下信息：</h4>
     <form name="shenhe">
       <div class="list list-inset padding">
