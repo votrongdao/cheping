@@ -27,22 +27,15 @@
         <span ng-bind="(_case.displayMileage)" class="pull-right"></span>
       </ion-item>
     </ion-list>
-    <h4>请输入以下信息：</h4>
-    <form name="baojia">
-      <div class="list list-inset padding">
-        <label class="item item-input">
-          <i class="icon ion-model-s placeholder-icon"></i>
-          <input type="number" name="price" ng-model="_case.price" placeholder="请输入协商的价格" required min="1" max="900000000" ng-trim="true">
-        </label>
-      </div>
-      <div ng-messages="baojia.price.$error" ng-if="baojia.price.$dirty" role="alert" class="padding ng-input-error">
-        <div ng-message="required, minlength">
-          请输入协商的价格
-        </div>
-      </div>
-    </form>
 
+    <ion-list class="item-icon-right">
+      <ion-item class="item-divider"></ion-item>
+      <ion-item type="item-text-wrap">
+        <span>估价：</span>
+        <span ng-bind="_case.purchasePrice" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
 
-    <button class="button button-block button-cp-dark" ng-click="_case.confirm()" ng-disabled="!_case.buttonEnable()">确认提交</button>
+    <button class="button button-block button-cp-dark" ng-click="_case.confirm()">洽谈完成</button>
   </ion-content>
 </ion-view>

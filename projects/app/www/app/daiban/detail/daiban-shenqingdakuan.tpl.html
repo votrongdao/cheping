@@ -27,14 +27,35 @@
         <span ng-bind="(_case.displayMileage)" class="pull-right"></span>
       </ion-item>
     </ion-list>
+
     <ion-list class="item-icon-right">
+      <ion-item class="item-divider"></ion-item>
       <ion-item type="item-text-wrap">
-        <span>采购价格：</span>
-        <span ng-bind="(_case.purchasePrice)" class="pull-right"></span>
+        <span>估价：</span>
+        <span ng-bind="_case.purchasePrice" class="pull-right"></span>
       </ion-item>
     </ion-list>
 
+    <ion-list class="item-icon-right">
+      <ion-item class="item-divider"></ion-item>
+      <ion-item type="item-text-wrap">
+        <span>请输入以下信息：</span>
+      </ion-item>
+    </ion-list>
 
+    <form name="qiatan">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-model-s placeholder-icon"></i>
+          <input type="number" name="price" ng-model="_case.price" placeholder="请输入打款价格" required min="1" max="900000000" ng-trim="true">
+        </label>
+      </div>
+      <div ng-messages="qiatan.price.$error" ng-if="qiatan.price.$dirty" role="alert" class="padding ng-input-error">
+        <div ng-message="required, minlength">
+          请输入打款价格
+        </div>
+      </div>
+    </form>
 
     <button class="button button-block button-cp-dark" ng-click="_case.confirm()" ng-disabled="!_case.buttonEnable()">确认申请</button>
   </ion-content>

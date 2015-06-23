@@ -13,17 +13,29 @@ angular.module('cheping.services.caseCreate', [])
         };
 
         service.addPhoto = function(content) {
-            if(newCase.photos.length <= 10) {
+            if (newCase.photos.length <= 10) {
                 return $http.post(URLS.CASE.ADDPHOTO, {
                     caseId: 0,
                     content: content
                 }).then(function(result) {
                     newCase.photos.push({
                         id: result.data.result,
-                        content : content
+                        content: content
                     });
                 });
             }
+        };
+
+        service.addYanchePhoto = function(content) {
+            return $http.post(URLS.CASE.ADDPHOTO, {
+                caseId: 0,
+                content: content
+            }).then(function(result) {
+                return {
+                    id: result.data.result,
+                    content: content
+                };
+            });
         };
 
         service.getNewCase = function() {
@@ -70,15 +82,15 @@ angular.module('cheping.services.caseCreate', [])
                 });
         };
 
-        service.getColors = function(){
+        service.getColors = function() {
             return ConfigService.getColors();
         };
 
-        service.getCitis = function(){
+        service.getCitis = function() {
             return ConfigService.getCitis();
         };
 
-        service.getCooperationMethod = function(){
+        service.getCooperationMethod = function() {
             return ConfigService.getCooperationMethod();
         };
     });

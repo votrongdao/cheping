@@ -34,9 +34,11 @@ angular.module('cheping.daiban.detail-shenhe', [
                     _case.modelName = result.modelName;
                     _case.modifiedContent = result.modifiedContent;
                     _case.outerColor = result.outerColor;
+                    _case.purchasePrice = result.purchasePrice;
                     _case.seriesName = result.seriesName;
                     _case.state = result.state;
                     _case.vehicleLocation = result.vehicleLocation;
+                    _case.photoContents = result.photoContents;
                     return result;
                 });
         };

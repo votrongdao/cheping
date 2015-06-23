@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-20  1:13 PM
+// Created          : 2015-06-22  9:55 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  9:27 PM
+// Last Modified On : 2015-06-22  11:40 PM
 // ***********************************************************************
 // <copyright file="UserController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -21,6 +21,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Security;
 using ChepingServer.DTO;
+using ChepingServer.Enum;
 using ChepingServer.Filters;
 using ChepingServer.Models;
 using ChepingServer.Requests;
@@ -56,6 +57,17 @@ namespace ChepingServer.Controllers
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Create(UserDto dto)
         {
+            if (dto.JobTitle == JobTitle.Valuer || dto.JobTitle == JobTitle.Querying || dto.JobTitle == JobTitle.Manager)
+            {
+                dto.OutletId = 1;
+            }
+
+            string valuerGroup = "10,20,30,40,50";
+            if (dto.JobTitle == JobTitle.Purchaser)
+            {
+                valuerGroup = dto.ValuerGroup;
+            }
+
             User user = new User
             {
                 Available = true,
@@ -64,7 +76,7 @@ namespace ChepingServer.Controllers
                 JobTitle = dto.JobTitle,
                 OutletId = dto.OutletId,
                 UserName = dto.UserName,
-                ValuerGroup = dto.ValuerGroup
+                ValuerGroup = valuerGroup
             };
 
             int outletCode = user.OutletId + 1000;

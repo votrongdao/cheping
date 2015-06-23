@@ -1,4 +1,4 @@
-<ion-view view-title="订单详情">
+<ion-view view-title="提醒详情">
   <ion-content class="case-detail">
     <ion-list>
       <ion-item>
@@ -150,7 +150,7 @@
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>理赔记录备注：</span>
-        <span ng-bind="_case.minMileage" class="pull-right"></span>
+        <span ng-bind="_case.claimNote" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>养护记录：</span>
@@ -181,28 +181,18 @@
     <ion-list class="item-icon-right">
       <ion-item class="item-divider"></ion-item>
       <ion-item type="item-text-wrap">
-        <span>评估价格：</span>
+        <span>估价：</span>
         <span ng-bind="_case.purchasePrice" class="pull-right"></span>
-      </ion-item>
-    </ion-list>
-
-    <ion-list ng-if="_case.enableTranscationsInView" >
-      <ion-item type="item-text-wrap" class="item-icon-right" ng-click="_case.goTranscations()">
-        <span class="pull-left">外源数据：</span>
-        <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
 
     <ion-list ng-if="_case.showPhotosInView">
-      <ion-item class="item-divider"></ion-item>
-      <ion-item type="item-text-wrap">
+      <ion-item class="item-divider">
         <span>车辆图片：</span>
-        <span ng-bind="_case.purchasePrice" class="pull-right"></span>
       </ion-item>
       <ion-item ng-repeat="photo in _case.photoContents">
         <img ng-src="{{ photo }}">
       </ion-item>
     </ion-list>
-
   </ion-content>
 </ion-view>

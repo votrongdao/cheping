@@ -10,6 +10,7 @@ angular.module('cheping', [
     'cheping.daiban',
     'cheping.new',
     'cheping.user',
+    'cheping.warning',
     'cheping.transcations'
 ])
     .constant('URLS', {
@@ -105,26 +106,34 @@ angular.module('cheping', [
             });
         });
     })
-    .controller('MainCtrl', function($state, UserService, AuthService, UtilityService) {
+    .controller('MainCtrl', function($scope, $state, UserService, AuthService, UtilityService) {
         var ctrl = this;
 
         ctrl.showNewTab = false;
         ctrl.showWarningTab = false;
         ctrl.showTab = false;
 
-        UserService.getUserInfo()
-            .then(function(result) {
-                if (result.jobTitle === 40 || result.jobTitle === 50) {
-                    ctrl.showNewTab = true;
-                    ctrl.showTab = true;
-                } else if (result.jobTitle === 10) {
-                    ctrl.showNewTab = true;
-                    ctrl.showTab = true;
-                } else {
-                    AuthService.clearToken();
-                    UtilityService.showAlert('用户权限错误');
-                    $state.go('cheping.user-login');
-                }
-            });
+        ctrl.reload = function() {
+            UserService.getUserInfo()
+                .then(function(result) {
+                    if (result.jobTitle === 40 || result.jobTitle === 50) {
+                        ctrl.showWarningTab = true;
+                        ctrl.showNewTab = false;
+                        ctrl.showTab = true;
+                    } else if (result.jobTitle === 10) {
+                        ctrl.showWarningTab = false;
+                        ctrl.showNewTab = true;
+                        ctrl.showTab = true;
+                    } else {
+                        AuthService.clearToken();
+                        UtilityService.showAlert('用户权限错误');
+                        $state.go('cheping.user-login');
+                    }
+                });
+        };
+
+        $scope.$on('$ionicView.enter', function() {
+            ctrl.reload();
+        });
     });
 

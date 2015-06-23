@@ -15,6 +15,7 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Tracing;
+using ChepingServer.Filters;
 using Moe.AspNet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -45,6 +46,8 @@ namespace ChepingServer
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 }
             };
+
+            config.Filters.Add(new GlobalExceptionFilterAttribute());
 
             config.Formatters.Clear();
             config.Formatters.Add(formatter);

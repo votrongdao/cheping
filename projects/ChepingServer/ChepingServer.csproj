@@ -189,6 +189,7 @@
     <Compile Include="Enum\SaleGrade.cs" />
     <Compile Include="Enum\State.cs" />
     <Compile Include="Filters\CookieAuthorizeAttribute.cs" />
+    <Compile Include="Filters\GlobalExceptionFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -221,6 +222,7 @@
     <Compile Include="Requests\QueryTranscationRecordRequest.cs" />
     <Compile Include="Requests\SignInRequest.cs" />
     <Compile Include="Responses\BoolResponse.cs" />
+    <Compile Include="Responses\CaseInfoResponse.cs" />
     <Compile Include="Responses\IntResponse.cs" />
     <Compile Include="Responses\StringResponse.cs" />
     <Compile Include="Responses\VehicleResponse.cs" />

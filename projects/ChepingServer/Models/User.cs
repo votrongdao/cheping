@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:52 PM
+// Last Modified On : 2015-06-23  8:31 PM
 // ***********************************************************************
 // <copyright file="User.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -78,6 +78,6 @@ namespace ChepingServer.Models
         ///     Gets or sets the valuer group.
         /// </summary>
         /// <value>The valuer group.</value>
-        public CarType ValuerGroup { get; set; }
+        public string ValuerGroup { get; set; }
     }
 }

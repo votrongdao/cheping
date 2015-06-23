@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:33 PM
+// Created          : 2015-06-22  9:41 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  11:49 AM
+// Last Modified On : 2015-06-23  8:36 PM
 // ***********************************************************************
 // <copyright file="UserDto.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -47,7 +47,7 @@ namespace ChepingServer.DTO
         }
 
         /// <summary>
-        /// To the dto.
+        ///     To the dto.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="outletName">Name of the outlet.</param>
@@ -112,7 +112,7 @@ namespace ChepingServer.DTO
         public int OutletId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the outlet.
+        ///     Gets or sets the name of the outlet.
         /// </summary>
         /// <value>The name of the outlet.</value>
         public string OutletName { get; set; }
@@ -132,7 +132,7 @@ namespace ChepingServer.DTO
         /// <summary>
         ///     用户Id，非必需情况，传默认值0
         /// </summary>
-        [Required, AvailableValues(CarType.Jiao, CarType.Pao, CarType.Fang, CarType.Yueye, CarType.ShangWu), JsonProperty("valuerGroup")]
-        public CarType ValuerGroup { get; set; }
+        [Required, JsonProperty("valuerGroup")]
+        public string ValuerGroup { get; set; }
     }
 }

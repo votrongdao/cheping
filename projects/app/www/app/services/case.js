@@ -45,7 +45,7 @@ angular.module('cheping.services.case', [])
         };
 
         service.getTranscations = function(caseId) {
-            var url = URLS.CASE.TRANSCATIONS + 'caseId';
+            var url = URLS.CASE.TRANSCATIONS + caseId;
 
             return $http.get(url, {
                 cache: CacheService.get('caseCache')
@@ -73,8 +73,8 @@ angular.module('cheping.services.case', [])
             });
         };
 
-        service.acceptPrice = function(caseId, price) {
-            var url = URLS.CASE.ACCEPTPRICE + '?' + 'caseId=' + caseId + '&purchasePrice=' + price;
+        service.acceptPrice = function(caseId) {
+            var url = URLS.CASE.ACCEPTPRICE + '?' + 'caseId=' + caseId;
 
             return $http.get(url).then(function(result) {
                 return result.data;
@@ -89,8 +89,8 @@ angular.module('cheping.services.case', [])
             });
         };
 
-        service.applyPayment = function(caseId) {
-            var url = URLS.CASE.APPLYPAYMENT + '?' + 'caseId=' + caseId;
+        service.applyPayment = function(caseId, price) {
+            var url = URLS.CASE.APPLYPAYMENT + '?' + 'caseId=' + caseId + '&price=' + price;
 
             return $http.get(url).then(function(result) {
                 return result.data;

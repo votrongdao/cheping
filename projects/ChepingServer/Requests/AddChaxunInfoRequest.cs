@@ -23,13 +23,13 @@ namespace ChepingServer.Requests
     public class AddChaxunInfoRequest
     {
         /// <summary>
-        /// 债券情况备注
+        /// 债务情况备注
         /// </summary>
         [Required, StringLength(200, MinimumLength = 1), JsonProperty("bondsNote")]
         public string BondsNote { get; set; }
 
         /// <summary>
-        /// 债券情况
+        /// 债务情况
         /// </summary>
         [Required, JsonProperty("bondsState")]
         public bool BondsState { get; set; }
@@ -68,7 +68,6 @@ namespace ChepingServer.Requests
         /// 最后养护时间
         /// </summary>
         [Required, JsonProperty("lastConservationTime")]
-        
         public DateTime LastConservationTime { get; set; }
 
         /// <summary>
@@ -81,7 +80,6 @@ namespace ChepingServer.Requests
         /// 违章情况备注
         /// </summary>
         [Required, StringLength(200, MinimumLength = 1), JsonProperty("violationNote")]
-        
         public string ViolationNote { get; set; }
 
         /// <summary>

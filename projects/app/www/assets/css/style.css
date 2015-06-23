@@ -423,11 +423,6 @@ label.item-radio .item-content {
   background-color: transparent;
 }
 
-.popup-container .popup-buttons button{
-  background-color: #660000;
-  border-color: #660000;
-}
-
 .list .item.item-accordion {
   line-height: 38px;
   padding-top: 0;

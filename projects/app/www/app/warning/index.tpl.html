@@ -5,8 +5,8 @@
       spinner="spiral"
       on-refresh="cases.doRefresh()">
     </ion-refresher>
-    <ion-list show-delete="true" can-swipe="true">
-      <ion-item ng-repeat="case in cases.items" class="item-thumbnail-left item-icon-right" >
+    <ion-list>
+      <ion-item ng-repeat="case in cases.items" class="item-thumbnail-left item-icon-right item-remove-animate" ui-sref="cheping.warning-detail({caseId: case.id, caseNo: case.serialId})">
         <img ng-src="{{ case.photo }}">
 
         <p ng-bind="case.modelName"></p>
@@ -18,10 +18,10 @@
           <span ng-bind="(case.vehicleLocation | city)"></span>
           <span ng-bind="(case.state | state)" class="state"></span>
         </div>
-
-        <ion-delete-button class="button-assertive icon ion-trash-a"
+        <ion-option-button class="button-assertive"
                            ng-click="cases.comfirmWarning(case.id)">
-        </ion-delete-button>
+          删除
+        </ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>

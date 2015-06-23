@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  3:33 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:52 PM
+// Last Modified On : 2015-06-23  8:32 PM
 // ***********************************************************************
 // <copyright file="UserMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -42,6 +42,10 @@ namespace ChepingServer.Models.Mapping
                 .HasMaxLength(20);
 
             this.Property(t => t.Password)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            this.Property(t => t.ValuerGroup)
                 .IsRequired()
                 .HasMaxLength(100);
 

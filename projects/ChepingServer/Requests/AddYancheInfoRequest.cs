@@ -11,6 +11,7 @@
 // </copyright>
 // ***********************************************************************
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
@@ -48,6 +49,13 @@ namespace ChepingServer.Requests
         /// <value>The license code.</value>
         [Required, StringLength(200, MinimumLength = 1), JsonProperty("licenseCode")]
         public string LicenseCode { get; set; }
+
+        /// <summary>
+        ///     照片id
+        /// </summary>
+        [Required, JsonProperty("photoIds")]
+        // ReSharper disable once CollectionNeverUpdated.Global
+        public List<int> PhotoIds { get; set; }
 
         /// <summary>
         ///     车架编号

@@ -13,7 +13,7 @@ angular.module('cheping.daiban', [
                         templateUrl: 'app/daiban/index.tpl.html'
                     }
                 }
-            })
+            });
     })
     .controller('DaibanCtrl', function($scope, $state, $timeout, UserService, CaseService, UtilityService) {
         var cases = this;
@@ -25,10 +25,8 @@ angular.module('cheping.daiban', [
             CaseService.getTodos()
                 .then(function(result) {
                     cases.items = result;
-                })
+                });
         };
-
-        cases.getTodos();
 
         cases.doRefresh = function() {
             cases.getTodos();
@@ -37,4 +35,8 @@ angular.module('cheping.daiban', [
                 $scope.$broadcast('scroll.refreshComplete');
             }, 500);
         };
+
+        $scope.$on('$ionicView.enter', function(event, toState, toParams, fromState, fromParams) {
+            cases.getTodos();
+        });
     });

@@ -17,7 +17,7 @@ angular.module('cheping.user', [
 
         UserService.getUserInfo()
             .then(function(currentUser) {
-                user.cellphone = currentUser.cellphone;
+                user.cellphone = currentUser.cellphone.toString();
                 user.outletId = currentUser.outletId;
                 user.userName = currentUser.userName;
                 user.userCode = currentUser.userCode;
