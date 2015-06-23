@@ -222,6 +222,7 @@
     <Compile Include="Requests\QueryTranscationRecordRequest.cs" />
     <Compile Include="Requests\SignInRequest.cs" />
     <Compile Include="Responses\BoolResponse.cs" />
+    <Compile Include="Responses\CaseInfoResponse.cs" />
     <Compile Include="Responses\IntResponse.cs" />
     <Compile Include="Responses\StringResponse.cs" />
     <Compile Include="Responses\VehicleResponse.cs" />

@@ -45,7 +45,7 @@ angular.module('cheping.services.case', [])
         };
 
         service.getTranscations = function(caseId) {
-            var url = URLS.CASE.TRANSCATIONS + 'caseId';
+            var url = URLS.CASE.TRANSCATIONS + caseId;
 
             return $http.get(url, {
                 cache: CacheService.get('caseCache')

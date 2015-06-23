@@ -57,9 +57,15 @@ namespace ChepingServer.Controllers
         [HttpPost, Route("Create"), ActionParameterRequired("dto"), ActionParameterValidate(Order = 1), ResponseType(typeof(UserDto))]
         public async Task<IHttpActionResult> Create(UserDto dto)
         {
-            if (dto.JobTitle == JobTitle.Valuer || dto.JobTitle == JobTitle.Querying)
+            if (dto.JobTitle == JobTitle.Valuer || dto.JobTitle == JobTitle.Querying || dto.JobTitle == JobTitle.Manager)
             {
                 dto.OutletId = 1;
+            }
+
+            string valuerGroup = "10,20,30,40,50";
+            if (dto.JobTitle == JobTitle.Purchaser)
+            {
+                valuerGroup = dto.ValuerGroup;
             }
 
             User user = new User
@@ -70,7 +76,7 @@ namespace ChepingServer.Controllers
                 JobTitle = dto.JobTitle,
                 OutletId = dto.OutletId,
                 UserName = dto.UserName,
-                ValuerGroup = dto.ValuerGroup
+                ValuerGroup = valuerGroup
             };
 
             int outletCode = user.OutletId + 1000;

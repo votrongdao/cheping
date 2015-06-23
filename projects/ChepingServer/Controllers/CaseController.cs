@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-21  11:24 AM
+// Created          : 2015-06-22  9:55 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  6:14 PM
+// Last Modified On : 2015-06-23  10:03 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -13,6 +13,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -191,7 +192,7 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     添加评估师评估信息
+        ///     添加评估信息
         /// </summary>
         /// <param name="request">The request.</param>
         /// <response code="200"></response>
@@ -204,7 +205,7 @@ namespace ChepingServer.Controllers
         /// </response>
         /// <response code="401">请登录</response>
         /// <response code="500"></response>
-        [Route("AddValueInfo"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
+        [Route("AddValueInfo"), ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
         public async Task<IHttpActionResult> AddValueInfo(AddValueInfoRequest request)
         {
             Case @case = await this.caseService.GetAsync(request.CaseId);
@@ -819,15 +820,18 @@ namespace ChepingServer.Controllers
         /// <param name="caseId">The case identifier.</param>
         /// <response code="200"></response>
         /// <response code="500"></response>
-        [HttpGet, Route("VehicleInfo"), CookieAuthorize, ResponseType(typeof(VehicleResponse))]
+        [HttpGet, Route("VehicleInfo"), CookieAuthorize, ResponseType(typeof(CaseInfoResponse))]
+        [SuppressMessage("ReSharper", "FunctionComplexityOverflow")]
         public async Task<IHttpActionResult> VehicleInfo(int caseId)
         {
             var result = await this.caseService.GetCaseWithVehicleInfoAsync(caseId);
 
+            var inspection = await this.caseService.GetVehicleInspectionAsync(caseId);
+
             var photoId = this.caseService.GetPhotos(caseId);
             var pc = this.caseService.GetPhotoContent(caseId);
 
-            VehicleResponse response = new VehicleResponse();
+            CaseInfoResponse response = new CaseInfoResponse();
             var c = result.Item1;
             var info = result.Item2;
             response.State = c.State;
@@ -864,6 +868,27 @@ namespace ChepingServer.Controllers
             response.Photos = photoId;
             response.Photo = pc;
             response.PhotoContents = this.caseService.GetPhotoContents(caseId);
+            response.VinCode = inspection.VinCode;
+            response.EngineCode = inspection.EngineCode;
+            response.InsuranceCode = inspection.InsuranceCode;
+            response.LicenseCode = inspection.LicenseCode;
+            response.RealMileage = inspection.RealMileage.GetValueOrDefault();
+            response.LastConservationTime = inspection.LastConservationTime.GetValueOrDefault();
+            response.ConservationState = inspection.ConservationState.GetValueOrDefault();
+            response.ConservationNote = inspection.ConservationNote;
+            response.ClaimState = inspection.ClaimState.GetValueOrDefault();
+            response.ClaimNote = inspection.ClaimNote;
+            response.BondsState = inspection.BondsState.GetValueOrDefault();
+            response.BondsNote = inspection.BondsNote;
+            response.ViolationState = inspection.ViolationState.GetValueOrDefault();
+            response.ViolationNote = inspection.ViolationNote;
+            response.PreferentialPrice = inspection.PreferentialPrice.GetValueOrDefault();
+            response.MaxMileage = inspection.MaxMileage.GetValueOrDefault();
+            response.MinMileage = inspection.MinMileage.GetValueOrDefault();
+            response.SaleGrade = inspection.SaleGrade.GetValueOrDefault();
+            response.WebAveragePrice = inspection.WebAveragePrice.GetValueOrDefault();
+            response.WebPrice = inspection.WebPrice.GetValueOrDefault();
+            response.FloorPrice = inspection.FloorPrice.GetValueOrDefault();
             return this.Ok(response);
         }
 

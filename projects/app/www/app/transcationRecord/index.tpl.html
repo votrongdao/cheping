@@ -7,14 +7,14 @@
     </ion-refresher>
     <ion-list>
       <ion-item ng-repeat="case in _case.items" class="item-thumbnail-left" >
-        <img src="assets/img/car.png">
-
-        <p ng-bind="_case.model"></p>
+        <p ng-bind="case.source"></p>
         <label>&nbsp;<span ng-bind="_case.brand"></span>&nbsp;</label>
         <label>&nbsp;<span ng-bind="_case.series"></span>&nbsp;</label>
         <label>&nbsp;<span ng-bind="(case.outerColor | colorName) + '/' + (case.innerColor | colorName)"></span>&nbsp;</label>
         <div>
           <span class="price" ng-bind="'&yen' + case.price"></span>
+          <span ng-bind="(case.licenseTime | time)"></span>
+          <span ng-bind="case.mileage" class="state"></span><span>公里</span>
         </div>
       </ion-item>
     </ion-list>

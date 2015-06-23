@@ -49,7 +49,8 @@
         <span ng-bind="(_case.cooperationMethod | cooperationMethod)" class="pull-right"></span>
       </ion-item>
     </ion-list>
-    <ion-list class="item-remove-animate item-icon-right">
+
+    <ion-list class="item-icon-right">
       <ion-item class="item-divider">
         <span>选填信息</span>
       </ion-item>
@@ -71,20 +72,133 @@
       </ion-item>
     </ion-list>
 
-    <ion-list ng-if="_case.enableTranscations()" >
+    <ion-list class="item-icon-right" ng-if="_case.showValueInfoInView">
+      <ion-item class="item-divider">
+        <span>评估信息</span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>销售底价：</span>
+        <span ng-bind="_case.floorPrice" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>4S店优惠价格：</span>
+        <span ng-bind="_case.preferentialPrice" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>网络均价：</span>
+        <span ng-bind="_case.webAveragePrice" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>网络报价：</span>
+        <span ng-bind="_case.webPrice" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>售卖等级：</span>
+        <span ng-bind="(_case.saleGrade | saleGrade)" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>查询最大里程：</span>
+        <span ng-bind="_case.maxMileage" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>查询最小里程：</span>
+        <span ng-bind="_case.minMileage" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="item-icon-right" ng-if="_case.showYancheInfoInView">
+      <ion-item class="item-divider">
+        <span>验车信息</span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>发动机编号：</span>
+        <span ng-bind="_case.engineCode" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>保单号：</span>
+        <span ng-bind="_case.insuranceCode" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>车牌号：</span>
+        <span ng-bind="_case.licenseCode" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>车架编号：</span>
+        <span ng-bind="_case.vinCode" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="item-icon-right" ng-if="_case.showChaxunInfoInView">
+      <ion-item class="item-divider">
+        <span>查询信息</span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>债务情况：</span>
+        <span ng-bind="(_case.bondsState | boolState)" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>债务情况备注：</span>
+        <span ng-bind="_case.bondsNote" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>理赔记录：</span>
+        <span ng-bind="(_case.claimState | boolState)" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>理赔记录备注：</span>
+        <span ng-bind="_case.minMileage" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>养护记录：</span>
+        <span ng-bind="(_case.conservationState | boolState)" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>养护记录备注：</span>
+        <span ng-bind="_case.conservationNote" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>最后养护时间：</span>
+        <span ng-bind="(_case.lastConservationTime | time)" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>真实里程：</span>
+        <span ng-bind="_case.realMileage" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>违章情况：</span>
+        <span ng-bind="(_case.violationState | boolState)" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>违章情况备注：</span>
+        <span ng-bind="_case.violationNote" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="item-icon-right">
+      <ion-item class="item-divider"></ion-item>
+      <ion-item type="item-text-wrap">
+        <span>评估（采购）价格：</span>
+        <span ng-bind="_case.purchasePrice" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+
+    <ion-list ng-if="_case.enableTranscationsInView" >
       <ion-item type="item-text-wrap" class="item-icon-right" ng-click="_case.goTranscations()">
         <span class="pull-left">外源数据：</span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
 
-    <ion-list>
-      <ion-item class="item-divider">
+    <ion-list ng-if="_case.showPhotosInView">
+      <ion-item class="item-divider"></ion-item>
+      <ion-item type="item-text-wrap">
         <span>车辆图片：</span>
+        <span ng-bind="_case.purchasePrice" class="pull-right"></span>
       </ion-item>
-      <ion-item ng-repeat="p in _case.photoContents">
-        <img ng-src="{{ p }}">
+      <ion-item ng-repeat="photo in _case.photoContents">
+        <img ng-src="{{ photo }}">
       </ion-item>
     </ion-list>
+
   </ion-content>
 </ion-view>

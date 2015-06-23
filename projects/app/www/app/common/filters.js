@@ -737,6 +737,42 @@ angular.module('cheping.filters', [])
             }
         };
     })
+    .filter('boolState', function() {
+        return function(state) {
+            if (!isFinite(state)) {
+                return state;
+            }
+
+            switch (state) {
+                case 0:
+                    return '正常';
+                case 1:
+                    return '异常';
+                default:
+                    return state;
+            }
+        };
+    })
+    .filter('saleGrade', function() {
+        return function(saleGrade) {
+            if (!isFinite(saleGrade)) {
+                return saleGrade;
+            }
+
+            switch (saleGrade) {
+                case 10:
+                    return 'A';
+                case 20:
+                    return 'B';
+                case 30:
+                    return 'C';
+                case 40:
+                    return 'D';
+                default:
+                    return saleGrade;
+            }
+        };
+    })
     .filter('state', function() {
         return function(stateId) {
             if (!isFinite(stateId)) {

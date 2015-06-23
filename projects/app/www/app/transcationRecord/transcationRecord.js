@@ -36,17 +36,17 @@ angular.module('cheping.transcations', [
 
         _case.items = [];
 
-        cases.getRecords = function() {
-            CaseService.getTranscations()
+        _case.getRecords = function() {
+            CaseService.getTranscations($stateParams.caseId)
                 .then(function(result) {
-                    cases.items = result;
+                    _case.items = result;
                 })
         };
 
-        cases.getRecords();
+        _case.getRecords();
 
-        cases.doRefresh = function() {
-            cases.getRecords();
+        _case.doRefresh = function() {
+            _case.getRecords();
 
             $timeout(function() {
                 $scope.$broadcast('scroll.refreshComplete');

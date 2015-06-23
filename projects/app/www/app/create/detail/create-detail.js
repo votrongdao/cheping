@@ -173,9 +173,10 @@ angular.module('cheping.new.detail', [
                 .then(function(result) {
                     UtilityService.showAlert('创建成功');
                     CaseCreateService.resetNewCase(10);
+                    newCase = CaseCreateService.getNewCase();
                     _case.resetViewModel();
                     $timeout(function() {
-                        $state.go('cheping.case-list', {carType: newCase.caseType});
+                        $state.go('cheping.new');
                     }, 2000);
                 });
         };

@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-23  12:40 AM
+// Last Modified On : 2015-06-23  8:36 PM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -913,7 +913,7 @@ namespace ChepingServer.Services
                 }
 
                 int valuerId;
-                List<User> valuers = await db.Users.Where(u => u.Available && !u.HangOn && u.JobTitle == JobTitle.Valuer && u.ValuerGroup == newCase.CaseType).ToListAsync();
+                List<User> valuers = await db.Users.Where(u => u.Available && !u.HangOn && u.JobTitle == JobTitle.Valuer && u.ValuerGroup.Contains(((int)newCase.CaseType).ToString())).ToListAsync();
 
                 var workingValuers = await db.Cases.Where(c => ValuerTodoStates.Contains(c.State) && c.ValuerId != null)
                     .GroupBy(c => c.ValuerId).Select(g => new { g.Key, Count = g.Count() }).ToListAsync();
