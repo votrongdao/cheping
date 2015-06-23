@@ -4,7 +4,7 @@
 // Created          : 2015-06-22  9:55 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-23  10:03 PM
+// Last Modified On : 2015-06-23  11:47 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -834,6 +834,17 @@ namespace ChepingServer.Controllers
             CaseInfoResponse response = new CaseInfoResponse();
             var c = result.Item1;
             var info = result.Item2;
+
+            string valuerName = "未评估";
+            if (c.ValuerId.HasValue)
+            {
+                var valuer = await this.userService.Get(c.ValuerId.Value, true);
+                if (valuer != null)
+                {
+                    valuerName = valuer.UserName;
+                }
+            }
+
             response.State = c.State;
             response.Abandon = c.Abandon;
             response.AbandonReason = c.AbandonReason;
@@ -889,6 +900,7 @@ namespace ChepingServer.Controllers
             response.WebAveragePrice = inspection.WebAveragePrice.GetValueOrDefault();
             response.WebPrice = inspection.WebPrice.GetValueOrDefault();
             response.FloorPrice = inspection.FloorPrice.GetValueOrDefault();
+            response.ValuerName = valuerName;
             return this.Ok(response);
         }
 

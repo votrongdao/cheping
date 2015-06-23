@@ -77,6 +77,10 @@
         <span>评估信息</span>
       </ion-item>
       <ion-item type="item-text-wrap">
+        <span>评估师姓名：</span>
+        <span ng-bind="_case.valuerName" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
         <span>销售底价：</span>
         <span ng-bind="_case.floorPrice" class="pull-right"></span>
       </ion-item>
@@ -177,7 +181,7 @@
     <ion-list class="item-icon-right">
       <ion-item class="item-divider"></ion-item>
       <ion-item type="item-text-wrap">
-        <span>评估（采购）价格：</span>
+        <span>评估价格：</span>
         <span ng-bind="_case.purchasePrice" class="pull-right"></span>
       </ion-item>
     </ion-list>

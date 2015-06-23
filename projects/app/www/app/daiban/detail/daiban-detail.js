@@ -76,6 +76,7 @@ angular.module('cheping.daiban.detail', [
                     _case.seriesName = result.seriesName;
                     _case.state = result.state;
                     _case.valuerId = result.valuerId;
+                    _case.valuerName = result.valuerName;
                     _case.vehicleInfoId = result.vehicleInfoId;
                     _case.vehicleInspecId = result.vehicleInspecId;
                     _case.vehicleLocation = result.vehicleLocation;
@@ -181,7 +182,8 @@ angular.module('cheping.daiban.detail', [
 
         _case.showValueInfo = function() {
             var state = [20, 50, 70, 80];
-            _case.showValueInfoInView = state.indexOf(_case.state) !== -1;
+            _case.showValueInfoInView = state.indexOf(_case.state) !== -1
+            && _case.modelId > 0;
         };
 
         _case.showYancheInfo = function() {

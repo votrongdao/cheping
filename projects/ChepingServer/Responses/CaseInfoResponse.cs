@@ -289,6 +289,12 @@ namespace ChepingServer.Responses
         public int? ValuerId { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the valuer.
+        /// </summary>
+        /// <value>The name of the valuer.</value>
+        public string ValuerName { get; set; }
+
+        /// <summary>
         ///     车辆信息编号
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("vehicleInfoId")]
