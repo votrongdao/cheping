@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-24  2:00 AM
+// Last Modified On : 2015-06-24  5:10 AM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using ChepingServer.DTO;
 using ChepingServer.Enum;
 using ChepingServer.Models;
 using Moe.Lib;
@@ -617,6 +618,161 @@ namespace ChepingServer.Services
                     default:
                         return new List<Case>();
                 }
+            }
+        }
+
+        /// <summary>
+        ///     Gets the value dto.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="min">The minimum.</param>
+        /// <param name="max">The maximum.</param>
+        /// <returns>ValueDto.</returns>
+        /// <exception cref="System.ApplicationException">
+        ///     无法加载事项信息
+        ///     or
+        ///     无法加载车辆信息
+        ///     or
+        ///     无法加载验车信息
+        ///     or
+        ///     无法加载颜色信息
+        /// </exception>
+        public async Task<ValueDto> GetValueDto(int caseId, int min, int max)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+
+                if (@case == null)
+                {
+                    throw new ApplicationException("无法加载事项信息");
+                }
+
+                VehicleInfo info = await db.VehicleInfos.FirstOrDefaultAsync(v => v.Id == @case.VehicleInfoId);
+
+                if (info == null)
+                {
+                    throw new ApplicationException("无法加载车辆信息");
+                }
+
+                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(v => v.Id == @case.VehicleInspecId);
+
+                if (inspection == null)
+                {
+                    throw new ApplicationException("无法加载验车信息");
+                }
+
+                int modelId = info.ModelId;
+                DateTime licenseTime = info.LicenseTime;
+
+                DateTime minTime = new DateTime(licenseTime.Year, 1, 1);
+                DateTime maxTime = new DateTime(licenseTime.Year, 1, 1).AddYears(1).AddMilliseconds(-1);
+
+                List<TranscationRecord> records = await db.TranscationRecords.Where(r => r.ModelId == modelId && r.LicenseTime >= minTime
+                                                                                         && r.LicenseTime <= maxTime && r.Mileage >= min && r.Mileage <= max).ToListAsync();
+
+                int count = records.Count;
+
+                if (count == 0)
+                {
+                    return new ValueDto
+                    {
+                        FloorPrice = 0,
+                        Records = new List<TranscationRecordDto>(),
+                        WebAveragePrice = 0,
+                        WebPrice = 0
+                    };
+                }
+
+                decimal m1 = decimal.Divide(records.Sum(r => r.LicenseTime.Month), count);
+                decimal l1 = decimal.Divide(records.Sum(r => r.Mileage), count);
+
+                int v1 = records.Sum(r => r.Price) / count;
+
+                decimal m2 = info.LicenseTime.Month;
+                decimal l2 = inspection.RealMileage.GetValueOrDefault();
+
+                var k1 = m2 >= m1 ? 0 : decimal.Multiply(new decimal(-0.01), (int)((m1 - m2) / 3));
+
+                decimal k2;
+
+                if (l1 >= l2)
+                {
+                    k2 = 0;
+                }
+                else
+                {
+                    int a = v1 / 30;
+
+                    k2 = new decimal(-0.01) * (l2 - l1) * a;
+                }
+
+                int color1 = info.OuterColor;
+                int color2 = info.InnerColor;
+
+                Color c1 = await db.Colors.FirstOrDefaultAsync(c => c.Id == color1);
+                Color c2 = await db.Colors.FirstOrDefaultAsync(c => c.Id == color2);
+
+                if (c1 == null || c2 == null)
+                {
+                    throw new ApplicationException("无法加载颜色信息");
+                }
+
+                string color = c1.ColorCode + '|' + c2.ColorCode;
+
+                decimal k3;
+
+                bool good = await db.ColorGrades.AnyAsync(g => g.GoodColors == color);
+                bool middle = await db.ColorGrades.AnyAsync(g => g.MiddleColors == color);
+
+                if (good)
+                {
+                    k3 = 0;
+                }
+                else if (middle)
+                {
+                    k3 = new decimal(-0.01);
+                }
+                else
+                {
+                    k3 = new decimal(-0.02);
+                }
+
+                int v2 = (int)((1 + k1 + k2 + k3) * v1);
+
+                decimal k4 = new decimal(0.97);
+
+                SaleGrade sg = inspection.SaleGrade.GetValueOrDefault();
+
+                if (sg == SaleGrade.A)
+                {
+                    k4 = new decimal(0.97);
+                }
+
+                if (sg == SaleGrade.B)
+                {
+                    k4 = new decimal(0.96);
+                }
+
+                if (sg == SaleGrade.C)
+                {
+                    k4 = new decimal(0.95);
+                }
+
+                if (sg == SaleGrade.D)
+                {
+                    k4 = new decimal(0.94);
+                }
+
+                int v3 = (int)(v2 * k4);
+
+                return new ValueDto
+                {
+                    FloorPrice = v3,
+                    Records = records.Select(r => r.ToDto()).ToList(),
+                    WebAveragePrice = v1,
+                    WebPrice = v2
+                };
             }
         }
 

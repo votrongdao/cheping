@@ -162,7 +162,9 @@ angular.module('cheping.daiban.detail', [
                 caseId: _case.id,
                 brand: _case.brandName,
                 series: _case.seriesName,
-                model: _case.modelName
+                model: _case.modelName,
+                min: _case.minMileage,
+                max: _case.maxMileage
             });
         };
 

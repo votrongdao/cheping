@@ -33,7 +33,7 @@ angular.module('cheping', [
             REJECTIONCONFIRM: 'http://cheping.yuyidev.com:80/api/Case/RejectionConfirm',
             ADDCASE: 'http://cheping.yuyidev.com:80/api/Case/AddCase',
             ADDPHOTO: 'http://cheping.yuyidev.com:80/api/Photos/Create',
-            TRANSCATIONS: 'http://cheping.yuyidev.com:80/api/TranscationRecord/Case/'
+            TRANSCATIONS: 'http://cheping.yuyidev.com:80/api/TranscationRecord/'
         },
         CONFIG: {
             BRANDS: 'http://cheping.yuyidev.com:80/api/Models/Brands',

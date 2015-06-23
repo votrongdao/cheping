@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-24  3:45 AM
+// Created          : 2015-06-24  3:46 AM
 //
 // Last Modified By : Siqi Lu
 // Last Modified On : 2015-06-24  3:48 AM
 // ***********************************************************************
-// <copyright file="CityMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
+// <copyright file="ColorMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
@@ -16,32 +16,32 @@ using System.Data.Entity.ModelConfiguration;
 namespace ChepingServer.Models.Mapping
 {
     /// <summary>
-    ///     CityMap.
+    ///     ColorMap.
     /// </summary>
-    public class CityMap : EntityTypeConfiguration<City>
+    public class ColorMap : EntityTypeConfiguration<Color>
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="CityMap" /> class.
+        ///     Initializes a new instance of the <see cref="ColorMap" /> class.
         /// </summary>
-        public CityMap()
+        public ColorMap()
         {
             // Primary Key
             this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.ProvinceName)
+            this.Property(t => t.ColorName)
                 .IsRequired()
-                .HasMaxLength(200);
+                .HasMaxLength(100);
 
-            this.Property(t => t.CityName)
+            this.Property(t => t.ColorCode)
                 .IsRequired()
-                .HasMaxLength(200);
+                .HasMaxLength(100);
 
             // Table & Column Mappings
-            this.ToTable("Cities");
+            this.ToTable("Colors");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.ProvinceName).HasColumnName("ProvinceName");
-            this.Property(t => t.CityName).HasColumnName("CityName");
+            this.Property(t => t.ColorName).HasColumnName("ColorName");
+            this.Property(t => t.ColorCode).HasColumnName("ColorCode");
         }
     }
 }

@@ -64,7 +64,7 @@
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>心理价位：</span>
-        <span ng-bind="_case.expectedPrice" class="pull-right"></span>
+        <span ng-bind="'&yen' + _case.expectedPrice" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>改装内容：</span>
@@ -82,19 +82,19 @@
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>销售底价：</span>
-        <span ng-bind="_case.floorPrice" class="pull-right"></span>
+        <span ng-bind="'&yen' + _case.floorPrice" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>4S店优惠价格：</span>
-        <span ng-bind="_case.preferentialPrice" class="pull-right"></span>
+        <span ng-bind="'&yen' + _case.preferentialPrice" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>网络均价：</span>
-        <span ng-bind="_case.webAveragePrice" class="pull-right"></span>
+        <span ng-bind="'&yen' + _case.webAveragePrice" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>网络报价：</span>
-        <span ng-bind="_case.webPrice" class="pull-right"></span>
+        <span ng-bind="'&yen' + _case.webPrice" class="pull-right"></span>
       </ion-item>
       <ion-item type="item-text-wrap">
         <span>售卖等级：</span>
@@ -176,13 +176,25 @@
         <span>违章情况备注：</span>
         <span ng-bind="_case.violationNote" class="pull-right"></span>
       </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>公司库存数量：</span>
+        <span class="pull-right">0 辆</span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>销售需求数量：</span>
+        <span class="pull-right">0 辆</span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>已售同款数量：</span>
+        <span class="pull-right">0 辆</span>
+      </ion-item>
     </ion-list>
 
     <ion-list class="item-icon-right">
       <ion-item class="item-divider"></ion-item>
       <ion-item type="item-text-wrap">
         <span>估价：</span>
-        <span ng-bind="_case.purchasePrice" class="pull-right"></span>
+        <span ng-bind="'&yen' + _case.purchasePrice" class="pull-right"></span>
       </ion-item>
     </ion-list>
 

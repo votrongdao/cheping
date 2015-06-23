@@ -53,4 +53,8 @@ angular.module('cheping.case.list', [
                 $scope.$broadcast('scroll.refreshComplete');
             }, 500);
         };
+
+        $scope.$on('$ionicView.enter', function() {
+            cases.doRefresh();
+        });
     });

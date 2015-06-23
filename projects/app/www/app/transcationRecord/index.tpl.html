@@ -3,9 +3,58 @@
     <ion-refresher
       pulling-icon="ion-arrow-down-c"
       spinner="spiral"
-      on-refresh="cases.doRefresh()">
+      on-refresh="_case.doRefresh()">
     </ion-refresher>
+
+    <form name="record">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-model-s placeholder-icon"></i>
+          <input type="number" name="min" ng-model="_case.min" placeholder="最小里程数" required>
+        </label>
+      </div>
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-model-s placeholder-icon"></i>
+          <input type="number" name="max" ng-model="_case.max" placeholder="最大里程数" required>
+        </label>
+      </div>
+      <ion-list>
+        <ion-item>
+          <button class="button button-block button-cp-green" ng-click="_case.chongzhi()">重置</button>
+        </ion-item>
+
+        <ion-item>
+          <button class="button button-block button-cp-dark" ng-click="_case.chaxun()">查询</button>
+        </ion-item>
+
+      </ion-list>
+    </form>
+
+    <ion-list class="item-icon-right">
+      <ion-item class="item-divider"></ion-item>
+      <ion-item type="item-text-wrap">
+        <span>外源库存：</span>
+        <span ng-bind="_case.count" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>外源均价：</span>
+        <span ng-bind="'&yen' + _case.webAveragePrice" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>销售底价：</span>
+        <span ng-bind="'&yen' + _case.floorPrice" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>网络报价：</span>
+        <span ng-bind="'&yen' + _case.webPrice" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+
+
+
     <ion-list>
+      <ion-item class="item-divider"></ion-item>
       <ion-item ng-repeat="case in _case.items">
         <p ng-bind="case.source"></p>
         <label>&nbsp;<span ng-bind="_case.brand"></span>&nbsp;</label>

@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:33 PM
+// Created          : 2015-06-24  3:46 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-23  8:32 PM
+// Last Modified On : 2015-06-24  3:50 AM
 // ***********************************************************************
 // <copyright file="UserMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -47,6 +47,7 @@ namespace ChepingServer.Models.Mapping
 
             this.Property(t => t.ValuerGroup)
                 .IsRequired()
+                .IsFixedLength()
                 .HasMaxLength(100);
 
             // Table & Column Mappings

@@ -4,9 +4,9 @@
 // Created          : 2015-06-24  3:45 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-24  3:52 AM
+// Last Modified On : 2015-06-24  3:53 AM
 // ***********************************************************************
-// <copyright file="City.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
+// <copyright file="ColorGrade.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
@@ -14,15 +14,15 @@
 namespace ChepingServer.Models
 {
     /// <summary>
-    ///     City.
+    ///     ColorGrade.
     /// </summary>
-    public class City
+    public class ColorGrade
     {
         /// <summary>
-        ///     Gets or sets the name of the city.
+        ///     Gets or sets the good colors.
         /// </summary>
-        /// <value>The name of the city.</value>
-        public string CityName { get; set; }
+        /// <value>The good colors.</value>
+        public string GoodColors { get; set; }
 
         /// <summary>
         ///     Gets or sets the identifier.
@@ -31,9 +31,15 @@ namespace ChepingServer.Models
         public int Id { get; set; }
 
         /// <summary>
-        ///     Gets or sets the name of the province.
+        ///     Gets or sets the middle colors.
         /// </summary>
-        /// <value>The name of the province.</value>
-        public string ProvinceName { get; set; }
+        /// <value>The middle colors.</value>
+        public string MiddleColors { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the model identifier.
+        /// </summary>
+        /// <value>The model identifier.</value>
+        public int? ModelId { get; set; }
     }
 }

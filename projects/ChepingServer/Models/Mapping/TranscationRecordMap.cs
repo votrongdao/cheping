@@ -1,17 +1,16 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:15 AM
+// Created          : 2015-06-24  3:46 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:50 PM
+// Last Modified On : 2015-06-24  3:50 AM
 // ***********************************************************************
 // <copyright file="TranscationRecordMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
 
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace ChepingServer.Models.Mapping
@@ -30,9 +29,6 @@ namespace ChepingServer.Models.Mapping
             this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             this.Property(t => t.Source)
                 .IsRequired()
                 .HasMaxLength(200);

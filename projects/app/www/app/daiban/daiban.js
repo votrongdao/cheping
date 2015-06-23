@@ -36,7 +36,7 @@ angular.module('cheping.daiban', [
             }, 500);
         };
 
-        $scope.$on('$ionicView.enter', function(event, toState, toParams, fromState, fromParams) {
+        $scope.$on('$ionicView.enter', function() {
             cases.getTodos();
         });
     });

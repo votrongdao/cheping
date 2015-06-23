@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-20  1:13 PM
+// Created          : 2015-06-22  9:55 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  8:19 PM
+// Last Modified On : 2015-06-24  4:35 AM
 // ***********************************************************************
 // <copyright file="TranscationRecordController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -30,6 +30,11 @@ namespace ChepingServer.Controllers
     [RoutePrefix("api/TranscationRecord")]
     public class TranscationRecordController : ApiControllerBase
     {
+        /// <summary>
+        /// The case service
+        /// </summary>
+        private readonly CaseService caseService = new CaseService();
+
         /// <summary>
         ///     The transcation record service
         /// </summary>
@@ -103,6 +108,26 @@ namespace ChepingServer.Controllers
         public async Task<IHttpActionResult> GetTranscationRecords([FromUri] int caseId)
         {
             return this.Ok(await this.transcationRecordService.GetTranscationRecords(caseId));
+        }
+
+        /// <summary>
+        /// 根据Id获取交易数据
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="min">The minimum.</param>
+        /// <param name="max">The maximum.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <response code="200"></response>
+        /// <response code="400">
+        /// 无此交易数据，请确认交易数据id是否正确
+        /// </response>
+        /// <response code="500"></response>
+        [HttpGet, Route("{id}/{min}/{max}"), ResponseType(typeof(ValueDto))]
+        public async Task<IHttpActionResult> GetValueDto([FromUri] int id, [FromUri] int min, [FromUri] int max)
+        {
+            var dto = await this.caseService.GetValueDto(id, min, max);
+
+            return this.Ok(dto);
         }
 
         /// <summary>

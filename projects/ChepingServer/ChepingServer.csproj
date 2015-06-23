@@ -183,6 +183,7 @@
     <Compile Include="DTO\PhotoDto.cs" />
     <Compile Include="DTO\TranscationRecordDto.cs" />
     <Compile Include="DTO\UserDto.cs" />
+    <Compile Include="DTO\ValueDto.cs" />
     <Compile Include="Enum\CarType.cs" />
     <Compile Include="Enum\CooperationMethod.cs" />
     <Compile Include="Enum\JobTitle.cs" />
@@ -196,8 +197,12 @@
     <Compile Include="Models\Case.cs" />
     <Compile Include="Models\ChePingContext.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\ColorGrade.cs" />
     <Compile Include="Models\Mapping\CaseMap.cs" />
     <Compile Include="Models\Mapping\CityMap.cs" />
+    <Compile Include="Models\Mapping\ColorGradeMap.cs" />
+    <Compile Include="Models\Mapping\ColorMap.cs" />
     <Compile Include="Models\Mapping\ModelMap.cs" />
     <Compile Include="Models\Mapping\OutletMap.cs" />
     <Compile Include="Models\Mapping\PhotoMap.cs" />

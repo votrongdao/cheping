@@ -1,18 +1,18 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:15 AM
+// Created          : 2015-06-24  3:45 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:52 PM
+// Last Modified On : 2015-06-24  3:57 AM
 // ***********************************************************************
 // <copyright file="Case.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
 // </copyright>
 // ***********************************************************************
 
-using ChepingServer.Enum;
 using System;
+using ChepingServer.Enum;
 
 namespace ChepingServer.Models
 {
@@ -22,9 +22,9 @@ namespace ChepingServer.Models
     public class Case
     {
         /// <summary>
-        ///     Gets or sets a value indicating whether this <see cref="Case" /> is abandon.
+        ///     Gets or sets the abandon.
         /// </summary>
-        /// <value><c>null</c> if [abandon] contains no value, <c>true</c> if [abandon]; otherwise, <c>false</c>.</value>
+        /// <value>The abandon.</value>
         public bool? Abandon { get; set; }
 
         /// <summary>
@@ -38,6 +38,12 @@ namespace ChepingServer.Models
         /// </summary>
         /// <value>The type of the case.</value>
         public CarType CaseType { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the create time.
+        /// </summary>
+        /// <value>The create time.</value>
+        public DateTime CreateTime { get; set; }
 
         /// <summary>
         ///     Gets or sets the director identifier.
@@ -94,6 +100,12 @@ namespace ChepingServer.Models
         public State State { get; set; }
 
         /// <summary>
+        ///     Gets or sets the times.
+        /// </summary>
+        /// <value>The times.</value>
+        public string Times { get; set; }
+
+        /// <summary>
         ///     Gets or sets the valuer identifier.
         /// </summary>
         /// <value>The valuer identifier.</value>
@@ -110,18 +122,5 @@ namespace ChepingServer.Models
         /// </summary>
         /// <value>The vehicle inspec identifier.</value>
         public int VehicleInspecId { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the create time identifier.
-        /// </summary>
-        /// <value>The create time identifier.</value>
-        public DateTime CreateTime { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the times identifier.
-        /// </summary>
-        /// <value>The times identifier.</value>
-        public string Times { get; set; }
-
     }
 }

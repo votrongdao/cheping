@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:15 AM
+// Created          : 2015-06-24  3:46 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:52 PM
+// Last Modified On : 2015-06-24  3:51 AM
 // ***********************************************************************
 // <copyright file="VehicleInspectionMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.

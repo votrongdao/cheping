@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
 // Author           : Siqi Lu
-// Created          : 2015-06-19  3:15 AM
+// Created          : 2015-06-24  3:46 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:50 PM
+// Last Modified On : 2015-06-24  3:57 AM
 // ***********************************************************************
 // <copyright file="VehicleInspection.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -28,9 +28,9 @@ namespace ChepingServer.Models
         public string BondsNote { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether [bonds state].
+        ///     Gets or sets the state of the bonds.
         /// </summary>
-        /// <value><c>null</c> if [bonds state] contains no value, <c>true</c> if [bonds state]; otherwise, <c>false</c>.</value>
+        /// <value>The state of the bonds.</value>
         public bool? BondsState { get; set; }
 
         /// <summary>
@@ -40,9 +40,9 @@ namespace ChepingServer.Models
         public string ClaimNote { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether [claim state].
+        ///     Gets or sets the state of the claim.
         /// </summary>
-        /// <value><c>null</c> if [claim state] contains no value, <c>true</c> if [claim state]; otherwise, <c>false</c>.</value>
+        /// <value>The state of the claim.</value>
         public bool? ClaimState { get; set; }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace ChepingServer.Models
         public string ConservationNote { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether [conservation state].
+        ///     Gets or sets the state of the conservation.
         /// </summary>
-        /// <value><c>null</c> if [conservation state] contains no value, <c>true</c> if [conservation state]; otherwise, <c>false</c>.</value>
+        /// <value>The state of the conservation.</value>
         public bool? ConservationState { get; set; }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace ChepingServer.Models
         public string ViolationNote { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether [violation state].
+        ///     Gets or sets the state of the violation.
         /// </summary>
-        /// <value><c>null</c> if [violation state] contains no value, <c>true</c> if [violation state]; otherwise, <c>false</c>.</value>
+        /// <value>The state of the violation.</value>
         public bool? ViolationState { get; set; }
 
         /// <summary>
