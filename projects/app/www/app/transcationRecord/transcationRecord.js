@@ -55,6 +55,10 @@ angular.module('cheping.transcations', [
             _case.getRecords();
         };
 
+        _case.enableButton = function() {
+            return _case.min && _case.max;
+        };
+
         _case.getRecords = function() {
 
             CaseService.getTranscations($stateParams.caseId, _case.min, _case.max)
