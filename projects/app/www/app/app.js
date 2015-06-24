@@ -79,7 +79,7 @@ angular.module('cheping', [
             }
         });
     })
-    .run(function($rootScope, $ionicLoading) {
+    .run(function($rootScope, $timeout, $ionicLoading) {
         $rootScope.$on('loading:show', function() {
             $ionicLoading.show({
                 template: '<ion-spinner icon="spiral" class="spinner-energized"></ion-spinner>'
@@ -91,7 +91,7 @@ angular.module('cheping', [
         });
 
         $rootScope.$on('http:requestError', function() {
-            $ionicLoading.hide();
+            $timeout($ionicLoading.hide(), 500);
             $ionicLoading.show({
                 template: '请求失败',
                 duration: 3000

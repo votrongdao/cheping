@@ -29,13 +29,13 @@ angular.module('cheping.services', [
         });
 
         CacheFactory('caseCache', {
-            maxAge: 5 * 1000,
+            maxAge: 10 * 1000,
             deleteOnExpire: 'aggressive',
             storageMode: 'memory'
         });
 
         CacheFactory('userCache', {
-            maxAge: 5 * 1000,
+            maxAge: 5 * 60 * 1000,
             deleteOnExpire: 'aggressive',
             storageMode: 'memory'
         });

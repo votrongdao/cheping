@@ -12,7 +12,7 @@ angular.module('cheping.user', [
                 }
             })
     })
-    .controller('UserCtrl', function($state, $ionicHistory, UserService, AuthService, UtilityService) {
+    .controller('UserCtrl', function($state, $ionicHistory, UserService, AuthService, UtilityService, CacheService) {
         var user = this;
 
         UserService.getUserInfo()
@@ -27,6 +27,10 @@ angular.module('cheping.user', [
 
         user.loginOut = function() {
             AuthService.clearToken();
+
+            CacheService.get('caseCache').removeAll();
+            CacheService.get('userCache').removeAll();
+
             $ionicHistory.nextViewOptions({
                 disableBack: true
             });
