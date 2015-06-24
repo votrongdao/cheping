@@ -25,6 +25,7 @@ angular.module('cheping.daiban.detail', [
         var _case = this;
         _case.rejectButtonText = '取消';
         _case.confirmButtonText = '确认';
+        _case.isPurchaser = true;
 
         _case.getCase = function() {
             return CaseService.getCase($stateParams.caseId)
@@ -92,6 +93,8 @@ angular.module('cheping.daiban.detail', [
         _case.checkOperation = function() {
             return UserService.getUserInfo()
                 .then(function(result) {
+                    _case.isPurchaser = result.jobTitle === 10;
+
                     if (result.jobTitle === 40) {
                         if (_case.state === 20) {
                             _case.rejectButtonText = '审核不通过';
@@ -154,7 +157,7 @@ angular.module('cheping.daiban.detail', [
 
         _case.enableTranscations = function() {
             var state = [20, 50, 70, 80];
-            _case.enableTranscationsInView = state.indexOf(_case.state) !== -1 && _case.modelId > 0;
+            _case.enableTranscationsInView = state.indexOf(_case.state) !== -1 && _case.modelId > 0 && !_case.isPurchaser;
         };
 
         _case.goTranscations = function() {

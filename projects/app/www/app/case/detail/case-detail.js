@@ -16,8 +16,6 @@ angular.module('cheping.case.detail', [
     })
     .controller('CaseDetailCtrl', function($state, $stateParams, CaseService, UserService) {
         var _case = this;
-        _case.rejectButtonText = '取消';
-        _case.confirmButtonText = '确认';
         _case.isPurchaser = true;
 
         _case.getCase = function() {
@@ -104,7 +102,7 @@ angular.module('cheping.case.detail', [
 
         _case.enableTranscations = function() {
             var state = [50, 70, 80];
-            _case.enableTranscationsInView = state.indexOf(_case.state) !== -1 && _case.modelId > 0;
+            _case.enableTranscationsInView = state.indexOf(_case.state) !== -1 && _case.modelId > 0 && !_case.isPurchaser;
         };
 
         _case.goTranscations = function() {
