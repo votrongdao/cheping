@@ -14,10 +14,11 @@ angular.module('cheping.case.detail', [
                 }
             })
     })
-    .controller('CaseDetailCtrl', function($state, $stateParams, CaseService) {
+    .controller('CaseDetailCtrl', function($state, $stateParams, CaseService, UserService) {
         var _case = this;
         _case.rejectButtonText = '取消';
         _case.confirmButtonText = '确认';
+        _case.isPurchaser = true;
 
         _case.getCase = function() {
             return CaseService.getCase($stateParams.caseId)
@@ -82,12 +83,23 @@ angular.module('cheping.case.detail', [
                 });
         };
 
+        _case.checkUser = function() {
+            return UserService.getUserInfo()
+                .then(function(result) {
+                    _case.isPurchaser = result.jobTitle === 10;
+                    return result;
+                });
+        };
+
         _case.resetView = function () {
-            _case.enableTranscations();
-            _case.showPhotos();
-            _case.showValueInfo();
-            _case.showYancheInfo();
-            _case.showChaxunInfo();
+            _case.checkUser()
+                .then(function(result) {
+                    _case.enableTranscations();
+                    _case.showPhotos();
+                    _case.showValueInfo();
+                    _case.showYancheInfo();
+                    _case.showChaxunInfo();
+                });
         };
 
         _case.enableTranscations = function() {
@@ -111,9 +123,9 @@ angular.module('cheping.case.detail', [
         };
 
         _case.showValueInfo = function() {
-            var state = [20, 25, 35, 50, 55, 65, 70, 75, 80, 85, 95];
+            var state = [20, 25, 30, 35, 40, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
             _case.showValueInfoInView = state.indexOf(_case.state) !== -1
-                && _case.modelId > 0;
+                && _case.modelId > 0 && !_case.isPurchaser;
         };
 
         _case.showYancheInfo = function() {
