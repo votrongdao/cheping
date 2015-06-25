@@ -89,19 +89,22 @@ angular.module('cheping.case.detail', [
                 });
         };
 
-        _case.resetView = function () {
+        _case.resetView = function() {
             _case.checkUser()
                 .then(function(result) {
-                    _case.enableTranscations();
-                    _case.showPhotos();
-                    _case.showValueInfo();
-                    _case.showYancheInfo();
-                    _case.showChaxunInfo();
+                    _case.getCase()
+                        .then(function(result) {
+                            _case.enableTranscations();
+                            _case.showPhotos();
+                            _case.showValueInfo();
+                            _case.showYancheInfo();
+                            _case.showChaxunInfo();
+                        });
                 });
         };
 
         _case.enableTranscations = function() {
-            var state = [50, 70, 80];
+            var state = [20, 25, 30, 35, 40, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
             _case.enableTranscationsInView = state.indexOf(_case.state) !== -1 && _case.modelId > 0 && !_case.isPurchaser;
         };
 
@@ -136,8 +139,5 @@ angular.module('cheping.case.detail', [
             _case.showChaxunInfoInView = state.indexOf(_case.state) !== -1;
         };
 
-        _case.getCase()
-            .then(function(result) {
-                _case.resetView();
-            });
+        _case.resetView();
     });

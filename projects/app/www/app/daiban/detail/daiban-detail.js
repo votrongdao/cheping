@@ -145,19 +145,21 @@ angular.module('cheping.daiban.detail', [
                 });
         };
 
-        _case.resetView = function () {
-            _case.enableTranscations();
-            _case.showRejectButton();
-            _case.showConfirmButton();
-            _case.showPhotos();
-            _case.showValueInfo();
-            _case.showYancheInfo();
-            _case.showChaxunInfo();
-        };
+        _case.resetView = function() {
+            _case.checkOperation()
+                .then(function(result) {
+                    _case.getCase()
+                        .then(function(result) {
+                            _case.enableTranscations();
+                            _case.showRejectButton();
+                            _case.showConfirmButton();
+                            _case.showPhotos();
+                            _case.showValueInfo();
+                            _case.showYancheInfo();
+                            _case.showChaxunInfo();
+                        });
 
-        _case.enableTranscations = function() {
-            var state = [20, 50, 70, 80];
-            _case.enableTranscationsInView = state.indexOf(_case.state) !== -1 && _case.modelId > 0 && !_case.isPurchaser;
+                });
         };
 
         _case.goTranscations = function() {
@@ -169,6 +171,11 @@ angular.module('cheping.daiban.detail', [
                 min: _case.minMileage,
                 max: _case.maxMileage
             });
+        };
+
+        _case.enableTranscations = function() {
+            var state = [20, 25, 30, 35, 40, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
+            _case.enableTranscationsInView = state.indexOf(_case.state) !== -1 && _case.modelId > 0 && !_case.isPurchaser;
         };
 
         _case.showRejectButton = function() {
@@ -287,11 +294,5 @@ angular.module('cheping.daiban.detail', [
             }
         };
 
-        _case.getCase()
-            .then(function(result) {
-                _case.checkOperation();
-            })
-            .then(function(result) {
-                _case.resetView();
-            });
+        _case.resetView();
     });
