@@ -10,13 +10,13 @@
       <div class="list list-inset padding">
         <label class="item item-input">
           <i class="icon ion-model-s placeholder-icon"></i>
-          <input type="number" name="min" ng-model="_case.min" placeholder="最小里程数" required>
+          <input type="number" name="min" ng-model="_case.min" min="1" max="10000000" placeholder="最小里程数" required>
         </label>
       </div>
       <div class="list list-inset padding">
         <label class="item item-input">
           <i class="icon ion-model-s placeholder-icon"></i>
-          <input type="number" name="max" ng-model="_case.max" placeholder="最大里程数" required>
+          <input type="number" name="max" ng-model="_case.max" min="1" max="10000000" placeholder="最大里程数" required>
         </label>
       </div>
       <ion-list>

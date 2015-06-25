@@ -4,7 +4,7 @@
 // Created          : 2015-06-19  2:19 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-19  2:21 PM
+// Last Modified On : 2015-06-25  2:44 PM
 // ***********************************************************************
 // <copyright file="CookieAuthorizeAttribute.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -98,7 +98,7 @@ namespace ChepingServer.Filters
                         FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(tokenValue);
                         if (ticket != null) actionContext.RequestContext.Principal = new GenericPrincipal(new GenericIdentity(ticket.Name), null);
                     }
-                    catch (ArgumentException)
+                    catch (Exception)
                     {
                         // ignore
                     }

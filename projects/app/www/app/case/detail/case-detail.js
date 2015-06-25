@@ -1,6 +1,7 @@
 angular.module('cheping.case.detail', [
     'cheping.services.user',
-    'cheping.services.case'
+    'cheping.services.case',
+    'cheping.transcations'
 ])
     .config(function($stateProvider) {
         $stateProvider
@@ -109,7 +110,7 @@ angular.module('cheping.case.detail', [
         };
 
         _case.goTranscations = function() {
-            $state.go('cheping.daiban-transcation-record', {
+            $state.go('cheping.case-transcation-record', {
                 caseId: _case.id,
                 brand: _case.brandName,
                 series: _case.seriesName,

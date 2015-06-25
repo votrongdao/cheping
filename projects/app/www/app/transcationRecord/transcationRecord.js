@@ -19,7 +19,7 @@ angular.module('cheping.transcations', [
             .state('cheping.case-transcation-record', {
                 url: '/case/transcation-record/{caseId}/{brand}/{series}/{model}/{min}/{max}',
                 views: {
-                    'case': {
+                    'cases': {
                         controller: 'TranscationRecordsCtrl as _case',
                         templateUrl: 'app/transcationRecord/index.tpl.html'
                     }
