@@ -150,8 +150,8 @@ angular.module('cheping.new.detail', [
             view.brandName = newCase.brandName || '选择品牌';
             view.seriesName = newCase.seriesName || '选择车系';
             view.modelName = newCase.modelName || '选择车型';
-            view.outerColor = newCase.outerColor || '选择车辆外部颜色';
-            view.innerColor = newCase.innerColor || '选择车辆内饰颜色';
+            view.outerColorName = newCase.outerColorName || '选择车辆外部颜色';
+            view.innerColorName = newCase.innerColorName || '选择车辆内饰颜色';
             view.licenseTime = newCase.licenseTime || '选择车辆上牌时间';
             view.vehicleLocation = newCase.vehicleLocation || '选择车辆所在地区';
             view.displayMileage = newCase.displayMileage || '输入里程数';
@@ -164,7 +164,7 @@ angular.module('cheping.new.detail', [
 
         _case.buttonEnable = function() {
             return newCase.caseType && newCase.brandName && newCase.seriesName && newCase.modelName &&
-                newCase.outerColor && newCase.innerColor && newCase.licenseTime && newCase.vehicleLocation
+                newCase.outerColorName && newCase.innerColorName && newCase.licenseTime && newCase.vehicleLocation
                 && newCase.displayMileage && newCase.cooperationMethod;
         };
 
@@ -352,7 +352,7 @@ angular.module('cheping.new.detail', [
         };
 
         ctrl.selectConfirm = function() {
-            if (ctrl.selected && ctrl.selected !== newCase.outerColor) {
+            if (ctrl.selected && ctrl.selected !== newCase.outerColorName) {
                 newCase.outerColor = 0;
                 newCase.outerColorName = ctrl.selected;
                 $state.go('cheping.new-detail', {carType: newCase.caseType});
@@ -369,16 +369,16 @@ angular.module('cheping.new.detail', [
         var newCase = CaseCreateService.getNewCase();
 
         ctrl.items = CaseCreateService.getColors();
-        ctrl.selected = newCase.outerColorName;
+        ctrl.selected = newCase.innerColorName;
 
         ctrl.select = function(item) {
             ctrl.selected = item;
         };
 
         ctrl.selectConfirm = function() {
-            if (ctrl.selected && ctrl.selected !== newCase.outerColor) {
-                newCase.outerColor = 0;
-                newCase.outerColorName = ctrl.selected;
+            if (ctrl.selected && ctrl.selected !== newCase.innerColorName) {
+                newCase.innerColor = 0;
+                newCase.innerColorName = ctrl.selected;
                 $state.go('cheping.new-detail', {carType: newCase.caseType});
             }
         };

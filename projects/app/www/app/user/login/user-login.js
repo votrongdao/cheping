@@ -30,7 +30,7 @@ angular.module('cheping.user.login', [
                         });
                         $state.go('cheping.case', {}, { reload: true });
                     }, function(reason) {
-                        UtilityService.showAlert(reason.data.message);
+                        //UtilityService.showAlert(reason.data.message);
                     });
 
             }

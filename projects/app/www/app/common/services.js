@@ -737,7 +737,7 @@ angular.module('cheping.services', [
         };
 
     })
-    .service('UtilityService', function($state, $ionicPopup, $timeout, $cordovaInAppBrowser) {
+    .service('UtilityService', function($state, $ionicPopup, $ionicLoading, $timeout, $cordovaInAppBrowser) {
         var service = this;
 
         /**
@@ -766,14 +766,10 @@ angular.module('cheping.services', [
         }
 
         function showAlert(text) {
-            var alertPopup = $ionicPopup.alert({
-                title: '提示信息',
-                template: text
+            $ionicLoading.show({
+                template: text,
+                duration: 3000
             });
-
-            $timeout(function() {
-                alertPopup.close();
-            }, 2000);
         }
 
         service.isUrl = isUrl;

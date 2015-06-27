@@ -4,7 +4,7 @@
 // Created          : 2015-06-22  9:55 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-27  9:55 PM
+// Last Modified On : 2015-06-27  11:01 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -123,12 +123,14 @@ namespace ChepingServer.Controllers
                 ExpectedPrice = request.ExpectedPrice,
                 FactoryTime = request.FactoryTime,
                 InnerColor = request.InnerColor,
+                InnerColorName = request.InnerColorName,
                 LicenseLocation = request.LicenseLocation,
                 LicenseTime = request.LicenseTime,
                 ModelId = -1,
                 ModelName = request.ModelName,
                 ModifiedContent = request.ModifiedContent,
                 OuterColor = request.OuterColor,
+                OuterColorName = request.OuterColorName,
                 SeriesName = request.SeriesName,
                 VehicleLocation = request.VehicleLocation
             };
@@ -232,7 +234,7 @@ namespace ChepingServer.Controllers
                 VehicleOwnerIdNo = request.VehicleOwnerIdNo
             };
 
-            @case = await this.caseService.AddChaxunInfoAsync(@case.Id, inspection);
+            @case = await this.caseService.AddQiatanInfoAsync(@case.Id, inspection);
 
             return this.Ok(@case.ToDto());
         }

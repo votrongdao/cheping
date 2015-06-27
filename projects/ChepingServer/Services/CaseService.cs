@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-27  9:44 PM
+// Last Modified On : 2015-06-27  10:47 PM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -1150,12 +1150,14 @@ namespace ChepingServer.Services
                 ExpectedPrice = info.ExpectedPrice,
                 FactoryTime = info.FactoryTime,
                 InnerColor = info.InnerColor,
+                InnerColorName = info.InnerColorName,
                 LicenseLocation = info.LicenseLocation,
                 LicenseTime = info.LicenseTime,
                 ModelId = info.ModelId,
                 ModelName = info.ModelName,
                 ModifiedContent = info.ModifiedContent,
                 OuterColor = info.OuterColor,
+                OuterColorName = info.OuterColorName,
                 SeriesName = info.SeriesName,
                 VehicleLocation = info.VehicleLocation
             };
@@ -1265,12 +1267,14 @@ namespace ChepingServer.Services
                 ExpectedPrice = info.ExpectedPrice,
                 FactoryTime = info.FactoryTime,
                 InnerColor = info.InnerColor,
+                InnerColorName = info.InnerColorName,
                 LicenseLocation = info.LicenseLocation,
                 LicenseTime = info.LicenseTime,
                 ModelId = info.ModelId,
                 ModelName = info.ModelName,
                 ModifiedContent = info.ModifiedContent,
                 OuterColor = info.OuterColor,
+                OuterColorName = info.OuterColorName,
                 SeriesName = info.SeriesName,
                 VehicleLocation = info.VehicleLocation
             };

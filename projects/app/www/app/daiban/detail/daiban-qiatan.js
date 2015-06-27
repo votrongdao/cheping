@@ -44,7 +44,7 @@ angular.module('cheping.daiban.detail-qiatan', [
         };
 
         _case.buttonEnable = function() {
-            return _case.price && _case.vehicleOwner && _case.vehicleOwnerBank &&
+            return _case.purchasePrice && _case.vehicleOwner && _case.vehicleOwnerBank &&
                 _case.vehicleOwnerBankCardNo && _case.vehicleOwnerIdNo;
         };
 
