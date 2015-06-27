@@ -4,7 +4,7 @@
 // Created          : 2015-06-24  3:46 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-24  3:51 AM
+// Last Modified On : 2015-06-27  8:07 PM
 // ***********************************************************************
 // <copyright file="VehicleInspectionMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -53,6 +53,21 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.ViolationNote)
                 .HasMaxLength(200);
 
+            this.Property(t => t.VehicleOwner)
+                .HasMaxLength(50);
+
+            this.Property(t => t.VehicleOwnerCellphone)
+                .HasMaxLength(20);
+
+            this.Property(t => t.VehicleOwnerBank)
+                .HasMaxLength(50);
+
+            this.Property(t => t.VehicleOwnerBankCardNo)
+                .HasMaxLength(50);
+
+            this.Property(t => t.VehicleOwnerIdNo)
+                .HasMaxLength(50);
+
             // Table & Column Mappings
             this.ToTable("VehicleInspections");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -77,6 +92,11 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.WebAveragePrice).HasColumnName("WebAveragePrice");
             this.Property(t => t.WebPrice).HasColumnName("WebPrice");
             this.Property(t => t.FloorPrice).HasColumnName("FloorPrice");
+            this.Property(t => t.VehicleOwner).HasColumnName("VehicleOwner");
+            this.Property(t => t.VehicleOwnerCellphone).HasColumnName("VehicleOwnerCellphone");
+            this.Property(t => t.VehicleOwnerBank).HasColumnName("VehicleOwnerBank");
+            this.Property(t => t.VehicleOwnerBankCardNo).HasColumnName("VehicleOwnerBankCardNo");
+            this.Property(t => t.VehicleOwnerIdNo).HasColumnName("VehicleOwnerIdNo");
         }
     }
 }

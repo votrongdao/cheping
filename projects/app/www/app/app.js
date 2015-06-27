@@ -25,6 +25,7 @@ angular.module('cheping', [
             GETWARNINGS: 'http://cheping.yuyidev.com:80/api/Case/Warnings',
             REJECT: 'http://cheping.yuyidev.com:80/api/Case/Reject',
             ADDYANCHEINFO: 'http://cheping.yuyidev.com:80/api/Case/AddYancheInfo',
+            ADDQIATANINFO: 'http://cheping.yuyidev.com:80/api/Case/AddQiatanInfo',
             REVIEWCASE: 'http://cheping.yuyidev.com:80/api/Case/ReviewCase',
             ACCEPTPRICE: 'http://cheping.yuyidev.com:80/api/Case/AcceptPrice',
             APPLYPAYMENT: 'http://cheping.yuyidev.com:80/api/Case/ApplyPayment',

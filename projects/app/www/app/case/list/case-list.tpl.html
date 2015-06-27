@@ -12,7 +12,7 @@
           <p ng-bind="case.modelName"></p>
             <label>&nbsp;<span ng-bind="case.brandName"></span>&nbsp;</label>
             <label>&nbsp;<span ng-bind="case.seriesName"></span>&nbsp;</label>
-            <label>&nbsp;<span ng-bind="(case.outerColor | colorName) + '/' + (case.innerColor | colorName)"></span>&nbsp;</label>
+            <label>&nbsp;<span ng-bind="(case.outerColorName) + '/' + (case.innerColorName)"></span>&nbsp;</label>
         <div>
           <span class="price" ng-bind="'&yen' + case.purchasePrice"></span>
           <span ng-bind="(case.vehicleLocation | city)"></span>

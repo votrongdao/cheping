@@ -222,6 +222,7 @@
     <Compile Include="Requests\AddCaseRequest.cs" />
     <Compile Include="Requests\AddChaxunInfoRequest.cs" />
     <Compile Include="Requests\AddPhotoRequest.cs" />
+    <Compile Include="Requests\AddQiatanInfoRequest.cs" />
     <Compile Include="Requests\AddValueInfoRequest.cs" />
     <Compile Include="Requests\AddYancheInfoRequest.cs" />
     <Compile Include="Requests\QueryTranscationRecordRequest.cs" />

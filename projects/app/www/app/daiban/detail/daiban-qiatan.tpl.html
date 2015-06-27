@@ -36,6 +36,67 @@
       </ion-item>
     </ion-list>
 
-    <button class="button button-block button-cp-dark" ng-click="_case.confirm()">洽谈完成</button>
+    <form name="qiatan1">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-model-s placeholder-icon"></i>
+          <input type="text" name="vehicleOwner" ng-model="_case.vehicleOwner" placeholder="请输入车主姓名" required minlength="1" maxlength="50" ng-trim="true">
+        </label>
+      </div>
+      <div ng-messages="qiatan1.vehicleOwner.$error" ng-if="qiatan1.vehicleOwner.$dirty" role="alert" class="padding ng-input-error">
+        <div ng-message="required, minlength">
+          请输入车主姓名
+        </div>
+      </div>
+    </form>
+    <form name="qiatan2">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-model-s placeholder-icon"></i>
+          <input type="text" name="vehicleOwnerBank" ng-model="_case.vehicleOwnerBank" placeholder="请输入车主银行卡开户行" required minlength="3" maxlength="50" ng-trim="true">
+        </label>
+      </div>
+      <div ng-messages="qiatan2.vehicleOwnerBank.$error" ng-if="qiatan2.vehicleOwnerBank.$dirty" role="alert" class="padding ng-input-error">
+        <div ng-message="required, minlength">
+          请输入车主银行卡开户行
+        </div>
+      </div>
+    </form>
+    <form name="qiatan3">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-model-s placeholder-icon"></i>
+          <input type="text" name="vehicleOwnerBankCardNo" ng-model="_case.vehicleOwnerBankCardNo" placeholder="请输入车主银行卡号" required minlength="3" maxlength="50" ng-trim="true">
+        </label>
+      </div>
+      <div ng-messages="qiatan3.vehicleOwnerBankCardNo.$error" ng-if="qiatan3.vehicleOwnerBankCardNo.$dirty" role="alert" class="padding ng-input-error">
+        <div ng-message="required, minlength">
+          请输入车主银行卡号
+        </div>
+      </div>
+    </form>
+    <form name="qiatan4">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-model-s placeholder-icon"></i>
+          <input type="text" name="vehicleOwnerCellphone" ng-model="_case.vehicleOwnerCellphone" placeholder="请输入车主手机号" minlength="1" maxlength="20" ng-trim="true">
+        </label>
+      </div>
+    </form>
+    <form name="qiatan5">
+      <div class="list list-inset padding">
+        <label class="item item-input">
+          <i class="icon ion-model-s placeholder-icon"></i>
+          <input type="text" name="vehicleOwnerIdNo" ng-model="_case.vehicleOwnerIdNo" placeholder="请输入身份证号" required minlength="3" maxlength="50" ng-trim="true">
+        </label>
+      </div>
+      <div ng-messages="qiatan5.vehicleOwnerIdNo.$error" ng-if="qiatan5.vehicleOwnerIdNo.$dirty" role="alert" class="padding ng-input-error">
+        <div ng-message="required, minlength">
+          请输入身份证号
+        </div>
+      </div>
+    </form>
+
+    <button class="button button-block button-cp-dark" ng-click="_case.confirm()" ng-disabled="!_case.buttonEnable()">洽谈完成</button>
   </ion-content>
 </ion-view>

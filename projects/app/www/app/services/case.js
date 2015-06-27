@@ -128,4 +128,12 @@ angular.module('cheping.services.case', [])
                 return result.data;
             });
         };
+
+        service.addQiatanInfo = function(data) {
+            var url = URLS.CASE.ADDQIATANINFO;
+
+            return $http.post(url, data).then(function(result) {
+                return result.data;
+            });
+        };
     });

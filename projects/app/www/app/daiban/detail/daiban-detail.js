@@ -51,6 +51,7 @@ angular.module('cheping.daiban.detail', [
                     _case.floorPrice = result.floorPrice;
                     _case.id = result.id;
                     _case.innerColor = result.innerColor;
+                    _case.innerColorName = result.innerColorName;
                     _case.insuranceCode = result.insuranceCode;
                     _case.lastConservationTime = result.lastConservationTime;
                     _case.licenseCode = result.licenseCode;
@@ -63,6 +64,7 @@ angular.module('cheping.daiban.detail', [
                     _case.modelName = result.modelName;
                     _case.modifiedContent = result.modifiedContent || '未填写';
                     _case.outerColor = result.outerColor;
+                    _case.outerColorName = result.outerColorName;
                     _case.outletId = result.outletId;
                     _case.photo = result.photo;
                     _case.photoContents = result.photoContents;
@@ -86,6 +88,11 @@ angular.module('cheping.daiban.detail', [
                     _case.violationState = result.violationState;
                     _case.webAveragePrice = result.webAveragePrice;
                     _case.webPrice = result.webPrice;
+                    _case.vehicleOwner = result.vehicleOwner || '未填写';
+                    _case.vehicleOwnerBank = result.vehicleOwnerBank || '未填写';
+                    _case.vehicleOwnerBankCardNo = result.vehicleOwnerBankCardNo || '未填写';
+                    _case.vehicleOwnerCellphone = result.vehicleOwnerCellphone || '未填写';
+                    _case.vehicleOwnerIdNo = result.vehicleOwnerIdNo || '未填写';
                     return result;
                 });
         };
@@ -157,6 +164,7 @@ angular.module('cheping.daiban.detail', [
                             _case.showValueInfo();
                             _case.showYancheInfo();
                             _case.showChaxunInfo();
+                            _case.showQiatanInfo();
                         });
 
                 });
@@ -206,6 +214,11 @@ angular.module('cheping.daiban.detail', [
         _case.showChaxunInfo = function() {
             var state = [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
             _case.showChaxunInfoInView = state.indexOf(_case.state) !== -1;
+        };
+
+        _case.showQiatanInfo = function() {
+            var state = [70, 75, 80, 85, 90, 95, 100];
+            _case.showQiatanInfoInView = state.indexOf(_case.state) !== -1;
         };
 
         _case.reject = function() {

@@ -4,7 +4,7 @@
 // Created          : 2015-06-24  3:46 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-24  3:57 AM
+// Last Modified On : 2015-06-27  8:14 PM
 // ***********************************************************************
 // <copyright file="VehicleInspection.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -122,6 +122,36 @@ namespace ChepingServer.Models
         /// </summary>
         /// <value>The sale grade.</value>
         public SaleGrade? SaleGrade { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the vehicle owner.
+        /// </summary>
+        /// <value>The vehicle owner.</value>
+        public string VehicleOwner { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the vehicle owner bank.
+        /// </summary>
+        /// <value>The vehicle owner bank.</value>
+        public string VehicleOwnerBank { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the vehicle owner bank card no.
+        /// </summary>
+        /// <value>The vehicle owner bank card no.</value>
+        public string VehicleOwnerBankCardNo { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the vehicle owner cellphone.
+        /// </summary>
+        /// <value>The vehicle owner cellphone.</value>
+        public string VehicleOwnerCellphone { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether [vehicle owner identifier no].
+        /// </summary>
+        /// <value><c>true</c> if [vehicle owner identifier no]; otherwise, <c>false</c>.</value>
+        public string VehicleOwnerIdNo { get; set; }
 
         /// <summary>
         ///     Gets or sets the vin code.

@@ -13,7 +13,7 @@
         <label class="item-input-wrapper">
           <input type="text" name="selectBrand" ng-model="ctrl.selected" placeholder="输入车辆品牌" required minlength="1" maxlength="18">
         </label>
-        <button class="button button-small" ng-click="ctrl.selectConfirm()">确认</button>
+        <button class="button button-small" ng-disabled="!ctrl.buttonEnable()" ng-click="ctrl.selectConfirm()">确认</button>
       </ion-item>
     </ion-list>
 

@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  11:24 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-24  5:10 AM
+// Last Modified On : 2015-06-27  9:44 PM
 // ***********************************************************************
 // <copyright file="CaseService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -37,6 +37,7 @@ namespace ChepingServer.Services
         private static readonly State[] PurchaserWarningStates = { State.ShenheShibai, State.FangqiBaojia, State.FangqiShenqingDakuan };
         private static readonly State[] QueryingTodoStates = { State.Chaxun };
         private static readonly State[] ValuerTodoStates = { State.Pinggu };
+        private readonly SmsService smsService = new SmsService();
 
         /// <summary>
         ///     accept price as an asynchronous operation.
@@ -79,6 +80,28 @@ namespace ChepingServer.Services
             {
                 Model model = await db.Models.FirstOrDefaultAsync(m => m.Brand == info.BrandName &&
                                                                        m.Series == info.SeriesName && m.Modeling == info.ModelName);
+
+                Color outerColor = await db.Colors.FirstOrDefaultAsync(c => c.ColorName == info.OuterColorName);
+
+                if (outerColor == null)
+                {
+                    info.OuterColor = -1;
+                }
+                else
+                {
+                    info.OuterColor = outerColor.Id;
+                }
+
+                Color innerColor = await db.Colors.FirstOrDefaultAsync(c => c.ColorName == info.InnerColorName);
+
+                if (innerColor == null)
+                {
+                    info.InnerColor = -1;
+                }
+                else
+                {
+                    info.InnerColor = innerColor.Id;
+                }
 
                 if (model == null)
                 {
@@ -144,6 +167,51 @@ namespace ChepingServer.Services
                 this.RecordTime(@case, State.Chaxun);
 
                 await db.ExecuteSaveChangesAsync();
+
+                return @case;
+            }
+        }
+
+        /// <summary>
+        ///     add qiatan information as an asynchronous operation.
+        /// </summary>
+        /// <param name="caseId">The case identifier.</param>
+        /// <param name="qiatanInfo">The qiatan information.</param>
+        /// <returns>Task&lt;Case&gt;.</returns>
+        /// <exception cref="ApplicationException">
+        ///     事项的状态不合法
+        ///     or
+        ///     未能加载验车信息
+        /// </exception>
+        public async Task<Case> AddQiatanInfoAsync(int caseId, VehicleInspection qiatanInfo)
+        {
+            using (ChePingContext db = new ChePingContext())
+            {
+                Case @case = await db.Cases.FirstOrDefaultAsync(c => c.Id == caseId);
+
+                if (@case == null || @case.State != State.Qiatan)
+                {
+                    throw new ApplicationException("事项的状态不合法");
+                }
+
+                VehicleInspection inspection = await db.VehicleInspections.FirstOrDefaultAsync(i => i.Id == @case.VehicleInspecId);
+                if (inspection == null)
+                {
+                    throw new ApplicationException("未能加载验车信息");
+                }
+
+                inspection.VehicleOwner = qiatanInfo.VehicleOwner;
+                inspection.VehicleOwnerCellphone = qiatanInfo.VehicleOwnerCellphone;
+                inspection.VehicleOwnerBank = qiatanInfo.VehicleOwnerBank;
+                inspection.VehicleOwnerBankCardNo = qiatanInfo.VehicleOwnerBankCardNo;
+                inspection.VehicleOwnerIdNo = qiatanInfo.VehicleOwnerIdNo;
+
+                @case.State = State.ShenqingDakuan;
+                this.RecordTime(@case, State.Qiatan);
+
+                await db.ExecuteSaveChangesAsync();
+
+                await this.smsService.SendNoticeMessage(@case.DirectorId.GetValueOrDefault());
 
                 return @case;
             }
@@ -318,7 +386,7 @@ namespace ChepingServer.Services
 
                 await db.ExecuteSaveChangesAsync();
 
-                await db.ExecuteSaveChangesAsync();
+                await this.smsService.SendNoticeMessage(@case.QueryingId.GetValueOrDefault());
 
                 return @case;
             }
@@ -374,6 +442,8 @@ namespace ChepingServer.Services
                     @case.ManagerId = managerId;
 
                     await db.ExecuteSaveChangesAsync();
+
+                    await this.smsService.SendNoticeMessage(@case.ManagerId.GetValueOrDefault());
                 }
 
                 return @case;
@@ -401,6 +471,8 @@ namespace ChepingServer.Services
                     this.RecordTime(@case, State.DakuanShenhe);
                     await db.ExecuteSaveChangesAsync();
                 }
+
+                await this.smsService.SendNoticeMessage(@case.PurchaserId);
 
                 return @case;
             }
@@ -710,32 +782,34 @@ namespace ChepingServer.Services
                 int color1 = info.OuterColor;
                 int color2 = info.InnerColor;
 
+                decimal k3;
+
                 Color c1 = await db.Colors.FirstOrDefaultAsync(c => c.Id == color1);
                 Color c2 = await db.Colors.FirstOrDefaultAsync(c => c.Id == color2);
 
                 if (c1 == null || c2 == null)
                 {
-                    throw new ApplicationException("无法加载颜色信息");
-                }
-
-                string color = c1.ColorCode + '|' + c2.ColorCode;
-
-                decimal k3;
-
-                bool good = await db.ColorGrades.AnyAsync(g => g.GoodColors == color);
-                bool middle = await db.ColorGrades.AnyAsync(g => g.MiddleColors == color);
-
-                if (good)
-                {
-                    k3 = 0;
-                }
-                else if (middle)
-                {
-                    k3 = new decimal(-0.01);
+                    k3 = new decimal(-0.02);
                 }
                 else
                 {
-                    k3 = new decimal(-0.02);
+                    string color = c1.ColorCode + '|' + c2.ColorCode;
+
+                    bool good = await db.ColorGrades.AnyAsync(g => g.GoodColors == color);
+                    bool middle = await db.ColorGrades.AnyAsync(g => g.MiddleColors == color);
+
+                    if (good)
+                    {
+                        k3 = 0;
+                    }
+                    else if (middle)
+                    {
+                        k3 = new decimal(-0.01);
+                    }
+                    else
+                    {
+                        k3 = new decimal(-0.02);
+                    }
                 }
 
                 int v2 = (int)((1 + k1 + k2 + k3) * v1);
@@ -1017,6 +1091,8 @@ namespace ChepingServer.Services
                     await db.ExecuteSaveChangesAsync();
                 }
 
+                await this.smsService.SendNoticeMessage(@case.PurchaserId);
+
                 return @case;
             }
         }
@@ -1144,6 +1220,8 @@ namespace ChepingServer.Services
                 }
 
                 await db.ExecuteSaveChangesAsync();
+
+                await this.smsService.SendNoticeMessage(newCase.ValuerId.GetValueOrDefault());
             }
 
             return newCase;

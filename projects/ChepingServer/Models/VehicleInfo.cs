@@ -64,6 +64,12 @@ namespace ChepingServer.Models
         public int InnerColor { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the inner color.
+        /// </summary>
+        /// <value>The name of the inner color.</value>
+        public string InnerColorName { get; set; }
+
+        /// <summary>
         ///     Gets or sets the license location.
         /// </summary>
         /// <value>The license location.</value>
@@ -98,6 +104,12 @@ namespace ChepingServer.Models
         /// </summary>
         /// <value>The color of the outer.</value>
         public int OuterColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the outer color.
+        /// </summary>
+        /// <value>The name of the outer color.</value>
+        public string OuterColorName { get; set; }
 
         /// <summary>
         ///     Gets or sets the name of the series.

@@ -69,6 +69,12 @@ namespace ChepingServer.Requests
         public int InnerColor { get; set; }
 
         /// <summary>
+        /// 内饰颜色
+        /// </summary>
+        [Required, StringLength(50, MinimumLength = 0), JsonProperty("innerColorName")]
+        public string InnerColorName { get; set; }
+
+        /// <summary>
         ///     牌照所在地
         /// </summary>
         [JsonProperty("licenseLocation")]
@@ -97,6 +103,12 @@ namespace ChepingServer.Requests
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("outerColor")]
         public int OuterColor { get; set; }
+
+        /// <summary>
+        /// 外部颜色
+        /// </summary>
+        [Required, StringLength(50, MinimumLength = 0), JsonProperty("outerColorName")]
+        public string OuterColorName { get; set; }
 
         /// <summary>
         ///     照片id

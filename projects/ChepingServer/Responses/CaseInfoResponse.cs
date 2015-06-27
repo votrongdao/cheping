@@ -4,7 +4,7 @@
 // Created          : 2015-06-23  9:08 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-23  9:08 PM
+// Last Modified On : 2015-06-27  9:34 PM
 // ***********************************************************************
 // <copyright file="CaseInfoResponse.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace ChepingServer.Responses
 {
     /// <summary>
-    /// CaseInfoResponse.
+    ///     CaseInfoResponse.
     /// </summary>
     public class CaseInfoResponse
     {
@@ -141,6 +141,12 @@ namespace ChepingServer.Responses
         public int InnerColor { get; set; }
 
         /// <summary>
+        ///     内部颜色
+        /// </summary>
+        [Required, StringLength(50, MinimumLength = 1), JsonProperty("innerColorName")]
+        public string InnerColorName { get; set; }
+
+        /// <summary>
         ///     保单号
         /// </summary>
         public string InsuranceCode { get; set; }
@@ -206,6 +212,12 @@ namespace ChepingServer.Responses
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("outerColor")]
         public int OuterColor { get; set; }
+
+        /// <summary>
+        ///     外部颜色
+        /// </summary>
+        [Required, StringLength(50, MinimumLength = 1), JsonProperty("outerColorName")]
+        public string OuterColorName { get; set; }
 
         /// <summary>
         ///     网点Id
@@ -289,7 +301,7 @@ namespace ChepingServer.Responses
         public int? ValuerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the valuer.
+        ///     Gets or sets the name of the valuer.
         /// </summary>
         /// <value>The name of the valuer.</value>
         public string ValuerName { get; set; }
@@ -311,6 +323,36 @@ namespace ChepingServer.Responses
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("vehicleLocation")]
         public int VehicleLocation { get; set; }
+
+        /// <summary>
+        ///     车主姓名
+        /// </summary>
+        [Required, StringLength(50, MinimumLength = 1), JsonProperty("vehicleOwner")]
+        public string VehicleOwner { get; set; }
+
+        /// <summary>
+        ///     车主银行卡开户行
+        /// </summary>
+        [Required, StringLength(50, MinimumLength = 1), JsonProperty("vehicleOwnerBank")]
+        public string VehicleOwnerBank { get; set; }
+
+        /// <summary>
+        ///     车主银行卡号
+        /// </summary>
+        [Required, StringLength(50, MinimumLength = 1), JsonProperty("vehicleOwnerBankCardNo")]
+        public string VehicleOwnerBankCardNo { get; set; }
+
+        /// <summary>
+        ///     车主手机号
+        /// </summary>
+        [JsonProperty("vehicleOwnerCellphone")]
+        public string VehicleOwnerCellphone { get; set; }
+
+        /// <summary>
+        ///     车主身份证号
+        /// </summary>
+        [JsonProperty("vehicleOwnerIdNo")]
+        public string VehicleOwnerIdNo { get; set; }
 
         /// <summary>
         ///     发动机号

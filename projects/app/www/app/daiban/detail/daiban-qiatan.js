@@ -44,11 +44,19 @@ angular.module('cheping.daiban.detail-qiatan', [
         };
 
         _case.buttonEnable = function() {
-            return _case.price;
+            return _case.price && _case.vehicleOwner && _case.vehicleOwnerBank &&
+                _case.vehicleOwnerBankCardNo && _case.vehicleOwnerIdNo;
         };
 
         _case.confirm = function() {
-            CaseService.acceptPrice($stateParams.caseId).then(function(result) {
+            CaseService.addQiatanInfo({
+                caseId: $stateParams.caseId,
+                vehicleOwner: _case.vehicleOwner,
+                vehicleOwnerBank: _case.vehicleOwnerBank,
+                vehicleOwnerBankCardNo: _case.vehicleOwnerBankCardNo,
+                vehicleOwnerCellphone: _case.vehicleOwnerCellphone,
+                vehicleOwnerIdNo: _case.vehicleOwnerIdNo
+            }).then(function(result) {
                 UtilityService.showAlert('价格如有变化，请及时通知总监');
 
                 $ionicHistory.nextViewOptions({

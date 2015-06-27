@@ -4,7 +4,7 @@
 // Created          : 2015-06-22  9:55 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-24  2:01 AM
+// Last Modified On : 2015-06-27  9:55 PM
 // ***********************************************************************
 // <copyright file="CaseController.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -42,7 +42,7 @@ namespace ChepingServer.Controllers
         /// <summary>
         ///     接受报价
         /// </summary>
-        /// <param name="caseId">The case identifier.</param>
+        /// <param name="caseId">订单 id</param>
         /// <response code="200"></response>
         /// <response code="400">
         ///     无法加载事项信息
@@ -80,7 +80,7 @@ namespace ChepingServer.Controllers
         /// <summary>
         ///     新增订单
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="request">订单内容</param>
         /// <response code="200"></response>
         /// <response code="400">
         ///     无法加载用户信息
@@ -139,9 +139,9 @@ namespace ChepingServer.Controllers
         }
 
         /// <summary>
-        ///     添加查询师查询信息
+        ///     添加查询信息
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="request">查询结果</param>
         /// <response code="200"></response>
         /// <response code="400">
         ///     无法加载事项信息
@@ -183,6 +183,53 @@ namespace ChepingServer.Controllers
                 BondsNote = request.BondsNote,
                 ViolationState = request.ViolationState,
                 ViolationNote = request.ViolationNote
+            };
+
+            @case = await this.caseService.AddChaxunInfoAsync(@case.Id, inspection);
+
+            return this.Ok(@case.ToDto());
+        }
+
+        /// <summary>
+        ///     添加洽谈结果信息
+        /// </summary>
+        /// <param name="request">洽谈结果信息</param>
+        /// <response code="200"></response>
+        /// <response code="400">
+        ///     无法加载事项信息
+        ///     <br />
+        ///     操作未授权
+        ///     <br />
+        ///     事项状态错误
+        /// </response>
+        /// <response code="401">请登录</response>
+        /// <response code="500"></response>
+        [Route("AddQiatanInfo"), CookieAuthorize, ActionParameterRequired, ActionParameterValidate(Order = 1), ResponseType(typeof(CaseDto))]
+        public async Task<IHttpActionResult> AddQiatanInfo(AddQiatanInfoRequest request)
+        {
+            Case @case = await this.caseService.GetAsync(request.CaseId);
+            if (@case == null)
+            {
+                return this.BadRequest("无法加载事项信息");
+            }
+
+            if (@case.PurchaserId != this.CurrentUser.Id)
+            {
+                return this.BadRequest("操作未授权");
+            }
+
+            if (@case.State != State.Qiatan)
+            {
+                return this.BadRequest("事项状态错误");
+            }
+
+            VehicleInspection inspection = new VehicleInspection
+            {
+                VehicleOwner = request.VehicleOwner,
+                VehicleOwnerCellphone = request.VehicleOwnerCellphone,
+                VehicleOwnerBank = request.VehicleOwnerBank,
+                VehicleOwnerBankCardNo = request.VehicleOwnerBankCardNo,
+                VehicleOwnerIdNo = request.VehicleOwnerIdNo
             };
 
             @case = await this.caseService.AddChaxunInfoAsync(@case.Id, inspection);
@@ -430,6 +477,7 @@ namespace ChepingServer.Controllers
                 response.FactoryTime = info.FactoryTime;
                 response.Id = c.Id;
                 response.InnerColor = info.InnerColor;
+                response.InnerColorName = info.InnerColorName;
                 response.LicenseLocation = info.LicenseLocation;
                 response.LicenseTime = info.LicenseTime;
                 response.ManagerId = c.ManagerId;
@@ -437,6 +485,7 @@ namespace ChepingServer.Controllers
                 response.ModelName = info.ModelName;
                 response.ModifiedContent = info.ModifiedContent;
                 response.OuterColor = info.OuterColor;
+                response.OuterColorName = info.OuterColorName;
                 response.OutletId = c.OutletId;
                 response.PurchasePrice = c.PurchasePrice;
                 response.PurchaserId = c.PurchaserId;
@@ -511,12 +560,14 @@ namespace ChepingServer.Controllers
                 response.FactoryTime = info.FactoryTime;
                 response.Id = c.Id;
                 response.InnerColor = info.InnerColor;
+                response.InnerColorName = info.InnerColorName;
                 response.LicenseLocation = info.LicenseLocation;
                 response.ManagerId = c.ManagerId;
                 response.ModelId = info.ModelId;
                 response.ModelName = info.ModelName;
                 response.ModifiedContent = info.ModifiedContent;
                 response.OuterColor = info.OuterColor;
+                response.OuterColorName = info.OuterColorName;
                 response.OutletId = c.OutletId;
                 response.PurchasePrice = c.PurchasePrice;
                 response.PurchaserId = c.PurchaserId;
@@ -576,6 +627,7 @@ namespace ChepingServer.Controllers
                 response.FactoryTime = info.FactoryTime;
                 response.Id = c.Id;
                 response.InnerColor = info.InnerColor;
+                response.InnerColorName = info.InnerColorName;
                 response.LicenseLocation = info.LicenseLocation;
                 response.LicenseTime = info.LicenseTime;
                 response.ManagerId = c.ManagerId;
@@ -583,6 +635,7 @@ namespace ChepingServer.Controllers
                 response.ModelName = info.ModelName;
                 response.ModifiedContent = info.ModifiedContent;
                 response.OuterColor = info.OuterColor;
+                response.OuterColorName = info.OuterColorName;
                 response.OutletId = c.OutletId;
                 response.PurchasePrice = c.PurchasePrice;
                 response.PurchaserId = c.PurchaserId;
@@ -859,6 +912,7 @@ namespace ChepingServer.Controllers
             response.FactoryTime = info.FactoryTime;
             response.Id = c.Id;
             response.InnerColor = info.InnerColor;
+            response.InnerColorName = info.InnerColorName;
             response.LicenseLocation = info.LicenseLocation;
             response.LicenseTime = info.LicenseTime;
             response.ManagerId = c.ManagerId;
@@ -866,6 +920,7 @@ namespace ChepingServer.Controllers
             response.ModelName = info.ModelName;
             response.ModifiedContent = info.ModifiedContent;
             response.OuterColor = info.OuterColor;
+            response.OuterColorName = info.OuterColorName;
             response.OutletId = c.OutletId;
             response.PurchasePrice = c.PurchasePrice;
             response.PurchaserId = c.PurchaserId;
@@ -902,6 +957,11 @@ namespace ChepingServer.Controllers
             response.WebPrice = inspection.WebPrice.GetValueOrDefault();
             response.FloorPrice = inspection.FloorPrice.GetValueOrDefault();
             response.ValuerName = valuerName;
+            response.VehicleOwner = inspection.VehicleOwner;
+            response.VehicleOwnerBank = inspection.VehicleOwnerBank;
+            response.VehicleOwnerBankCardNo = inspection.VehicleOwnerBankCardNo;
+            response.VehicleOwnerCellphone = inspection.VehicleOwnerCellphone;
+            response.VehicleOwnerIdNo = inspection.VehicleOwnerIdNo;
             return this.Ok(response);
         }
 

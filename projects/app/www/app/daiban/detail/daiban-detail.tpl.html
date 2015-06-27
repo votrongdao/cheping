@@ -190,6 +190,32 @@
       </ion-item>
     </ion-list>
 
+    <ion-list class="item-icon-right" ng-if="_case.showQiatanInfoInView">
+      <ion-item class="item-divider">
+        <span>打款信息</span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>车主姓名：</span>
+        <span ng-bind="_case.vehicleOwner" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>车主开户行：</span>
+        <span ng-bind="_case.vehicleOwnerBank" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>车主银行卡号：</span>
+        <span ng-bind="_case.vehicleOwnerBankCardNo" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>车主手机号：</span>
+        <span ng-bind="_case.vehicleOwnerCellphone" class="pull-right"></span>
+      </ion-item>
+      <ion-item type="item-text-wrap">
+        <span>车主身份证号：</span>
+        <span ng-bind="_case.vehicleOwnerIdNo" class="pull-right"></span>
+      </ion-item>
+    </ion-list>
+
     <ion-list class="item-icon-right">
       <ion-item class="item-divider"></ion-item>
       <ion-item type="item-text-wrap">

@@ -345,20 +345,23 @@ angular.module('cheping.new.detail', [
         var newCase = CaseCreateService.getNewCase();
 
         ctrl.items = CaseCreateService.getColors();
-        ctrl.selected = newCase.outerColor;
+        ctrl.selected = newCase.outerColorName;
+
+        ctrl.select = function(item) {
+            ctrl.selected = item;
+        };
 
         ctrl.selectConfirm = function() {
             if (ctrl.selected && ctrl.selected !== newCase.outerColor) {
-                newCase.outerColor = ctrl.selected;
+                newCase.outerColor = 0;
+                newCase.outerColorName = ctrl.selected;
                 $state.go('cheping.new-detail', {carType: newCase.caseType});
             }
         };
 
-        $scope.$watch(angular.bind(ctrl, function() {
-            return this.selected;
-        }), function(newVal, oldVal) {
-            ctrl.selectConfirm();
-        });
+        ctrl.buttonEnable = function() {
+            return ctrl.selected;
+        };
 
     })
     .controller('NewInnerColorCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
@@ -366,21 +369,23 @@ angular.module('cheping.new.detail', [
         var newCase = CaseCreateService.getNewCase();
 
         ctrl.items = CaseCreateService.getColors();
-        ctrl.selected = newCase.innerColor;
+        ctrl.selected = newCase.outerColorName;
+
+        ctrl.select = function(item) {
+            ctrl.selected = item;
+        };
 
         ctrl.selectConfirm = function() {
-            if (ctrl.selected && ctrl.selected !== newCase.innerColor) {
-                newCase.innerColor = ctrl.selected;
+            if (ctrl.selected && ctrl.selected !== newCase.outerColor) {
+                newCase.outerColor = 0;
+                newCase.outerColorName = ctrl.selected;
                 $state.go('cheping.new-detail', {carType: newCase.caseType});
             }
         };
 
-        $scope.$watch(angular.bind(ctrl, function() {
-            return this.selected;
-        }), function(newVal, oldVal) {
-            ctrl.selectConfirm();
-        });
-
+        ctrl.buttonEnable = function() {
+            return ctrl.selected;
+        };
     })
     .controller('NewLicenseTimeCtrl', function($scope, $state, $stateParams, $timeout, CaseCreateService) {
         var ctrl = this;

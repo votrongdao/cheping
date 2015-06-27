@@ -4,7 +4,7 @@
 // Created          : 2015-06-24  3:46 AM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-24  3:51 AM
+// Last Modified On : 2015-06-27  7:33 PM
 // ***********************************************************************
 // <copyright file="VehicleInfoMap.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -44,6 +44,14 @@ namespace ChepingServer.Models.Mapping
                 .IsRequired()
                 .HasMaxLength(200);
 
+            this.Property(t => t.OuterColorName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            this.Property(t => t.InnerColorName)
+                .IsRequired()
+                .HasMaxLength(50);
+
             // Table & Column Mappings
             this.ToTable("VehicleInfos");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -61,6 +69,8 @@ namespace ChepingServer.Models.Mapping
             this.Property(t => t.ExpectedPrice).HasColumnName("ExpectedPrice");
             this.Property(t => t.ModelId).HasColumnName("ModelId");
             this.Property(t => t.ModelName).HasColumnName("ModelName");
+            this.Property(t => t.OuterColorName).HasColumnName("OuterColorName");
+            this.Property(t => t.InnerColorName).HasColumnName("InnerColorName");
         }
     }
 }

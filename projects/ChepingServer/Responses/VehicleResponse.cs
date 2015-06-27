@@ -4,7 +4,7 @@
 // Created          : 2015-06-21  12:21 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-22  6:55 PM
+// Last Modified On : 2015-06-27  9:28 PM
 // ***********************************************************************
 // <copyright file="VehicleResponse.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -98,6 +98,12 @@ namespace ChepingServer.Responses
         public int InnerColor { get; set; }
 
         /// <summary>
+        ///     内部颜色
+        /// </summary>
+        [Required, StringLength(50, MinimumLength = 1), JsonProperty("innerColorName")]
+        public string InnerColorName { get; set; }
+
+        /// <summary>
         ///     牌照所在地
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("licenseLocation")]
@@ -138,6 +144,12 @@ namespace ChepingServer.Responses
         /// </summary>
         [Required, Range(0, int.MaxValue), JsonProperty("outerColor")]
         public int OuterColor { get; set; }
+
+        /// <summary>
+        ///     外部颜色
+        /// </summary>
+        [Required, StringLength(50, MinimumLength = 1), JsonProperty("outerColorName")]
+        public string OuterColorName { get; set; }
 
         /// <summary>
         ///     网点Id
