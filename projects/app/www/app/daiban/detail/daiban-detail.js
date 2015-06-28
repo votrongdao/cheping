@@ -307,5 +307,9 @@ angular.module('cheping.daiban.detail', [
             }
         };
 
+        $scope.$on('$ionicView.enter', function() {
+            _case.resetView();
+        });
+
         _case.resetView();
     });
