@@ -15,31 +15,31 @@ angular.module('cheping', [
 ])
     .constant('URLS', {
         USER: {
-            GETINFO: 'http://localhost:1585/api/Users',
-            SIGNIN: 'http://localhost:1585/api/Users/Login'
+            GETINFO: 'http://cheping.yuyidev.com:80/api/Users',
+            SIGNIN: 'http://cheping.yuyidev.com:80/api/Users/Login'
         },
         CASE: {
-            GETCASELIST: 'http://localhost:1585/api/Case/List',
-            GETVEHICLEINFO: 'http://localhost:1585/api/Case/VehicleInfo',
-            GETTODOS: 'http://localhost:1585/api/Case/Todos',
-            GETWARNINGS: 'http://localhost:1585/api/Case/Warnings',
-            REJECT: 'http://localhost:1585/api/Case/Reject',
-            ADDYANCHEINFO: 'http://localhost:1585/api/Case/AddYancheInfo',
-            ADDQIATANINFO: 'http://localhost:1585/api/Case/AddQiatanInfo',
-            REVIEWCASE: 'http://localhost:1585/api/Case/ReviewCase',
-            ACCEPTPRICE: 'http://localhost:1585/api/Case/AcceptPrice',
-            APPLYPAYMENT: 'http://localhost:1585/api/Case/ApplyPayment',
-            APPROVEPAYMENT: 'http://localhost:1585/api/Case/ApprovePayment',
-            PURCHASE: 'http://localhost:1585/api/Case/Purchase',
-            REJECTIONCONFIRM: 'http://localhost:1585/api/Case/RejectionConfirm',
-            ADDCASE: 'http://localhost:1585/api/Case/AddCase',
-            ADDPHOTO: 'http://localhost:1585/api/Photos/Create',
-            TRANSCATIONS: 'http://localhost:1585/api/TranscationRecord/'
+            GETCASELIST: 'http://cheping.yuyidev.com:80/api/Case/List',
+            GETVEHICLEINFO: 'http://cheping.yuyidev.com:80/api/Case/VehicleInfo',
+            GETTODOS: 'http://cheping.yuyidev.com:80/api/Case/Todos',
+            GETWARNINGS: 'http://cheping.yuyidev.com:80/api/Case/Warnings',
+            REJECT: 'http://cheping.yuyidev.com:80/api/Case/Reject',
+            ADDYANCHEINFO: 'http://cheping.yuyidev.com:80/api/Case/AddYancheInfo',
+            ADDQIATANINFO: 'http://cheping.yuyidev.com:80/api/Case/AddQiatanInfo',
+            REVIEWCASE: 'http://cheping.yuyidev.com:80/api/Case/ReviewCase',
+            ACCEPTPRICE: 'http://cheping.yuyidev.com:80/api/Case/AcceptPrice',
+            APPLYPAYMENT: 'http://cheping.yuyidev.com:80/api/Case/ApplyPayment',
+            APPROVEPAYMENT: 'http://cheping.yuyidev.com:80/api/Case/ApprovePayment',
+            PURCHASE: 'http://cheping.yuyidev.com:80/api/Case/Purchase',
+            REJECTIONCONFIRM: 'http://cheping.yuyidev.com:80/api/Case/RejectionConfirm',
+            ADDCASE: 'http://cheping.yuyidev.com:80/api/Case/AddCase',
+            ADDPHOTO: 'http://cheping.yuyidev.com:80/api/Photos/Create',
+            TRANSCATIONS: 'http://cheping.yuyidev.com:80/api/TranscationRecord/'
         },
         CONFIG: {
-            BRANDS: 'http://localhost:1585/api/Models/Brands',
-            SERIES: 'http://localhost:1585/api/Models/Series',
-            MODELINGS: 'http://localhost:1585/api/Models/Modelings'
+            BRANDS: 'http://cheping.yuyidev.com:80/api/Models/Brands',
+            SERIES: 'http://cheping.yuyidev.com:80/api/Models/Series',
+            MODELINGS: 'http://cheping.yuyidev.com:80/api/Models/Modelings'
 
         }
     })
