@@ -126,7 +126,7 @@ angular.module('cheping', [
                         ctrl.showNewTab = true;
                         ctrl.showTab = true;
                     } else {
-                        AuthService.clearToken();
+                        UserService.clear();
                         UtilityService.showAlert('用户权限错误');
                         $state.go('cheping.user-login');
                     }

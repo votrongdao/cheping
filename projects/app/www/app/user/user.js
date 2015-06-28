@@ -26,7 +26,7 @@ angular.module('cheping.user', [
             });
 
         user.loginOut = function() {
-            AuthService.clearToken();
+            UserService.clear();
 
             CacheService.get('caseCache').removeAll();
             CacheService.get('userCache').removeAll();

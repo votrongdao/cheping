@@ -12,12 +12,11 @@ angular.module('cheping.services.user', [
         };
 
         service.getUserInfo = function() {
-            return $http.get(URLS.USER.GETINFO, {
-                cache: CacheService.get('userCache')
-            }).then(function(result) {
-                currentUser = result.data;
-                return currentUser;
-            });
+            return $http.get(URLS.USER.GETINFO)
+                .then(function(result) {
+                    currentUser = result.data;
+                    return currentUser;
+                });
         };
 
         service.login = function(loginName, password) {
@@ -30,5 +29,10 @@ angular.module('cheping.services.user', [
                 }).then(function(result) {
                     service.getUserInfo();
                 });
+        };
+
+        service.clear = function() {
+            currentUser = {};
+            AuthService.clearToken();
         };
     });
