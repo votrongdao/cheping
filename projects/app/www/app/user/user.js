@@ -1,29 +1,18 @@
-angular.module('cheping.user', [
-])
-    .config(function ($stateProvider) {
+angular.module('cheping.user', [])
+    .config(function($stateProvider) {
         $stateProvider
             .state('cheping.user', {
                 url: '/user',
                 views: {
-                    'user':{
+                    'user': {
                         controller: 'UserCtrl as user',
                         templateUrl: 'app/user/index.tpl.html'
                     }
                 }
             })
     })
-    .controller('UserCtrl', function($state, $ionicHistory, UserService, AuthService, UtilityService, CacheService) {
+    .controller('UserCtrl', function($scope, $state, $ionicHistory, UserService, AuthService, UtilityService, CacheService) {
         var user = this;
-
-        UserService.getUserInfo()
-            .then(function(currentUser) {
-                user.cellphone = currentUser.cellphone.toString();
-                user.outletId = currentUser.outletId;
-                user.userName = currentUser.userName;
-                user.userCode = currentUser.userCode;
-                user.jobTitle = currentUser.jobTitle;
-                user.outletName = currentUser.outletName;
-            });
 
         user.loginOut = function() {
             UserService.clear();
@@ -36,4 +25,20 @@ angular.module('cheping.user', [
             });
             $state.go('cheping.user-login');
         };
+
+        user.doRefresh = function() {
+            UserService.getUserInfo()
+                .then(function(currentUser) {
+                    user.cellphone = currentUser.cellphone.toString();
+                    user.outletId = currentUser.outletId;
+                    user.userName = currentUser.userName;
+                    user.userCode = currentUser.userCode;
+                    user.jobTitle = currentUser.jobTitle;
+                    user.outletName = currentUser.outletName;
+                });
+        };
+
+        $scope.$on('$ionicView.enter', function() {
+            user.doRefresh();
+        });
     });

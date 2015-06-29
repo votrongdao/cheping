@@ -14,7 +14,7 @@ angular.module('cheping.user.login', [
                 }
             })
     })
-    .controller('UserLoginCtrl', function($state, $ionicHistory, UserService, UtilityService) {
+    .controller('UserLoginCtrl', function($scope, $state, $ionicHistory, UserService) {
         var user = this;
 
         user.model = {};
@@ -39,4 +39,9 @@ angular.module('cheping.user.login', [
         user.loginButtonEnable = function() {
             return user.viewModel.cellphone && user.viewModel.password;
         };
+
+        $scope.$on('$ionicView.enter', function() {
+            user.viewModel.cellphone = '';
+            user.viewModel.password = '';
+        });
     });

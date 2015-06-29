@@ -117,6 +117,7 @@ angular.module('cheping', [
         ctrl.reload = function() {
             UserService.getUserInfo()
                 .then(function(result) {
+                    ctrl.showTab = false;
                     if (result.jobTitle === 40 || result.jobTitle === 50) {
                         ctrl.showWarningTab = true;
                         ctrl.showNewTab = false;
@@ -133,8 +134,7 @@ angular.module('cheping', [
                 });
         };
 
-        $scope.$on('$ionicView.enter', function() {
-            ctrl.reload();
-        });
+
+        ctrl.reload();
     });
 

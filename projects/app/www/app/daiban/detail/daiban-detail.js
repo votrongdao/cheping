@@ -104,41 +104,61 @@ angular.module('cheping.daiban.detail', [
 
                     if (result.jobTitle === 40) {
                         if (_case.state === 20) {
-                            _case.rejectButtonText = '审核不通过';
-                            _case.confirmButtonText = '同意验车';
+                            //_case.rejectButtonText = '审核不通过';
+                            //_case.confirmButtonText = '同意验车';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         } else if (_case.state === 50) {
-                            _case.rejectButtonText = '放弃报价';
-                            _case.confirmButtonText = '报价';
+                            //_case.rejectButtonText = '放弃报价';
+                            //_case.confirmButtonText = '报价';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         } else if (_case.state === 70) {
-                            _case.rejectButtonText = '放弃申请';
-                            _case.confirmButtonText = '申请打款';
+                            //_case.rejectButtonText = '放弃申请';
+                            //_case.confirmButtonText = '申请打款';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         } else {
-                            _case.rejectButtonText = '失败';
-                            _case.confirmButtonText = '成功';
+                            //_case.rejectButtonText = '失败';
+                            //_case.confirmButtonText = '成功';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         }
 
                     } else if (result.jobTitle === 10) {
                         if (_case.state === 30) {
-                            _case.rejectButtonText = '验车失败';
-                            _case.confirmButtonText = '验车成功';
+                            //_case.rejectButtonText = '验车失败';
+                            //_case.confirmButtonText = '验车成功';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         } else if (_case.state === 60) {
-                            _case.rejectButtonText = '洽谈失败';
-                            _case.confirmButtonText = '洽谈成功';
+                            //_case.rejectButtonText = '洽谈失败';
+                            //_case.confirmButtonText = '洽谈成功';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         } else if (_case.state === 90) {
-                            _case.rejectButtonText = '入库失败';
-                            _case.confirmButtonText = '入库';
+                            //_case.rejectButtonText = '入库失败';
+                            //_case.confirmButtonText = '入库';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         } else {
-                            _case.rejectButtonText = '失败';
-                            _case.confirmButtonText = '成功';
+                            //_case.rejectButtonText = '失败';
+                            //_case.confirmButtonText = '成功';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         }
 
                     } else if (result.jobTitle === 50) {
                         if (_case.state === 80) {
-                            _case.rejectButtonText = '放弃收购';
-                            _case.confirmButtonText = '同意打款';
+                            //_case.rejectButtonText = '放弃收购';
+                            //_case.confirmButtonText = '同意打款';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         } else {
-                            _case.rejectButtonText = '失败';
-                            _case.confirmButtonText = '成功';
+                            //_case.rejectButtonText = '失败';
+                            //_case.confirmButtonText = '成功';
+                            _case.rejectButtonText = '拒绝';
+                            _case.confirmButtonText = '继续';
                         }
 
                     } else {
