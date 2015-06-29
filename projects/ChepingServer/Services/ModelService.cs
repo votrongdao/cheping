@@ -4,7 +4,7 @@
 // Created          : 2015-06-18  11:10 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-20  12:50 PM
+// Last Modified On : 2015-06-29  5:45 PM
 // ***********************************************************************
 // <copyright file="ModelService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -154,10 +154,10 @@ namespace ChepingServer.Services
             {
                 if (includeUnavailable)
                 {
-                    return await db.Models.GroupBy(m => m.Brand).Select(m => m.Key).ToListAsync();
+                    return await db.Models.GroupBy(m => m.Brand).OrderBy(m => m.Key).Select(m => m.Key).ToListAsync();
                 }
 
-                return await db.Models.Where(m => m.Available).GroupBy(m => m.Brand).Select(m => m.Key).ToListAsync();
+                return await db.Models.Where(m => m.Available).GroupBy(m => m.Brand).OrderBy(m => m.Key).Select(m => m.Key).ToListAsync();
             }
         }
 
@@ -174,10 +174,10 @@ namespace ChepingServer.Services
             {
                 if (includeUnavailable)
                 {
-                    return await db.Models.Where(m => m.Brand == brand && m.Series == series).GroupBy(m => m.Modeling).Select(m => m.Key).ToListAsync();
+                    return await db.Models.Where(m => m.Brand == brand && m.Series == series).GroupBy(m => m.Modeling).OrderBy(m => m.Key).Select(m => m.Key).ToListAsync();
                 }
 
-                return await db.Models.Where(m => m.Brand == brand && m.Series == series && m.Available).GroupBy(m => m.Modeling).Select(m => m.Key).ToListAsync();
+                return await db.Models.Where(m => m.Brand == brand && m.Series == series && m.Available).GroupBy(m => m.Modeling).OrderBy(m => m.Key).Select(m => m.Key).ToListAsync();
             }
         }
 
@@ -221,10 +221,10 @@ namespace ChepingServer.Services
             {
                 if (includeUnavailable)
                 {
-                    return await db.Models.Where(m => m.Brand == brand).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
+                    return await db.Models.Where(m => m.Brand == brand).GroupBy(m => m.Series).OrderBy(m => m.Key).Select(m => m.Key).ToListAsync();
                 }
 
-                return await db.Models.Where(m => m.Brand == brand && m.Available).GroupBy(m => m.Series).Select(m => m.Key).ToListAsync();
+                return await db.Models.Where(m => m.Brand == brand && m.Available).GroupBy(m => m.Series).OrderBy(m => m.Key).Select(m => m.Key).ToListAsync();
             }
         }
 

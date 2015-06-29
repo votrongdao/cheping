@@ -12,6 +12,7 @@
 // ***********************************************************************
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -212,7 +213,7 @@ namespace ChepingServer.Controllers
         [HttpGet, Route("Modelings"), CookieAuthorize, ResponseType(typeof(List<string>))]
         public async Task<IHttpActionResult> GetModelings([FromUri] string brand, [FromUri] string series, [FromUri] bool includeUnavailable = false)
         {
-            return this.Ok(await this.modelService.GetModelings(brand, series, includeUnavailable));
+            return this.Ok((await this.modelService.GetModelings(brand, series, includeUnavailable)).OrderBy(m => m));
         }
 
         /// <summary>
