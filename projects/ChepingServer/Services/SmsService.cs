@@ -11,6 +11,7 @@
 // </copyright>
 // ***********************************************************************
 
+using System;
 using System.Data.Entity;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -61,7 +62,14 @@ namespace ChepingServer.Services
         /// <returns>Task.</returns>
         public async Task SendNoticeMessage(string cellphone)
         {
-            await this.SendMessage(cellphone, "您有新的代办任务，请尽快登录系统完成");
+            try
+            {
+                await this.SendMessage(cellphone, "您有新的代办任务，请尽快登录系统完成");
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
         }
 
         /// <summary>
