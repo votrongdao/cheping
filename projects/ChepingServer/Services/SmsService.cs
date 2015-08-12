@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Project          : ChepingServer
-// Author           : Siqi Lu
+// File             : SmsService.cs
 // Created          : 2015-06-18  10:09 PM
 //
 // Last Modified By : Siqi Lu
-// Last Modified On : 2015-06-27  8:20 PM
+// Last Modified On : 2015-08-12  2:42 PM
 // ***********************************************************************
 // <copyright file="SmsService.cs" company="Shanghai Yuyi Mdt InfoTech Ltd.">
 //     Copyright ©  2012-2015 Shanghai Yuyi Mdt InfoTech Ltd. All rights reserved.
@@ -51,7 +51,8 @@ namespace ChepingServer.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                await client.GetAsync(SendMessageUrl + MessageTemplate.FormatWith(UserName, Password, cellphone, message, "通道测试", ProductId));
+                var response = await client.GetAsync(SendMessageUrl + MessageTemplate.FormatWith(UserName, Password, cellphone, message, "通道测试", ProductId));
+                Console.WriteLine(await response.Content.ReadAsStringAsync());
             }
         }
 
