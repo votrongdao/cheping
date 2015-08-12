@@ -1,0 +1,114 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "res/xml/config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"com.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"DatePickerPlugin\"><param name=\"android-package\" value=\"com.plugin.datepicker.DatePickerPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.liteglue.SQLitePlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "AndroidManifest.xml": {
+                "parents": {
+                    "/manifest/application": [
+                        {
+                            "xml": "<activity android:label=\"@string/multi_app_name\" android:name=\"com.synconset.MultiImageChooserActivity\" android:theme=\"@android:style/Theme.Holo.Light\"></activity>",
+                            "count": 1
+                        }
+                    ],
+                    "/manifest": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "com.ionic.keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "com.plugin.datepicker": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "com.synconset.imagepicker": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "io.litehelpers.cordova.sqlite": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.mycarapp986152"
+        }
+    },
+    "dependent_plugins": {}
+}
